@@ -26,7 +26,7 @@ export default function Sidebar() {
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">
             <img
-              src="/assets/dist/img/user2-160x160.jpg"
+              src={user.avatar}
               className="img-circle elevation-2"
               alt="User Image"
             />
@@ -50,7 +50,7 @@ export default function Sidebar() {
                 <p>Dashboard</p>
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/repair" className="nav-link">
                 <i className="nav-icon fas fa-tools" />
                 <p>Repair</p>
@@ -61,21 +61,18 @@ export default function Sidebar() {
                 <i className="nav-icon fas fa-users" />
                 <p>Users</p>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
-              <Link to="/starter" className="nav-link">
-                <i className="nav-icon fas fa-file" />
-                <p>Starter Page</p>
+              <Link to="/bookings" className="nav-link">
+                <i className="nav-icon fas fa-calendar" />
+                <p>Bookings</p>
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link">
-                <i className="nav-icon fas fa-th" />
-                <p>
-                  Simple Link
-                  <span className="right badge badge-danger">New</span>
-                </p>
-              </a>
+              <Link to="/profile" className="nav-link">
+                <i className="nav-icon fas fa-user" />
+                <p>Profile</p>
+              </Link>
             </li>
           </ul>
         </nav>
