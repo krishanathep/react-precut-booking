@@ -50,27 +50,15 @@ export default function Sidebar() {
                 <p>Dashboard</p>
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link to="/repair" className="nav-link">
-                <i className="nav-icon fas fa-tools" />
-                <p>Repair</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/users" className="nav-link">
-                <i className="nav-icon fas fa-users" />
-                <p>Users</p>
-              </Link>
-            </li> */}
             <li className="nav-item">
               <Link to="/bookings" className="nav-link">
-                <i className="nav-icon fas fa-calendar" />
+              <i className="nav-icon fas fa-calendar-alt"></i>
                 <p>Bookings</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/profile" className="nav-link">
-                <i className="nav-icon fas fa-user" />
+              <i className="nav-icon fas fa-address-card"></i>
                 <p>Profile</p>
               </Link>
             </li>
