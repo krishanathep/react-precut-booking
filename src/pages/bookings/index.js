@@ -8,99 +8,99 @@ export default function Bookings() {
   const bookings = [
     {
       id: 1,
-      name: "Test Bookings Name 1",
+      name: "Bookings Name 1",
       type: "Type 1",
-      detail: "Test Bookings case items detail 1",
+      detail: "Bookings case items detail 1",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 2,
-      name: "Test Bookings Name 2",
+      name: "Bookings Name 2",
       type: "Type 2",
-      detail: "Test Bookings case items detail 2",
+      detail: "Bookings case items detail 2",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 3,
-      name: "TestBookingsr Name 3",
+      name: "Bookingsr Name 3",
       type: "Type 1",
-      detail: "Test Bookings case items detail 3",
+      detail: "Bookings case items detail 3",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 4,
-      name: "Test Bookings Name 4",
+      name: "Bookings Name 4",
       type: "Type 1",
-      detail: "Test Bookings case items detail 4",
+      detail: "Bookings case items detail 4",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 5,
-      name: "Test Bookings Name 5",
+      name: "Bookings Name 5",
       type: "Type 1",
-      detail: "Test Bookings case items detail 5",
+      detail: "Bookings case items detail 5",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 6,
-      name: "Test Bookings Name 6",
+      name: "Bookings Name 6",
       type: "Type 1",
-      detail: "Test Bookings case items detail 6",
+      detail: "Bookings case items detail 6",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 7,
-      name: "Test Bookings Name 7",
+      name: "Bookings Name 7",
       type: "Type 1",
-      detail: "Test Bookings case items detail 7",
+      detail: "Bookings case items detail 7",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 8,
-      name: "Test Bookings Name 8",
+      name: "Bookings Name 8",
       type: "Type 1",
-      detail: "Test Bookings case items detail 8",
+      detail: "Bookings case items detail 8",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 9,
-      name: "Test Bookings Name 9",
+      name: "Bookings Name 9",
       type: "Type 1",
-      detail: "Test Bookings case items detail 9",
+      detail: "Bookings case items detail 9",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 10,
-      name: "Test Bookings Name 10",
+      name: "Bookings Name 10",
       type: "Type 1",
-      detail: "Test Bookings case items detail 10",
+      detail: "Bookings case items detail 10",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
     },
     {
       id: 11,
-      name: "Test Bookings Name 11",
+      name: "Bookings Name 11",
       type: "Type 1",
-      detail: "Test Bookings case items detail 11",
+      detail: "Bookings case items detail 11",
       user: "UserName",
       status: "Status",
       date_at: "14-09-2022",
@@ -150,18 +150,17 @@ export default function Bookings() {
   function actionButton(cell, row, rowIndex, formatExtraData) {
     return (
       <>
-        <Link
-          to='/bookings/view'
-          className="btn btn-info btn-sm"
-        >
-          <i class="fas fa-eye"></i>
-        </Link>{" "}
-        <Link
-          to='/bookings/edit'
-          className="btn btn-primary btn-sm"
-        >
-          <i class="fas fa-edit"></i>
-        </Link>
+        <div className="btn-group">
+          <Link to={"/bookings/view/" + row.id} className="btn btn-default">
+          <i className="fas fa-file"></i>
+          </Link>
+          <Link to={"/bookings/edit/" + row.id} className="btn btn-default">
+          <i className="fas fa-pen"></i>
+          </Link>
+          <button onClick={()=>alert('Deleted booking successfully!')} type="button" className="btn btn-default">
+          <i class="fas fa-trash"></i>
+          </button>
+        </div>
       </>
     );
   }

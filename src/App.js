@@ -28,8 +28,8 @@ function App() {
           <Route path="/users" element={<Users/>}/>
           <Route path="/bookings" element={<Bookings/>}/>
           <Route path="/bookings/create" element={<BookingCreate/>}/>
-          <Route path="/bookings/edit" element={<BookingEdit/>}/>
-          <Route path="/bookings/view" element={<BookingView/>}/>
+          <Route path="/bookings/edit/:id" element={<BookingEdit/>}/>
+          <Route path="/bookings/view/:id" element={<BookingView/>}/>
           <Route path="/profile" element={<Profile/>} />
         </Route>
       </Routes>

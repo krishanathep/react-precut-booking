@@ -52,13 +52,13 @@ export default function Sidebar() {
             </li>
             <li className="nav-item">
               <Link to="/bookings" className="nav-link">
-              <i className="nav-icon fas fa-calendar-alt"></i>
+              <i className="nav-icon fas fa-calendar"></i>
                 <p>Bookings</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/profile" className="nav-link">
-              <i className="nav-icon fas fa-address-card"></i>
+              <i className="nav-icon fas fa-user"></i>
                 <p>Profile</p>
               </Link>
             </li>

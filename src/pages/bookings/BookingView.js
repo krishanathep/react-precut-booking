@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function BookingView() {
   return (
@@ -30,14 +31,39 @@ export default function BookingView() {
                   <h5 className="m-0">Booking view</h5>
                 </div>
                 <div className="card-body">
-                  <h6 className="card-title">Special title treatment</h6>
-                  <p className="card-text">
-                    With supporting text below as a natural lead-in to
-                    additional content.
-                  </p>
-                  <a href="#" className="btn btn-primary">
-                    Go somewhere
-                  </a>
+                  <table className="table table-bordered">
+                    {/* <tr>
+                      <td>ID</td>
+                      <td>1</td>
+                    </tr> */}
+                    <tr>
+                      <td>Name</td>
+                      <td>Test bokking name</td>
+                    </tr>
+                    <tr>
+                      <td>Type</td>
+                      <td>Test bokking type</td>
+                    </tr>
+                    <tr>
+                      <td>Detail</td>
+                      <td>Test bokking detail</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>Test bokking status</td>
+                    </tr>
+                    <tr>
+                      <td>Start date</td>
+                      <td>10-10-2022</td>
+                    </tr>
+                    <tr>
+                      <td>Stop date</td>
+                      <td>20-10-2022</td>
+                    </tr>
+                  </table>
+                  <div className='float-right mt-2'>
+                  <Link to='/bookings' className='btn btn-danger'>Cancel</Link>
+                  </div>
                 </div>
               </div>
             </div>
