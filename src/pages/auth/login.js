@@ -24,7 +24,6 @@ export default function Login() {
     await fetch("https://www.melivecode.com/api/login", resusetOptions)
       .then((res) => res.json())
       .then((res) => {
-        console.log(data)
         if ("accessToken" in res) {
 
           localStorage.setItem("accessToken", res["accessToken"]);
@@ -68,7 +67,7 @@ export default function Login() {
       <div className="login-box">
         <div className="login-logo">
           <Link to="/">
-            <b>Admin</b>LTE
+          <img src="/calendar.png" width='70' alt="logo" />
           </Link>
         </div>
         <div className="card card-primary card-outline">

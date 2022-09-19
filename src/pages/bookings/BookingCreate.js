@@ -1,11 +1,19 @@
-import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function BookingCreate() {
+  const navigation = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [stopDate, setStopDate] = useState(new Date());
+
+  const handleSubmit = () => {
+    alert("Created Booking Successfully");
+    navigation("/bookings");
+    window.open("https://form.jotform.com/222488509096466");
+  };
+
   return (
     <>
       <div className="content-wrapper">
@@ -35,12 +43,16 @@ export default function BookingCreate() {
                     <h5 className="m-0">Booking create</h5>
                   </div>
                   <div className="card-body">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="name">Name</label>
-                            <input type="text" className="form-control"  placeholder="Please input data" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Please input data"
+                            />
                           </div>
                         </div>
                         <div className="col-md-12">
@@ -68,7 +80,7 @@ export default function BookingCreate() {
                           </div>
                         </div>
                         <div className="col-md-12">
-                        <div className="form-group">
+                          <div className="form-group">
                             <label htmlFor="start_date">Start date</label>
                             <DatePicker
                               className="form-control"
@@ -78,7 +90,7 @@ export default function BookingCreate() {
                           </div>
                         </div>
                         <div className="col-md-12">
-                        <div className="form-group">
+                          <div className="form-group">
                             <label htmlFor="stop_date">Stop date</label>
                             <DatePicker
                               className="form-control"

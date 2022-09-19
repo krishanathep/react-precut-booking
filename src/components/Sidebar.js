@@ -13,7 +13,7 @@ export default function Sidebar() {
   return (
     <>
     <aside className="main-sidebar sidebar-dark-primary sidebar-no-expand elevation-4">
-      <a href="index3.html" className="brand-link">
+      <Link to='/dashboard' className="brand-link">
         <img
           src="/assets/dist/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
@@ -21,7 +21,7 @@ export default function Sidebar() {
           style={{ opacity: ".8" }}
         />
         <span className="brand-text font-weight-light">AdminLTE 3</span>
-      </a>
+      </Link>
       <div className="sidebar">
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">

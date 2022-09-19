@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 
 export default function Navbar() {
   const navigate = useNavigate()
@@ -28,12 +28,12 @@ export default function Navbar() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
-              <i className="fas fa-user"></i>{' '}admin
+            <h4><i className="fas fa-user-circle lg"></i></h4>
             </a>
             <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-              <a href="#" className="dropdown-item">
+              <Link to='profile' className="dropdown-item">
                 <i className="fas fa-user mr-2"></i> Profile
-              </a>
+              </Link>
               <div className="dropdown-divider"></div>
               <a href="#" className="dropdown-item" onClick={signOut}>
                 <i className="fas fa-sign-out-alt mr-2"></i> Sign out
