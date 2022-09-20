@@ -67,7 +67,7 @@ export default function Login() {
       <div className="login-box">
         <div className="login-logo">
           <Link to="/">
-          <img src="/calendar.png" width='70' alt="logo" />
+          <i className="far fa-calendar-check fa-2x"></i>
           </Link>
         </div>
         <div className="card card-primary card-outline">

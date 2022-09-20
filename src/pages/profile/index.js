@@ -45,7 +45,7 @@ export default function Profile() {
                       <p className="text-muted text-center">{user.email}</p>
                       <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
-                          <b>Progress</b> <a class="float-right">10</a>
+                          <b>Process</b> <a class="float-right">10</a>
                         </li>
                         <li className="list-group-item">
                           <b>Finish</b> <a class="float-right">8</a>

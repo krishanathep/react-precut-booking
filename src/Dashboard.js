@@ -117,7 +117,7 @@ export default function Dashboard() {
               <i className="fas fa-users-cog"></i>
               </span>
               <div className="info-box-content">
-                <span className="info-box-text">Progress</span>
+                <span className="info-box-text">Process</span>
                 <span className="info-box-number">8</span>
               </div>
             </div>

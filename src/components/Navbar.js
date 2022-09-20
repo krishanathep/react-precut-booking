@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate,Link } from 'react-router-dom'
+import { useNavigate,Link, useRouteLoaderData } from 'react-router-dom'
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem("user"));
 
   function signOut() {
     localStorage.removeItem("accessToken");
@@ -28,7 +29,7 @@ export default function Navbar() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
-            <h4><i className="fas fa-user-circle lg"></i></h4>
+            <i className="fas fa-user-circle fa-lg"></i>{' '}Hello, {user.fname}
             </a>
             <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
               <Link to='profile' className="dropdown-item">
