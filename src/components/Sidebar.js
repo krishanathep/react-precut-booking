@@ -56,12 +56,12 @@ export default function Sidebar() {
                 <p>Bookings</p>
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/profile" className="nav-link">
               <i className="nav-icon fas fa-user"></i>
                 <p>Profile</p>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

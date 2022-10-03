@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^3.9.1",
     "react": "^18.2.0",
+    "react-big-calendar": "^1.5.0",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-chartjs-2": "^4.3.1",
