@@ -23,7 +23,7 @@ export default function Sidebar() {
         <span className="brand-text font-weight-light">AdminLTE 3</span>
       </Link>
       <div className="sidebar">
-        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+        {/* <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">
             <img
               src={user.avatar}
@@ -36,7 +36,7 @@ export default function Sidebar() {
               {user.email}
             </a>
           </div>
-        </div>
+        </div> */}
         <nav className="mt-2">
           <ul
             className="nav nav-pills nav-sidebar flex-column"
@@ -45,21 +45,21 @@ export default function Sidebar() {
             data-accordion="false"
           >
             <li className="nav-item">
-              <Link to="/dashboard" className="nav-link">
+              <Link to="/backend/dashboard" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt" />
-                <p>Dashboard</p>
+                <p>Dashbard</p>
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/bookings" className="nav-link">
+              <Link to="/backend/bookings" className="nav-link">
               <i className="nav-icon fas fa-calendar"></i>
                 <p>Bookings</p>
               </Link>
             </li>
             {/* <li className="nav-item">
-              <Link to="/profile" className="nav-link">
-              <i className="nav-icon fas fa-user"></i>
-                <p>Profile</p>
+              <Link to="/booking-status" className="nav-link">
+              <i className="nav-icon fas fa-list"></i>
+                <p>Booking list</p>
               </Link>
             </li> */}
           </ul>

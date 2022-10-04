@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const localizer = momentLocalizer(moment);
 
 export default function Bookings(props) {
-  const [myEventsList, setMyEventsList] = useState([
+  const [bookings, setBookings] = useState([
     { 
       id: 1,
       title:'Booking one',
@@ -16,18 +16,23 @@ export default function Bookings(props) {
     }, { 
       id: 2,
       title:'Booking two',
-      start: '2022, 10, 10',
+      start: '2022, 10, 11',
       end: '2022, 10, 13',
     }, { 
-      id: 2,
-      title:'Booking tree',
-      start: '2022, 10, 18',
+      id: 3,
+      title:'Booking three',
+      start: '2022, 10, 19',
       end: '2022, 10, 21',
     }, { 
-      id: 5,
-      title:'Booking fow',
+      id: 4,
+      title:'Booking four',
       start: '2022, 10, 25',
       end: '2022, 10, 27',
+    },{ 
+      id: 5,
+      title:'Booking five',
+      start: '2022, 10, 28',
+      end: '2022, 10, 29',
     }
   ]);
   return (
@@ -73,10 +78,10 @@ export default function Bookings(props) {
                       <div className="col-md-12">
                         <Calendar
                           localizer={localizer}
-                          events={myEventsList}
+                          events={bookings}
                           startAccessor="start"
                           endAccessor="end"
-                          style={{ height: 500 }}
+                          style={{ height: 700 }}
                         />
                       </div>
                     </div>

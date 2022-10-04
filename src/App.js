@@ -1,36 +1,49 @@
-import { BrowserRouter as Router ,Routes,Route } from "react-router-dom";
-import WithNavbar from "./layouts/WithNavbar";
-import WithOutNavbar from './layouts/WithOutNavbar'
-import Login from './pages/auth/login'
-import './App.css';
-import Dashboard from "./Dashboard";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/auth/login";
+import "./App.css";
+
 import Repair from "./pages/repair";
 import RepairCreate from "./pages/repair/RepairCreate";
-import Users from './pages/users'
+import Users from "./pages/users";
 import Profile from "./pages/profile";
-import Bookings from "./pages/bookings";
-import BookingCreate from './pages/bookings/BookingCreate'
-import BookingEdit from './pages/bookings/BookingEdit'
-import BookingView from './pages/bookings/BookingView'
 
+//Front-end
+import WithNavbar from "./layouts/frontend/WithNavbar";
+import WithOutNavbar from "./layouts/frontend/WithOutNavbar";
+import Dashboard from "./pages/frontend/dashboard";
+import Bookings from "./pages/frontend/bookings";
+import BookingCreate from "./pages/frontend/bookings/BookingCreate";
+import BookingEdit from "./pages/frontend/bookings/BookingEdit";
+import BookingView from "./pages/frontend/bookings/BookingView";
+import BookingStatus from "./pages/frontend/bookingStatus";
+
+//Black-end
+import AdminNavbar from "./layouts/backend/WithNavbar";
+import AdminDashboard from "./pages/backend/dashboard";
+import AdminBookings from './pages/backend/bookings'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<WithOutNavbar/>}>
-          <Route path="/" element={<Login/>}/>
+        <Route element={<WithOutNavbar />}>
+          <Route path="/" element={<Login />} />
         </Route>
-        <Route element={<WithNavbar/>}>
-          <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/repair" element={<Repair/>}/>
-          <Route path="/repair/create" element={<RepairCreate/>}/>
-          <Route path="/users" element={<Users/>}/>
-          <Route path="/bookings" element={<Bookings/>}/>
-          <Route path="/bookings/create" element={<BookingCreate/>}/>
-          <Route path="/bookings/edit/:id" element={<BookingEdit/>}/>
-          <Route path="/bookings/view/:id" element={<BookingView/>}/>
-          <Route path="/profile" element={<Profile/>} />
+        <Route element={<WithNavbar />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/repair" element={<Repair />} />
+          <Route path="/repair/create" element={<RepairCreate />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/bookings" element={<Bookings />} />
+          <Route path="/bookings/create" element={<BookingCreate />} />
+          <Route path="/bookings/edit/:id" element={<BookingEdit />} />
+          <Route path="/bookings/view/:id" element={<BookingView />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/booking-status" element={<BookingStatus />} />
+        </Route>
+        <Route element={<AdminNavbar />}>
+          <Route path="/backend/dashboard" element={<AdminDashboard />} />
+          <Route path="/backend/bookings" element={<AdminBookings />} />
         </Route>
       </Routes>
     </Router>
