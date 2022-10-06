@@ -1,19 +1,18 @@
 import React,{ useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const data = { username, password };
+    const data = { email, password };
 
     const resusetOptions = {
       method: "POST",
@@ -21,15 +20,14 @@ export default function Login() {
       body: JSON.stringify(data),
     };
 
-    await fetch("https://www.melivecode.com/api/login", resusetOptions)
+    await fetch("http://127.0.0.1:8000/api/login", resusetOptions)
       .then((res) => res.json())
       .then((res) => {
-        if ("accessToken" in res) {
+        if ("token" in res.data) {
 
-          localStorage.setItem("accessToken", res["accessToken"]);
-          localStorage.setItem("user", JSON.stringify(res["user"]));
-          //navigate("/dashboard")
-          
+          localStorage.setItem("token", res.data["token"]);
+          localStorage.setItem("name", JSON.stringify(res.data["name"]));
+         
           toast.success('Logged in successfully.', {
             position: "top-right",
             autoClose: 2000,
@@ -41,7 +39,7 @@ export default function Login() {
             });
 
             window.setTimeout(function() {
-              window.location.href = "/dashboard";
+              window.location.href = "/bookings";
             }, 2500)
 
         } else {
@@ -78,12 +76,12 @@ export default function Login() {
             <form onSubmit={handleSubmit}>
               <div className="input-group mb-3">
                 <input
-                  type="username"
+                  type="email"
                   className="form-control"
-                  placeholder="Username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className="input-group-append">
                   <div className="input-group-text">

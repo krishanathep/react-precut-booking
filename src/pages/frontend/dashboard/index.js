@@ -1,71 +1,71 @@
 import React from "react";
-import { Bar, Doughnut } from "react-chartjs-2";
-import Chart from "chart.js/auto";
+//import { Bar, Doughnut } from "react-chartjs-2";
+//import Chart from "chart.js/auto";
 
 export default function Dashboard() {
-  const dataDoughnut = {
-    labels: ["Finish", "Waiting","Cancel"],
-    datasets: [
-      {
-        data: [1000, 800, 200],
-        backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
-        hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
-      },
-    ],
-  };
+  // const dataDoughnut = {
+  //   labels: ["Finish", "Waiting","Cancel"],
+  //   datasets: [
+  //     {
+  //       data: [1000, 800, 200],
+  //       backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+  //       hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+  //     },
+  //   ],
+  // };
 
-  const dataBar = {
-    labels: [
-      "January",
-      "Fabruary",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
+  // const dataBar = {
+  //   labels: [
+  //     "January",
+  //     "Fabruary",
+  //     "March",
+  //     "April",
+  //     "May",
+  //     "June",
+  //     "July",
+  //     "August",
+  //     "September",
+  //     "October",
+  //     "November",
+  //     "December",
+  //   ],
 
-    datasets: [
-      {
-        label: "# of Bookings",
-        data: [12, 19, 5, 9, 8, 6, 12, 19, 7, 5, 10, 19],
-        backgroundColor: [
-          "rgba(54, 162, 235, 1)",
-          // "rgba(54, 162, 235, 0.2)",
-          // "rgba(255, 206, 86, 0.2)",
-          // "rgba(75, 192, 192, 0.2)",
-          // "rgba(153, 102, 255, 0.2)",
-          // "rgba(255, 159, 64, 0.2)",
-          // "rgba(255, 99, 132, 0.2)",
-          // "rgba(54, 162, 235, 0.2)",
-          // "rgba(255, 206, 86, 0.2)",
-          // "rgba(75, 192, 192, 0.2)",
-          // "rgba(153, 102, 255, 0.2)",
-          // "rgba(255, 159, 64, 0.2)",
-        ],
-        // borderColor: [
-        //   // "rgba(255, 99, 132, 1)",
-        //   "rgba(54, 162, 235, 1)",
-        //   // "rgba(255, 206, 86, 1)",
-        //   // "rgba(75, 192, 192, 1)",
-        //   // "rgba(153, 102, 255, 1)",
-        //   // "rgba(255, 159, 64, 1)",
-        //   // "rgba(255, 99, 132, 1)",
-        //   // "rgba(54, 162, 235, 1)",
-        //   // "rgba(255, 206, 86, 1)",
-        //   // "rgba(75, 192, 192, 1)",
-        //   // "rgba(153, 102, 255, 1)",
-        //   // "rgba(255, 159, 64, 1)",
-        // ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  //   datasets: [
+  //     {
+  //       label: "# of Bookings",
+  //       data: [12, 19, 5, 9, 8, 6, 12, 19, 7, 5, 10, 19],
+  //       backgroundColor: [
+  //         "rgba(54, 162, 235, 1)",
+  //         // "rgba(54, 162, 235, 0.2)",
+  //         // "rgba(255, 206, 86, 0.2)",
+  //         // "rgba(75, 192, 192, 0.2)",
+  //         // "rgba(153, 102, 255, 0.2)",
+  //         // "rgba(255, 159, 64, 0.2)",
+  //         // "rgba(255, 99, 132, 0.2)",
+  //         // "rgba(54, 162, 235, 0.2)",
+  //         // "rgba(255, 206, 86, 0.2)",
+  //         // "rgba(75, 192, 192, 0.2)",
+  //         // "rgba(153, 102, 255, 0.2)",
+  //         // "rgba(255, 159, 64, 0.2)",
+  //       ],
+  //       // borderColor: [
+  //       //   // "rgba(255, 99, 132, 1)",
+  //       //   "rgba(54, 162, 235, 1)",
+  //       //   // "rgba(255, 206, 86, 1)",
+  //       //   // "rgba(75, 192, 192, 1)",
+  //       //   // "rgba(153, 102, 255, 1)",
+  //       //   // "rgba(255, 159, 64, 1)",
+  //       //   // "rgba(255, 99, 132, 1)",
+  //       //   // "rgba(54, 162, 235, 1)",
+  //       //   // "rgba(255, 206, 86, 1)",
+  //       //   // "rgba(75, 192, 192, 1)",
+  //       //   // "rgba(153, 102, 255, 1)",
+  //       //   // "rgba(255, 159, 64, 1)",
+  //       // ],
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
 
   return (
     <>
@@ -133,7 +133,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <div className="card card-primary card-outline">
               <h5 className="card-header">Bookings bar chart</h5>
               <div className="card-body">
@@ -157,7 +157,7 @@ export default function Dashboard() {
                   }} />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>

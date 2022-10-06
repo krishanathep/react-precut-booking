@@ -172,14 +172,14 @@ export default function BookingStatus() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Bookings list</h1>
+                <h1 className="m-0">Status</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">Home</a>
                   </li>
-                  <li className="breadcrumb-item active">Bookings-list</li>
+                  <li className="breadcrumb-item active">Status</li>
                 </ol>
               </div>
             </div>
@@ -190,9 +190,9 @@ export default function BookingStatus() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  <div className="card-header">
+                  {/* <div className="card-header">
                     <h5 className="m-0">Bookings list</h5>
-                  </div>
+                  </div> */}
                   <div className="card-body">
                     {/* <div className="float-right mb-2">
                       <Link to="/bookings/create" className="btn btn-primary">

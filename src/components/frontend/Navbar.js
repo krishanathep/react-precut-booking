@@ -1,12 +1,12 @@
 import React from "react";
-import { useNavigate,Link, useRouteLoaderData } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem("user"));
+  const name = JSON.parse(localStorage.getItem("name"));
 
   function signOut() {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/")
   }
@@ -29,7 +29,7 @@ export default function Navbar() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
-            Hello, {user.fname}{' '}<i className="fas fa-user-circle fa-lg"></i>
+            Hello, {name}{' '}<i className="fas fa-user-circle fa-lg"></i>
             </a>
             <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
               {/* <Link to='profile' className="dropdown-item">

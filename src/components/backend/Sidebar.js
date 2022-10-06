@@ -20,7 +20,7 @@ export default function Sidebar() {
           className="brand-image img-circle elevation-3"
           style={{ opacity: ".8" }}
         />
-        <span className="brand-text font-weight-light">AdminLTE 3</span>
+        <span className="brand-text font-weight-light">Admin-PBS</span>
       </Link>
       <div className="sidebar">
         {/* <div className="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -56,12 +56,12 @@ export default function Sidebar() {
                 <p>Bookings</p>
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link to="/booking-status" className="nav-link">
-              <i className="nav-icon fas fa-list"></i>
-                <p>Booking list</p>
+            <li className="nav-item">
+              <Link to="/backend/users" className="nav-link">
+              <i className="nav-icon fas fa-users"></i>
+                <p>Users</p>
               </Link>
-            </li> */}
+            </li>
           </ul>
         </nav>
       </div>
