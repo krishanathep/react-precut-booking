@@ -1,18 +1,40 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import React, { useState,useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function BookingCreate() {
   const navigation = useNavigate();
-  const [startDate, setStartDate] = useState(new Date());
-  const [stopDate, setStopDate] = useState(new Date());
+  const {id} = useParams();
+  const [booking, setBooking] = useState([]);
+  const [capacity, setCapacity] = useState('')
+
+  const name = JSON.parse(localStorage.getItem("name"));
 
   const handleSubmit = () => {
-    alert("Created Booking Successfully");
-    navigation("/bookings");
-    window.open("https://form.jotform.com/222488509096466");
+    if(capacity === '') {
+      alert("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ");
+      return
+    }
+
+    if(capacity > 400){
+      alert("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด");
+      return
+    } else {
+      alert("เพิ่ม Booking เรียบร้อยแล้วครับ");
+    }
+    navigation('/bookings')
   };
+
+  const fetchData = async() => {
+    await fetch('http://127.0.0.1:8000/api/booking/'+id)
+      .then((res)=>res.json())
+      .then((res)=>setBooking(res.booking))
+  }
+
+  useEffect(()=>{
+    fetchData(id);
+  },[])
+
 
   return (
     <>
@@ -39,63 +61,52 @@ export default function BookingCreate() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  <div className="card-header">
+                  {/* <div className="card-header">
                     <h5 className="m-0">Booking create</h5>
-                  </div>
+                  </div> */}
                   <div className="card-body">
                     <form onSubmit={handleSubmit}>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">FAB name</label>
                             <input
                               type="text"
                               className="form-control"
-                              placeholder="Please input data"
+                              value={name}
                             />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="">Type :</label>
-                            <select className="form-control">
-                              <option selected disabled>
-                                Please select type
-                              </option>
-                              <option>Hardware</option>
-                              <option>Software</option>
-                              <option>Training</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="">Detail :</label>
-                            <textarea
-                              rows="3"
-                              type="name"
+                            <label htmlFor="name">Booking date</label>
+                            <input
+                              type="text"
                               className="form-control"
-                              placeholder="Please input data"
-                            ></textarea>
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="start_date">Start date</label>
-                            <DatePicker
-                              className="form-control"
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
+                              value={booking.start}
                             />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="stop_date">Stop date</label>
-                            <DatePicker
+                            <label htmlFor="name">Capacity</label>
+                            <input
+                              type="number"
                               className="form-control"
-                              selected={stopDate}
-                              onChange={(date) => setStopDate(date)}
+                              value={capacity}
+                              name='capacity'
+                              onChange={(event) => setCapacity(event.target.value)}
+                              placeholder="Please input your capacity"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="name">User name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={name}
                             />
                           </div>
                         </div>

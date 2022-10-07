@@ -28,7 +28,7 @@ function App() {
         <Route element={<WithNavbar />}>
           <Route path="/dashboard" element={<Dashboard />} />         
           <Route path="/bookings" element={<Bookings />} />
-          <Route path="/bookings/create" element={<BookingCreate />} />
+          <Route path="/bookings/create/:id" element={<BookingCreate />} />
           <Route path="/bookings/edit/:id" element={<BookingEdit />} />
           <Route path="/bookings/view/:id" element={<BookingView />} />
           <Route path="/booking-status" element={<BookingStatus />} />

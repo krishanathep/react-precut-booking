@@ -1,55 +1,27 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
-export default function Bookings(props) {
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      title: "Booking one",
-      status: "full",
-      start: "2022, 10, 03",
-      end: "2022, 10, 03",
-    },
-    {
-      id: 2,
-      title: "Booking two",
-      status: "full",
-      start: "2022, 10, 11",
-      end: "2022, 10, 11",
-    },
-    {
-      id: 3,
-      title: "Booking three",
-      status: "null",
-      start: "2022, 10, 19",
-      end: "2022, 10, 19",
-    },
-    {
-      id: 4,
-      title: "Booking four",
-      status: "null",
-      start: "2022, 10, 25",
-      end: "2022, 10, 25",
-    },
-    {
-      id: 5,
-      title: "Booking five",
-      status: "haft",
-      start: "2022, 10, 28",
-      end: "2022, 10, 29",
-    },
-    {
-      id: 5,
-      title: "Booking six",
-      status: "haft",
-      start: "2022, 10, 30",
-      end: "2022, 10, 30",
-    }
-  ]);
+export default function Bookings() {
+  const [bookings, setBookings] = useState([]);
+
+  const fetchData = async() => {
+    await fetch('http://127.0.0.1:8000/api/bookings')
+      .then((res)=>res.json())
+      .then((res)=>setBookings(res.bookings))
+  }
+
+  useEffect(()=>{
+    fetchData();
+  },[])
+
+  const handleSelectBookings = (event) =>{
+    window.location.href = "/bookings/create/"+event.id
+  } 
+
   return (
     <>
       <div className="content-wrapper">
@@ -96,7 +68,9 @@ export default function Bookings(props) {
                           events={bookings}
                           startAccessor="start"
                           endAccessor="end"
+                          views={['month','day','agenda']}
                           style={{ height: 700 }}
+                          onSelectEvent={handleSelectBookings}
                           eventPropGetter={(
                             bookings,
                             status,
@@ -108,13 +82,13 @@ export default function Bookings(props) {
                               backgroundColor: "lightgrey",
                             };
 
-                            if (bookings.status == "full") {
+                            if (bookings.status === "full") {
                               newStyle.backgroundColor = "#DE3163";
                             } else {
-                              if (bookings.status == "null") {
+                              if (bookings.status === "null") {
                                 newStyle.backgroundColor = "#40E0D0";
                               } else {
-                                if (bookings.status == "haft") {
+                                if (bookings.status === "haft") {
                                   newStyle.backgroundColor = "#FFBF00";
                                 }
                               }

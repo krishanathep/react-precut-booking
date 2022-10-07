@@ -27,20 +27,24 @@ export default function Login() {
 
           localStorage.setItem("token", res.data["token"]);
           localStorage.setItem("name", JSON.stringify(res.data["name"]));
+          localStorage.setItem("email", JSON.stringify(res.data["email"]));
+          
          
-          toast.success('Logged in successfully.', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+          // toast.success('Logged in successfully.', {
+          //   position: "top-right",
+          //   autoClose: 2000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   });
 
-            window.setTimeout(function() {
-              window.location.href = "/bookings";
-            }, 2500)
+            // window.setTimeout(function() {
+            //   window.location.href = "/bookings";
+            // }, 2500)
+          
+            window.location.href = '/bookings';
 
         } else {
 
