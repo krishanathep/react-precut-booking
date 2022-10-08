@@ -6,12 +6,12 @@ import moment from "moment";
 const localizer = momentLocalizer(moment);
 
 export default function Bookings() {
-  const [bookings, setBookings] = useState([]);
+  const [capacity, setCapacity] = useState([]);
 
   const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/bookings')
+    await fetch('http://127.0.0.1:8000/api/capacity')
       .then((res)=>res.json())
-      .then((res)=>setBookings(res.bookings))
+      .then((res)=>setCapacity(res.capacity))
   }
 
   useEffect(()=>{
@@ -65,30 +65,26 @@ export default function Bookings() {
                       <div className="col-md-12">
                         <Calendar
                           localizer={localizer}
-                          events={bookings}
+                          events={capacity}
                           startAccessor="start"
                           endAccessor="end"
                           views={['month','day','agenda']}
                           style={{ height: 700 }}
                           onSelectEvent={handleSelectBookings}
                           eventPropGetter={(
-                            bookings,
-                            status,
-                            start,
-                            end,
-                            isSelected
+                            capacity
                           ) => {
                             let newStyle = {
                               backgroundColor: "lightgrey",
                             };
 
-                            if (bookings.status === "full") {
+                            if (capacity.title  === "ไม่ว่าง") {
                               newStyle.backgroundColor = "#DE3163";
                             } else {
-                              if (bookings.status === "null") {
+                              if (capacity.title === "ว่าง 400 ชุด") {
                                 newStyle.backgroundColor = "#40E0D0";
                               } else {
-                                if (bookings.status === "haft") {
+                                if (capacity.title === "ว่าง 200 ชุด") {
                                   newStyle.backgroundColor = "#FFBF00";
                                 }
                               }

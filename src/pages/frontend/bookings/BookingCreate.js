@@ -5,30 +5,52 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function BookingCreate() {
   const navigation = useNavigate();
   const {id} = useParams();
-  const [booking, setBooking] = useState([]);
-  const [capacity, setCapacity] = useState('')
+  const [capacity, setCapacity] = useState([]);
+  const [booking_capacity, setBookingCapacity] = useState('')
+  const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("name")))
+  const [booking_date, setBookingDate] = useState('10-10-22')
+  const [user_name, setUserName] = useState(JSON.parse(localStorage.getItem("name")))
 
-  const name = JSON.parse(localStorage.getItem("name"));
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = () => {
-    if(capacity === '') {
+    if(booking_capacity === '') {
       alert("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ");
       return
     }
 
-    if(capacity > 400){
+    if(booking_capacity > 400){
       alert("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด");
       return
-    } else {
-      alert("เพิ่ม Booking เรียบร้อยแล้วครับ");
+    } 
+
+    const data = {
+      booking_capacity, fab_name, booking_date, user_name
     }
-    navigation('/bookings')
+
+    const resusetOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+
+    fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
+      .then((res)=>res.json())
+      .then((res)=>{
+        if(res.status === 200){
+          alert("เพิ่มข้อมูลเรียบร้อยแล้วครับ");
+          window.location.href = "/bookings";
+        }else {
+          alert("มีบางอย่างผิดพลาด");
+        }
+      })
+   
   };
 
   const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/booking/'+id)
+    await fetch('http://127.0.0.1:8000/api/capacity/'+id)
       .then((res)=>res.json())
-      .then((res)=>setBooking(res.booking))
+      .then((res)=>setCapacity(res.capacity))
   }
 
   useEffect(()=>{
@@ -43,7 +65,7 @@ export default function BookingCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Booking crate</h1>
+                <h1 className="m-0">Booking create</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -73,7 +95,8 @@ export default function BookingCreate() {
                             <input
                               type="text"
                               className="form-control"
-                              value={name}
+                              value={fab_name}
+                              onChange={(event) => setFabName(event.target.value)}
                             />
                           </div>
                         </div>
@@ -83,7 +106,8 @@ export default function BookingCreate() {
                             <input
                               type="text"
                               className="form-control"
-                              value={booking.start}
+                              value={booking_date}
+                              onChange={(event) => setBookingDate(event.target.value)}
                             />
                           </div>
                         </div>
@@ -93,9 +117,8 @@ export default function BookingCreate() {
                             <input
                               type="number"
                               className="form-control"
-                              value={capacity}
-                              name='capacity'
-                              onChange={(event) => setCapacity(event.target.value)}
+                              value={booking_capacity}
+                              onChange={(event) => setBookingCapacity(event.target.value)}
                               placeholder="Please input your capacity"
                             />
                           </div>
@@ -106,7 +129,8 @@ export default function BookingCreate() {
                             <input
                               type="text"
                               className="form-control"
-                              value={name}
+                              value={user_name}
+                              onChange={(event) => setUserName(event.target.value)}
                             />
                           </div>
                         </div>
