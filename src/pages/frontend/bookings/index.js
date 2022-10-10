@@ -19,7 +19,7 @@ export default function Bookings() {
   },[])
 
   const handleSelectBookings = (event) =>{
-    window.location.href = "/bookings/create/"+event.id
+    window.location.href = "/bookings/create/"+event.start
   } 
 
   return (

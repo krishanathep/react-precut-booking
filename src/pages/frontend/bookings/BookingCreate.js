@@ -1,26 +1,47 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BookingCreate() {
   const navigation = useNavigate();
-  const {id} = useParams();
+  const {start} = useParams();
   const [capacity, setCapacity] = useState([]);
   const [booking_capacity, setBookingCapacity] = useState('')
-  const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("name")))
-  const [booking_date, setBookingDate] = useState('10-10-22')
+  const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
+  const [booking_date, setBookingDate] = useState(start)
   const [user_name, setUserName] = useState(JSON.parse(localStorage.getItem("name")))
+  const data_from = 'https://form.jotform.com/222820524863455'
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if(booking_capacity === '') {
-      alert("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ");
+      //alert("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ");
+      toast.error("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return
     }
 
     if(booking_capacity > 400){
-      alert("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด");
+      //alert("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด");
+      toast.error("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return
     } 
 
@@ -34,32 +55,49 @@ export default function BookingCreate() {
       body: JSON.stringify(data),
     };
 
-    fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
-      .then((res)=>res.json())
-      .then((res)=>{
-        if(res.status === 200){
-          alert("เพิ่มข้อมูลเรียบร้อยแล้วครับ");
-          window.location.href = "/bookings";
-        }else {
-          alert("มีบางอย่างผิดพลาด");
-        }
-      })
+    alert('เพิ่มข้อมูลเรียบร้อยแล้วครับ')
+
+    //window.open(data_from+'?'+fab_name+'&'+booking_date+'&'+booking_capacity+'&'+user_name);
+    window.open(data_from+'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
+
+    // fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
+    //   .then((res)=>res.json())
+    //   .then((res)=>{
+    //     if(res.status === 200){
+    //       //alert("เพิ่มข้อมูลเรียบร้อยแล้วครับ");
+    //       toast.success('เพิ่มข้อมูลเรียบร้อยแล้วครับ', {
+    //         position: "top-right",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         });
+
+    //          window.setTimeout(function() {
+    //           window.location.href = "/bookings";
+    //         }, 2500)
+
+    //     }else {
+    //       //alert("มีบางอย่างผิดพลาด");
+    //       toast.error("มีบางอย่างผิดพลาด", {
+    //         position: "top-right",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //       });
+    //     }
+    //   })
    
   };
 
-  const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/capacity/'+id)
-      .then((res)=>res.json())
-      .then((res)=>setCapacity(res.capacity))
-  }
-
-  useEffect(()=>{
-    fetchData(id);
-  },[])
-
-
   return (
     <>
+    <ToastContainer/>
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid">
@@ -119,7 +157,7 @@ export default function BookingCreate() {
                               className="form-control"
                               value={booking_capacity}
                               onChange={(event) => setBookingCapacity(event.target.value)}
-                              placeholder="Please input your capacity"
+                              placeholder="Input capacity"
                             />
                           </div>
                         </div>

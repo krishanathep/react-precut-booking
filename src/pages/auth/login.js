@@ -28,7 +28,7 @@ export default function Login() {
           localStorage.setItem("token", res.data["token"]);
           localStorage.setItem("name", JSON.stringify(res.data["name"]));
           localStorage.setItem("email", JSON.stringify(res.data["email"]));
-          
+          localStorage.setItem("fab", JSON.stringify(res.data["fab"]));
          
           // toast.success('Logged in successfully.', {
           //   position: "top-right",
