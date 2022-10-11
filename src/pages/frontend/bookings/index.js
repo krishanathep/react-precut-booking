@@ -19,7 +19,10 @@ export default function Bookings() {
   },[])
 
   const handleSelectBookings = (event) =>{
-    window.location.href = "/bookings/create/"+event.start
+    //if (event.slots?.length > 15) return;
+    //alert("onSelectSlot" + JSON.stringify(event));
+
+    window.location.href = `/bookings/create/`+ event.id
   } 
 
   return (
@@ -95,6 +98,7 @@ export default function Bookings() {
                               style: newStyle,
                             };
                           }}
+                          
                         />
                       </div>
                     </div>

@@ -5,7 +5,7 @@ import "./App.css";
 //Front-end
 import WithNavbar from "./layouts/frontend/WithNavbar";
 import WithOutNavbar from "./layouts/frontend/WithOutNavbar";
-import Dashboard from "./pages/frontend/dashboard";
+//import Dashboard from "./pages/frontend/dashboard";
 import Bookings from "./pages/frontend/bookings";
 import BookingCreate from "./pages/frontend/bookings/BookingCreate";
 import BookingEdit from "./pages/frontend/bookings/BookingEdit";
@@ -26,9 +26,9 @@ function App() {
           <Route path="/" element={<Login />} />
         </Route>
         <Route element={<WithNavbar />}>
-          <Route path="/dashboard" element={<Dashboard />} />         
+          {/* <Route path="/dashboard" element={<Dashboard />} />          */}
           <Route path="/bookings" element={<Bookings />} />
-          <Route path="/bookings/create/:start" element={<BookingCreate />} />
+          <Route path="/bookings/create/:id" element={<BookingCreate />} />
           <Route path="/bookings/edit/:id" element={<BookingEdit />} />
           <Route path="/bookings/view/:id" element={<BookingView />} />
           <Route path="/booking-status" element={<BookingStatus />} />

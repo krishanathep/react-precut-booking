@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function BookingCreate() {
-  const navigation = useNavigate();
-  const {start} = useParams();
+  const {id} = useParams();
   const [capacity, setCapacity] = useState([]);
   const [booking_capacity, setBookingCapacity] = useState('')
+  const [booking_date, setBookingDate] = useState('')
+  const [limite, setLimite] = useState('')
   const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
-  const [booking_date, setBookingDate] = useState(start)
   const [user_name, setUserName] = useState(JSON.parse(localStorage.getItem("name")))
   const data_from = 'https://form.jotform.com/222820524863455'
+
+  const getData = async() => {
+    await fetch('http://127.0.0.1:8000/api/capacity/' + id)
+      .then((res)=>res.json())
+      .then((res)=>setCapacity(res.capacity))
+  }
+
+  useEffect(()=>{
+    getData();
+    setBookingDate(capacity.start)
+    setLimite(capacity.capacity)
+  },[capacity.start, capacity.copacity])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,7 +69,6 @@ export default function BookingCreate() {
 
     alert('เพิ่มข้อมูลเรียบร้อยแล้วครับ')
 
-    //window.open(data_from+'?'+fab_name+'&'+booking_date+'&'+booking_capacity+'&'+user_name);
     window.open(data_from+'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
 
     // fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
@@ -129,12 +140,13 @@ export default function BookingCreate() {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">FAB name</label>
+                            {/* <label htmlFor="name">FAB name</label> */}
                             <input
                               type="text"
                               className="form-control"
                               value={fab_name}
                               onChange={(event) => setFabName(event.target.value)}
+                              hidden
                             />
                           </div>
                         </div>
@@ -151,7 +163,7 @@ export default function BookingCreate() {
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Capacity</label>
+                            <label htmlFor="name">Capacity ({limite})</label>
                             <input
                               type="number"
                               className="form-control"
@@ -159,24 +171,26 @@ export default function BookingCreate() {
                               onChange={(event) => setBookingCapacity(event.target.value)}
                               placeholder="Input capacity"
                             />
+                            <small className="text-danger">* หากต้องการสั่งซื้อมากกว่า CAP ที่กำหนด ให้ติดต่อทีมขาย หรือ ทีม CS ที่ดูแลท่าน</small>
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">User name</label>
+                            {/* <label htmlFor="name">User name</label> */}
                             <input
                               type="text"
                               className="form-control"
                               value={user_name}
                               onChange={(event) => setUserName(event.target.value)}
+                              hidden
                             />
                           </div>
                         </div>
                         <div className="col-md-12 float-right">
                           <div className="float-right">
-                            <button className="btn btn-primary">Submit</button>{" "}
+                            <button className="btn btn-primary">ยืนยัน</button>{" "}
                             <Link to="/bookings" className="btn btn-danger">
-                              Cancel
+                              ยกเลิก
                             </Link>
                           </div>
                         </div>
