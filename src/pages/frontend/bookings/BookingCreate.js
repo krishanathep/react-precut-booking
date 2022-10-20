@@ -15,7 +15,8 @@ export default function BookingCreate() {
   const data_from = 'https://form.jotform.com/222820524863455'
 
   const getData = async() => {
-    await fetch('http://127.0.0.1:8000/api/capacity/' + id)
+    //await fetch('http://127.0.0.1:8000/api/capacity/' + id)
+    await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity/' + id)
       .then((res)=>res.json())
       .then((res)=>setCapacity(res.capacity))
   }
@@ -158,12 +159,13 @@ export default function BookingCreate() {
                               className="form-control"
                               value={booking_date}
                               onChange={(event) => setBookingDate(event.target.value)}
+                              readOnly
                             />
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Capacity ({limite})</label>
+                            <label htmlFor="name">Capacity ที่สามารถจองได้ของวันนี้คือ {limite}</label>
                             <input
                               type="number"
                               className="form-control"

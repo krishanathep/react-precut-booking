@@ -20,7 +20,8 @@ export default function Login() {
       body: JSON.stringify(data),
     };
 
-    await fetch("http://127.0.0.1:8000/api/login", resusetOptions)
+    //await fetch("http://127.0.0.1:8000/api/login", resusetOptions)
+    await fetch("https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/login", resusetOptions)
       .then((res) => res.json())
       .then((res) => {
         if ("token" in res.data) {

@@ -3,8 +3,7 @@ import { NavLink as Link } from "react-router-dom";
 
 export default function Sidebar() {
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("token");
 
   if (!token) {
     window.location.href = "/";
@@ -44,13 +43,13 @@ export default function Sidebar() {
             role="menu"
             data-accordion="false"
           >
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/backend/dashboard" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>Dashbard</p>
               </Link>
-            </li>
-            <li className="nav-item">
+            </li> */}
+            {/* <li className="nav-item">
               <Link to="/backend/bookings" className="nav-link">
               <i className="nav-icon fas fa-calendar"></i>
                 <p>Bookings</p>
@@ -60,6 +59,12 @@ export default function Sidebar() {
               <Link to="/backend/users" className="nav-link">
               <i className="nav-icon fas fa-users"></i>
                 <p>Users</p>
+              </Link>
+            </li> */}
+             <li className="nav-item">
+              <Link to="/backend/capacity" className="nav-link">
+              <i className="nav-icon fas fa-calendar"></i>
+                <p>Capacity</p>
               </Link>
             </li>
           </ul>

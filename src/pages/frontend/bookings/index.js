@@ -9,7 +9,8 @@ export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
   const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/capacity')
+    //await fetch('http://127.0.0.1:8000/api/capacity')
+    await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
       .then((res)=>res.json())
       .then((res)=>setCapacity(res.capacity))
   }
@@ -21,6 +22,16 @@ export default function Bookings() {
   const handleSelectBookings = (event) =>{
     //if (event.slots?.length > 15) return;
     //alert("onSelectSlot" + JSON.stringify(event));
+    
+    if (event.title === 'ไม่ว่าง') {
+      alert('ไม่สามารถจองวันได้เนื่องจาก CAP เต็มแล้วครับ')
+      return
+    }
+
+    if (event.title === 'ว่าง 200 ชุด') {
+      alert('ถ้าต้องการจองวันที่ CAP 200 กรุณาติดต่อเจ้าหน้าที่')
+      return
+    }
 
     window.location.href = `/bookings/create/`+ event.id
   } 
@@ -71,7 +82,7 @@ export default function Bookings() {
                           events={capacity}
                           startAccessor="start"
                           endAccessor="end"
-                          views={['month','day','agenda']}
+                          views={['month','agenda']}
                           style={{ height: 700 }}
                           onSelectEvent={handleSelectBookings}
                           eventPropGetter={(

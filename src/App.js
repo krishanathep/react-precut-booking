@@ -16,7 +16,9 @@ import BookingStatus from "./pages/frontend/bookingStatus";
 import AdminNavbar from "./layouts/backend/WithNavbar";
 import AdminDashboard from "./pages/backend/dashboard";
 import AdminBookings from './pages/backend/bookings'
-import AdminUsers from "./pages/backend/users";
+import AdminUsers from "./pages/backend/users"
+import AdminCapacity from './pages/backend/capacity'
+import AdminCapacityUpload from './pages/backend/capacity/CapacityUpload'
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
           <Route path="/backend/dashboard" element={<AdminDashboard />} />
           <Route path="/backend/bookings" element={<AdminBookings />} />
           <Route path="/backend/users" element={<AdminUsers />} />
+          <Route path="/backend/capacity" element={<AdminCapacity/>} />
+          <Route path="/backend/capacity/upload" element={<AdminCapacityUpload/>} />
         </Route>
       </Routes>
     </Router>
