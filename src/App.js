@@ -17,6 +17,8 @@ import AdminNavbar from "./layouts/backend/WithNavbar";
 import AdminDashboard from "./pages/backend/dashboard";
 import AdminBookings from './pages/backend/bookings'
 import AdminUsers from "./pages/backend/users"
+import AdminUsersCreate from "./pages/backend/users/usersCreate"
+import AdminUsersEdit from "./pages/backend/users/usersEdit"
 import AdminCapacity from './pages/backend/capacity'
 import AdminCapacityUpload from './pages/backend/capacity/CapacityUpload'
 
@@ -39,6 +41,9 @@ function App() {
           <Route path="/backend/dashboard" element={<AdminDashboard />} />
           <Route path="/backend/bookings" element={<AdminBookings />} />
           <Route path="/backend/users" element={<AdminUsers />} />
+          <Route path="/backend/users/create" element={<AdminUsersCreate />} />
+          <Route path="/backend/users/edit/:id" element={<AdminUsersEdit />} />
+
           <Route path="/backend/capacity" element={<AdminCapacity/>} />
           <Route path="/backend/capacity/upload" element={<AdminCapacityUpload/>} />
         </Route>

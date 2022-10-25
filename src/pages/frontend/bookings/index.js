@@ -9,8 +9,8 @@ export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
   const fetchData = async() => {
-    //await fetch('http://127.0.0.1:8000/api/capacity')
-    await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
+    await fetch('http://127.0.0.1:8000/api/capacity')
+    //await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
       .then((res)=>res.json())
       .then((res)=>setCapacity(res.capacity))
   }
@@ -84,30 +84,43 @@ export default function Bookings() {
                           endAccessor="end"
                           views={['month','agenda']}
                           style={{ height: 700 }}
+                          
                           onSelectEvent={handleSelectBookings}
                           eventPropGetter={(
                             capacity
                           ) => {
                             let newStyle = {
-                              backgroundColor: "lightgrey",
+                              //backgroundColor: "lightgrey",
                             };
+
+                            if(capacity.start < capacity.start) {
+                              newStyle.backgroundColor = "#DE3163";
+                            }
 
                             if (capacity.title  === "ไม่ว่าง") {
                               newStyle.backgroundColor = "#DE3163";
                             } else {
-                              if (capacity.title === "ว่าง 400 ชุด") {
+                              if (capacity.title === "ว่าง 400 เซ็ต") {
                                 newStyle.backgroundColor = "#40E0D0";
                               } else {
-                                if (capacity.title === "ว่าง 200 ชุด") {
+                                if (capacity.title === "ว่าง 200 เซ็ต") {
                                   newStyle.backgroundColor = "#FFBF00";
                                 }
                               }
                             }
 
+                          
                             return {
                               className: "",
                               style: newStyle,
                             };
+                          }}
+
+                          onNavigate={(date, view) => {
+                            console.log('#### onNavigate');
+                            console.log('#### date=', date);
+                            console.log('#### view=', view);
+                            //this.setState({currentDate: date});
                           }}
                           
                         />

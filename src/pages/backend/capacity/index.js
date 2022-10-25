@@ -1,22 +1,23 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { Link } from "react-router-dom";
 
 export default function Capacity() {
+  const [capacity, setCapacity] = useState([
+    { id: 1, title: "test", start: "2022-10-11", end: "2022-10-11" },
+  ]);
 
-  const [capacity, setCapacity] = useState([]);
+  const fetchData = async () => {
+    await fetch("http://127.0.0.1:8000/api/capacity")
+      .then((res) => res.json())
+      .then((res) => setCapacity(res.capacity));
+  };
 
-  const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/capacity')
-      .then((res)=>res.json())
-      .then((res)=>setCapacity(res.capacity))
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[])
+  }, []);
 
   const columns = [
     {
@@ -39,15 +40,15 @@ export default function Capacity() {
       dataField: "created_at",
       text: "Create at",
     },
-    {
-      dataField: "username",
-      text: "Username",
-    },
-    {
-      dataField: "actions",
-      text: "Actions",
-      formatter: actionButton,
-    },
+    // {
+    //   dataField: "username",
+    //   text: "Username",
+    // },
+    // {
+    //   dataField: "actions",
+    //   text: "Actions",
+    //   formatter: actionButton,
+    // },
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
@@ -55,13 +56,17 @@ export default function Capacity() {
       <>
         <div className="btn-group">
           <Link to={"/bookings/view/" + row.id} className="btn btn-default">
-          <i className="fas fa-file"></i>
+            <i className="fas fa-file"></i>
           </Link>
           <Link to={"/bookings/edit/" + row.id} className="btn btn-default">
-          <i className="fas fa-pen"></i>
+            <i className="fas fa-pen"></i>
           </Link>
-          <button onClick={()=>alert('Deleted booking successfully!')} type="button" className="btn btn-default">
-          <i class="fas fa-trash"></i>
+          <button
+            onClick={() => alert("Deleted booking successfully!")}
+            type="button"
+            className="btn btn-default"
+          >
+            <i class="fas fa-trash"></i>
           </button>
         </div>
       </>
@@ -93,14 +98,14 @@ export default function Capacity() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  {/* <div className="card-header">
+                  <div className="card-header">
                     <h5 className="m-0">Bookings list</h5>
-                  </div> */}
+                  </div>
                   <div className="card-body">
                     <div className="float-right mb-2">
-                      <Link to="/backend/capacity/upload" className="btn btn-primary">
+                      <a href="http://127.0.0.1:8000/capacity/import" className="btn btn-primary">
                         <i class="fas fa-plus"></i> Capacity
-                      </Link>
+                      </a>
                     </div>
                     <BootstrapTable
                       keyField="id"

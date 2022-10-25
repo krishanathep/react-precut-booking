@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import { json } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState("");
@@ -12,9 +13,9 @@ export default function Users() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      await fetch("https://www.melivecode.com/api/users")
+      await fetch("http://127.0.0.1:8000/api/users")
         .then((res) => res.json())
-        .then((res) => setUsers(res));
+        .then((res) => setUsers(res.users));
     } catch (error) {
       setErrors(error);
     } finally {
@@ -28,34 +29,62 @@ export default function Users() {
       text: "ID",
     },
     {
-      dataField: "avatar",
-      isDummyField: true,
-      text: "Avatar",
-      formatter: (cellContent, row) => {
-        return (
-          <>
-          <img src={row.avatar} className="rounded-circle" alt="Avatar" width='50'/>
-          </>
-        );
-      },
+      dataField: "name",
+      text: "Name",
     },
     {
-      dataField: "fname",
-      text: "First name",
+      dataField: "email",
+      text: "Email",
     },
     {
-      dataField: "lname",
-      text: "Last Name",
+      dataField: "role",
+      text: "Role",
     },
     {
-      dataField: "username",
-      text: "User name",
+      dataField: "fab_name",
+      text: "FAB",
     },
     {
-      dataField: "avatar",
-      text: "Avatar link",
+      dataField: "actions",
+      text: "Actions",
+      formatter: actionButton,
     },
   ];
+
+  function actionButton(cell, row, rowIndex, formatExtraData) {
+    return (
+      <>
+        <div className="btn-group">
+          <Link
+            to={"/backend/users/edit/" + row.id}
+            className="btn btn-default"
+          >
+            <i className="fas fa-pen"></i>
+          </Link>
+          {/* <Link to={"/bookings/edit/" + row.id} className="btn btn-default">
+          <i className="fas fa-pen"></i>
+          </Link> */}
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={async () => {
+              const isConfirm = window.confirm(
+                "แน่ใจว่าต้องการลบข้อมูล "
+              );
+              if (isConfirm === true) {
+                await axios.delete(
+                  "http://127.0.0.1:8000/api/users-delete/" + row.id
+                );
+                window.location.reload(false)
+              }
+            }}
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </>
+    );
+  }
 
   useEffect(() => {
     fetchData();
@@ -104,6 +133,14 @@ export default function Users() {
                     <h5 className="m-0">Users list</h5>
                   </div>
                   <div className="card-body">
+                    <div className="float-right mb-2">
+                      <Link
+                        to="/backend/users/create"
+                        className="btn btn-primary"
+                      >
+                        <i class="fas fa-plus"></i> Create
+                      </Link>
+                    </div>
                     <BootstrapTable
                       keyField="id"
                       data={users}

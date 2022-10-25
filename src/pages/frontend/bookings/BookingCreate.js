@@ -15,8 +15,8 @@ export default function BookingCreate() {
   const data_from = 'https://form.jotform.com/222820524863455'
 
   const getData = async() => {
-    //await fetch('http://127.0.0.1:8000/api/capacity/' + id)
-    await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity/' + id)
+    await fetch('http://127.0.0.1:8000/api/capacity/' + id)
+    //await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity/' + id)
       .then((res)=>res.json())
       .then((res)=>setCapacity(res.capacity))
   }
