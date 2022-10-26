@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { Link,useParams,useNavigate } from 'react-router-dom'
+import Swal from "sweetalert2";
 
 export default function UsersEdit() {
     const navigate = useNavigate();
@@ -44,9 +45,14 @@ export default function UsersEdit() {
     .then((res)=>res.json())
     .then((res)=>{
       if(res.status === 200) {
-        alert(res.message)
+        Swal.fire({
+          title: "Successfully",
+          text: "Updated User Successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          timer: 3000
+        });
         navigate('/backend/users')
-        //window.location.href = "/backend/users"
       }
     })
   }

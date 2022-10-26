@@ -1,8 +1,50 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+//import Swal from "sweetalert2";
 
 export default function CapactiyUpload() {
-    const [username, setUserName] = useState(JSON.parse(localStorage.getItem("name")))
+
+  const navigate = useNavigate()
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [isSelected, setIsSelected] = useState(false);
+
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsSelected(true);
+  };
+
+  const handleSubmission = () => {
+    const formData = new FormData();
+
+		formData.append('file', selectedFile);
+
+		fetch(
+			'http://127.0.0.1:8000/api/upload-capacity',
+			{
+				method: 'POST',
+				body: formData,
+			}
+		)
+			.then((response) => response.json())
+			.then((result) => {
+				console.log('Success:', result);
+        // Swal.fire({
+        //   title: "Successfully",
+        //   text: "Welcome to Precut Booking System",
+        //   icon: "success",
+        //   confirmButtonText: "OK",
+        //   timer: 3000
+        // });
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+
+      navigate('/backend/capacity')
+	};
+
+
   return (
     <>
       <div className="content-wrapper">
@@ -10,14 +52,14 @@ export default function CapactiyUpload() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Capacity Upload</h1>
+                <h1 className="m-0">Capacity Import</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">Home</a>
                   </li>
-                  <li className="breadcrumb-item active">Capacity-upload</li>
+                  <li className="breadcrumb-item active">Capacity import</li>
                 </ol>
               </div>
             </div>
@@ -28,29 +70,50 @@ export default function CapactiyUpload() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
+                <div className="card-header">
+                    <h5 className="m-0">Capacity import</h5>
+                  </div>
                   <div className="card-body">
                     <form>
-                      <div className="form-group">
+                      {/* <div className="form-group">
                         <input
                         name="username"
                           type="text"
                           className="form-control"
                           value={username}
                         />
-                      </div>
+                      </div> */}
                       <div className="form-group">
-                        <label htmlFor="">Upload :</label>
+                        <label htmlFor="">File import</label>
                         <br />
                         <input
-                          type="file"
+                          name="file"
+                          type="file" 
                           className="form-control-file border"
+                          onChange={changeHandler}
                         />
+                        {/* {isSelected ? (
+                          <div className="mt-2">
+                            <p>Filename: {selectedFile.name}</p>
+                            <p>Filetype: {selectedFile.type}</p>
+                            <p>Size in bytes: {selectedFile.size}</p>
+                            <p>
+                              lastModifiedDate:{" "}
+                              {selectedFile.lastModifiedDate.toLocaleDateString()}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="mt-2">
+                            <p>Select a file to show details</p>
+                          </div>
+                        )} */}
                       </div>
-                      <input
-                        type="submit"
+                      <button
+                        onClick={handleSubmission}
                         className="btn btn-primary"
-                        value="Submit"
-                      />{" "}
+                      >
+                        Submit
+                      </button>{' '}
                       <Link to="/backend/capacity" className="btn btn-danger">
                         Cancel
                       </Link>

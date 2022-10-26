@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link,useNavigate } from 'react-router-dom'
+import Swal from "sweetalert2";
 
 export default function UsersCreate() {
     const navigate = useNavigate();
@@ -14,7 +15,13 @@ export default function UsersCreate() {
         event.preventDefault();
 
         if(password !== password_confirm){
-          alert('please Check Password confirm')
+          Swal.fire({
+            title: "Oops...",
+            text: "Please Check Password confirm",
+            icon: "error",
+            confirmButtonText: "OK",
+            timer: 3000
+          });
           return
         }
 
@@ -32,11 +39,25 @@ export default function UsersCreate() {
           .then((res) => res.json())
           .then((res) => {
             if (res.success === true) {
-              alert("เพิ่มข้อมูลเรียบร้อยแล้ว" + res.status);
-              //window.location.href = "/backend/users";
+
+              Swal.fire({
+                title: "Successfully",
+                text: "Created User Successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+                timer: 3000
+              });
+
               navigate('/backend/users')
             } else {
-              alert("มีบางอย่างผิดพลาด" + res.success);
+              Swal.fire({
+                title: "Oops...",
+                text: "Something went wrong!",
+                icon: "error",
+                confirmButtonText: "OK",
+                timer: 3000
+              });
+              return
             }
           });
     
@@ -80,7 +101,8 @@ export default function UsersCreate() {
                               type="text"
                               className="form-control"
                               value={email}
-                              onChange={(event) => setEmail(event.target.value)}    
+                              onChange={(event) => setEmail(event.target.value)}  
+                              placeholder='Enter your email'  
                             />
                           </div>
                         </div>
@@ -92,6 +114,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={name}
                               onChange={(event) => setName(event.target.value)}
+                              placeholder='Enter your email'
                             />
                           </div>
                         </div>
@@ -103,6 +126,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={role}
                               onChange={(event) => setRole(event.target.value)}
+                              placeholder='Enter your name'
                               hidden
                             />
                           </div>
@@ -115,6 +139,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={fab_name}
                               onChange={(event) => setFabName(event.target.value)}
+                              placeholder='Enter your fab name'
                             />
                           </div>
                         </div>
@@ -126,6 +151,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={password}
                               onChange={(event) => setPassword(event.target.value)}
+                              placeholder='Enter your password'
                             />
                           </div>
                         </div>
@@ -137,6 +163,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={password_confirm}
                               onChange={(event) => setPasswordConfirm(event.target.value)}
+                              placeholder='Enter your password confirm'
                             />
                           </div>
                         </div>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import axios from "axios";
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 export default function Users() {
@@ -12,14 +13,14 @@ export default function Users() {
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+      //setLoading(true);
       await fetch("http://127.0.0.1:8000/api/users")
         .then((res) => res.json())
         .then((res) => setUsers(res.users));
     } catch (error) {
       setErrors(error);
     } finally {
-      setLoading(false);
+      //setLoading(false);
     }
   };
 
@@ -31,18 +32,31 @@ export default function Users() {
     {
       dataField: "name",
       text: "Name",
+      filter: textFilter(),
+      sort: true
     },
     {
       dataField: "email",
       text: "Email",
+      filter: textFilter(),
+      sort: true
     },
     {
       dataField: "role",
       text: "Role",
+      filter: textFilter(),
+      sort: true,
+      // formatter: (cellContent, row) => {
+      //   return (
+      //     <h6><span className="badge badge-info">{row.role}</span></h6>
+      //   )
+      // }
     },
     {
       dataField: "fab_name",
       text: "FAB",
+      filter: textFilter(),
+      sort: true
     },
     {
       dataField: "actions",
@@ -52,6 +66,39 @@ export default function Users() {
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
+    async function deleteUser(event, id) {
+      event.preventDefault();
+        await Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            fetch(
+              "http://127.0.0.1:8000/api/users-delete/" + row.id ,
+              { method: "DELETE" }
+            )
+              .then((res) => res.json())
+              .then((res) => console.log(res.user));
+    
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+              showConfirmButton: false,
+            });
+            setTimeout(function () {
+              window.location.reload();
+            }, 1500);
+          } else {
+            console.log(errors);
+          }
+        });
+      }
     return (
       <>
         <div className="btn-group">
@@ -67,17 +114,7 @@ export default function Users() {
           <button
             type="button"
             className="btn btn-default"
-            onClick={async () => {
-              const isConfirm = window.confirm(
-                "แน่ใจว่าต้องการลบข้อมูล "
-              );
-              if (isConfirm === true) {
-                await axios.delete(
-                  "http://127.0.0.1:8000/api/users-delete/" + row.id
-                );
-                window.location.reload(false)
-              }
-            }}
+            onClick={deleteUser}
           >
             <i class="fas fa-trash"></i>
           </button>
@@ -90,19 +127,19 @@ export default function Users() {
     fetchData();
   }, []);
 
-  if (loading === true) {
-    return (
-      <div className="preloader flex-column justify-content-center align-items-center">
-        <img
-          className="animation__shake"
-          src="/assets/dist/img/AdminLTELogo.png"
-          alt="AdminLTELogo"
-          height="60"
-          width="60"
-        />
-      </div>
-    );
-  }
+  // if (loading === true) {
+  //   return (
+  //     <div className="preloader flex-column justify-content-center align-items-center">
+  //       <img
+  //         className="animation__shake"
+  //         src="/assets/dist/img/AdminLTELogo.png"
+  //         alt="AdminLTELogo"
+  //         height="60"
+  //         width="60"
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -146,6 +183,7 @@ export default function Users() {
                       data={users}
                       columns={columns}
                       pagination={paginationFactory()}
+                      filter={ filterFactory() }
                     />
                   </div>
                 </div>

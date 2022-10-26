@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import Swal from "sweetalert2";
 import moment from "moment";
 
 const localizer = momentLocalizer(moment);
@@ -24,12 +25,24 @@ export default function Bookings() {
     //alert("onSelectSlot" + JSON.stringify(event));
     
     if (event.title === 'ไม่ว่าง') {
-      alert('ไม่สามารถจองวันได้เนื่องจาก CAP เต็มแล้วครับ')
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
+        icon: "error",
+        confirmButtonText: "OK",
+        //timer: 3000
+      });
       return
     }
 
-    if (event.title === 'ว่าง 200 ชุด') {
-      alert('ถ้าต้องการจองวันที่ CAP 200 กรุณาติดต่อเจ้าหน้าที่')
+    if (event.title === 'ว่าง 200 เซ็ต') {
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: "ถ้าต้องการจองวันที่ CAP 200 กรุณาติดต่อเจ้าหน้าที่",
+        icon: "warning",
+        confirmButtonText: "OK",
+        //timer: 3000
+      });
       return
     }
 

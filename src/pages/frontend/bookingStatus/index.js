@@ -1,109 +1,73 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+//import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+//import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import { Link } from "react-router-dom";
 
 export default function BookingStatus() {
   const bookings = [
     {
       id: 1,
-      name: "Bookings Name 1",
-      type: "Type 1",
-      detail: "Bookings case items detail 1",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149609/2",
+      project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
     {
       id: 2,
-      name: "Bookings Name 2",
-      type: "Type 2",
-      detail: "Bookings case items detail 2",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149691/2",
+      project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
     {
       id: 3,
-      name: "Bookingsr Name 3",
-      type: "Type 1",
-      detail: "Bookings case items detail 3",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149692/2",
+      project: "คุณเอ เขาค้อ ส่งสาขาลำปาง",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
     {
       id: 4,
-      name: "Bookings Name 4",
-      type: "Type 1",
-      detail: "Bookings case items detail 4",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149693/2",
+      project: "คุณเอ เขาค้อ ส่งสาขานครสวรรค์",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
     {
       id: 5,
-      name: "Bookings Name 5",
-      type: "Type 1",
-      detail: "Bookings case items detail 5",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149694/2",
+      project: "คุณชโยดม ฉันทวางค์ ส่งสาขาลำปาง",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
     {
       id: 6,
-      name: "Bookings Name 6",
-      type: "Type 1",
-      detail: "Bookings case items detail 6",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
-    },
-    {
-      id: 7,
-      name: "Bookings Name 7",
-      type: "Type 1",
-      detail: "Bookings case items detail 7",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
-    },
-    {
-      id: 8,
-      name: "Bookings Name 8",
-      type: "Type 1",
-      detail: "Bookings case items detail 8",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
-    },
-    {
-      id: 9,
-      name: "Bookings Name 9",
-      type: "Type 1",
-      detail: "Bookings case items detail 9",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
-    },
-    {
-      id: 10,
-      name: "Bookings Name 10",
-      type: "Type 1",
-      detail: "Bookings case items detail 10",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
-    },
-    {
-      id: 11,
-      name: "Bookings Name 11",
-      type: "Type 1",
-      detail: "Bookings case items detail 11",
-      user: "UserName",
-      status: "Status",
-      date_at: "14-09-2022",
+      fab_name: "บจ.ไทยไวนิล",
+      date: "Oct 22, 2022",
+      invoice: "2013149695/2",
+      project: "นพ.ขชล รวมทรัพย์ ส่งนครสวรรค์",
+      type: "หน้าต่าง&ประตู",
+      model: "Signature",
+      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
     },
   ];
 
@@ -111,34 +75,43 @@ export default function BookingStatus() {
     {
       dataField: "id",
       text: "ID",
+      sort: true
     },
     {
-      dataField: "name",
-      text: "Booking name",
+      dataField: "fab_name",
+      text: "FAB name",
+      filter: textFilter(),
+      sort: true
+    },
+    {
+      dataField: "date",
+      text: "วันส่งคำสั่งซื้อ",
+      filter: textFilter(),
+      sort: true
+    },
+    {
+      dataField: "invoice",
+      text: "เลขที่ใบเสนอราคา",
+      filter: textFilter(),
+      sort: true
+    },
+    {
+      dataField: "project",
+      text: "ชื่อโครงการ/ลูกค้า",
+      filter: textFilter(),
+      sort: true
     },
     {
       dataField: "type",
-      text: "Type",
+      text: "ประเภทสินค้า",
+      filter: textFilter(),
+      sort: true
     },
     {
-      dataField: "detail",
-      text: "Booking Detail",
-    },
-    {
-      dataField: "user",
-      text: "Username",
-    },
-    {
-      dataField: "status",
-      text: "Status",
-    },
-    {
-      dataField: "date_at",
-      text: "Start date",
-    },
-    {
-      dataField: "date_at",
-      text: "Stop date",
+      dataField: "model",
+      text: "รุ่นสินค้า",
+      filter: textFilter(),
+      sort: true
     },
     {
       dataField: "actions",
@@ -151,15 +124,13 @@ export default function BookingStatus() {
     return (
       <>
         <div className="btn-group">
-          <Link to={"/bookings/view/" + row.id} className="btn btn-default">
-          <i className="fas fa-file"></i>
+          {/* <Link to={"/booking-status/view/" + row.id} className="btn btn-default"> */}
+          <Link to={"/booking-status/view/"} className="btn btn-default">
+          <i className="fas fa-list"></i>
           </Link>
-          <Link to={"/bookings/edit/" + row.id} className="btn btn-default">
-          <i className="fas fa-pen"></i>
-          </Link>
-          <button onClick={()=>alert('Deleted booking successfully!')} type="button" className="btn btn-default">
-          <i class="fas fa-trash"></i>
-          </button>
+          <a href={row.file} type="button" className="btn btn-default">
+          <i className="fas fa-file-download"></i>
+          </a>
         </div>
       </>
     );
@@ -190,9 +161,9 @@ export default function BookingStatus() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  {/* <div className="card-header">
-                    <h5 className="m-0">Bookings list</h5>
-                  </div> */}
+                  <div className="card-header">
+                    <h5 className="m-0">Status</h5>
+                  </div>
                   <div className="card-body">
                     {/* <div className="float-right mb-2">
                       <Link to="/bookings/create" className="btn btn-primary">
@@ -204,6 +175,7 @@ export default function BookingStatus() {
                       data={bookings}
                       columns={columns}
                       pagination={paginationFactory()}
+                      filter={ filterFactory() }
                     />
                   </div>
                 </div>

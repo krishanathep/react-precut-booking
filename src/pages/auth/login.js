@@ -1,13 +1,12 @@
-import React,{ useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Login() {
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,112 +20,108 @@ export default function Login() {
     };
 
     await fetch("http://127.0.0.1:8000/api/login", resusetOptions)
-    //await fetch("https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/login", resusetOptions)
+      //await fetch("https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/login", resusetOptions)
       .then((res) => res.json())
       .then((res) => {
-        if ("token" in res.data) {
 
+        if ("token" in res.data) {
+          
           localStorage.setItem("token", res.data["token"]);
           localStorage.setItem("name", JSON.stringify(res.data["name"]));
           localStorage.setItem("email", JSON.stringify(res.data["email"]));
           localStorage.setItem("fab", JSON.stringify(res.data["fab"]));
-         
-          // toast.success('Logged in successfully.', {
-          //   position: "top-right",
-          //   autoClose: 2000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   });
-
-            // window.setTimeout(function() {
-            //   window.location.href = "/bookings";
-            // }, 2500)
+          localStorage.setItem("role", JSON.stringify(res.data["role"]));
           
-            window.location.href = '/bookings';
-
-        } else {
-
-          toast.error("Incorrect username or password.", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+          Swal.fire({
+            title: "Successfully",
+            text: "Welcome to Precut Booking System",
+            icon: "success",
+            confirmButtonText: "OK",
+            timer: 3000
           });
 
+          if (res.data.role === "admin") {
+            navigate("/backend/capacity");
+          } else {
+            navigate("/bookings");
+          }
+
+        } else {
+          Swal.fire({
+            title: "Oops...",
+            text: "Something went wrong!",
+            icon: "error",
+            confirmButtonText: "OK",
+            timer: 3000
+          });
+          return
         }
       });
   }
 
   return (
     <>
-    <ToastContainer/>
-    <div className="hold-transition login-page">
-      <div className="login-box">
-        <div className="login-logo">
-          <Link to="/">
-          <i className="far fa-calendar-check fa-2x"></i>
-          </Link>
-        </div>
-        <div className="card card-primary card-outline">
-          <div className="card-header" align="center">
-            Sign in to start your session
+      <div className="hold-transition login-page">
+        <div className="login-box">
+          <div className="login-logo">
+            <Link to="/">
+              <i className="far fa-calendar-check fa-2x"></i>
+            </Link>
           </div>
-          <div className="card-body login-card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="input-group mb-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <div className="input-group-append">
-                  <div className="input-group-text">
-                    <span className="fas fa-envelope" />
+          <div className="card card-primary card-outline">
+            <div className="card-header" align="center">
+              Sign in to start your session
+            </div>
+            <div className="card-body login-card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="input-group mb-3">
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-envelope" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="input-group mb-3">
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <div className="input-group-append">
-                  <div className="input-group-text">
-                    <span className="fas fa-lock" />
+                <div className="input-group mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-lock" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-8">
-                  {/* <div className="icheck-primary">
+                <div className="row">
+                  <div className="col-8">
+                    {/* <div className="icheck-primary">
                   <input type="checkbox" id="remember" />
                   <label htmlFor="remember">Remember Me</label>
                 </div> */}
+                  </div>
+                  <div className="col-4">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Sign In
+                    </button>
+                  </div>
                 </div>
-                <div className="col-4">
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Sign In
-                  </button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
-  )
+  );
 }

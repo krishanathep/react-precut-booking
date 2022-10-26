@@ -11,6 +11,7 @@ import BookingCreate from "./pages/frontend/bookings/BookingCreate";
 import BookingEdit from "./pages/frontend/bookings/BookingEdit";
 import BookingView from "./pages/frontend/bookings/BookingView";
 import BookingStatus from "./pages/frontend/bookingStatus";
+import BookingStatusView from './pages/frontend/bookingStatus/statusView'
 
 //Black-end
 import AdminNavbar from "./layouts/backend/WithNavbar";
@@ -35,7 +36,10 @@ function App() {
           <Route path="/bookings/create/:id" element={<BookingCreate />} />
           <Route path="/bookings/edit/:id" element={<BookingEdit />} />
           <Route path="/bookings/view/:id" element={<BookingView />} />
+
           <Route path="/booking-status" element={<BookingStatus />} />
+          <Route path="/booking-status/view/" element={<BookingStatusView />} />
+
         </Route>
         <Route element={<AdminNavbar />}>
           <Route path="/backend/dashboard" element={<AdminDashboard />} />

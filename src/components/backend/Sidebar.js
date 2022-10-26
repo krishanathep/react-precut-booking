@@ -5,9 +5,11 @@ export default function Sidebar() {
 
   const token = localStorage.getItem("token");
 
+
   if (!token) {
     window.location.href = "/";
   }
+
 
   return (
     <>

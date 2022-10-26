@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from "sweetalert2";
 
 export default function BookingCreate() {
   const {id} = useParams();
+  const navigate = useNavigate()
   const [capacity, setCapacity] = useState([]);
   const [booking_capacity, setBookingCapacity] = useState('')
   const [booking_date, setBookingDate] = useState('')
@@ -31,29 +31,23 @@ export default function BookingCreate() {
     event.preventDefault();
 
     if(booking_capacity === '') {
-      //alert("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ");
-      toast.error("กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: "กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ",
+        icon: "error",
+        confirmButtonText: "OK",
+        //timer: 3000
       });
       return
     }
 
     if(booking_capacity > 400){
-      //alert("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด");
-      toast.error("ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: "ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด",
+        icon: "error",
+        confirmButtonText: "OK",
+        //timer: 3000
       });
       return
     } 
@@ -68,48 +62,35 @@ export default function BookingCreate() {
       body: JSON.stringify(data),
     };
 
-    alert('เพิ่มข้อมูลเรียบร้อยแล้วครับ')
-
     window.open(data_from+'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
 
-    // fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
-    //   .then((res)=>res.json())
-    //   .then((res)=>{
-    //     if(res.status === 200){
-    //       //alert("เพิ่มข้อมูลเรียบร้อยแล้วครับ");
-    //       toast.success('เพิ่มข้อมูลเรียบร้อยแล้วครับ', {
-    //         position: "top-right",
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //         });
-
-    //          window.setTimeout(function() {
-    //           window.location.href = "/bookings";
-    //         }, 2500)
-
-    //     }else {
-    //       //alert("มีบางอย่างผิดพลาด");
-    //       toast.error("มีบางอย่างผิดพลาด", {
-    //         position: "top-right",
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //       });
-    //     }
-    //   })
+    fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
+      .then((res)=>res.json())
+      .then((res)=>{
+        if(res.status === 200){
+          Swal.fire({
+            title: "Successfully",
+            text: "Bookings Created Successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+            timer: 3000
+          });
+          navigate('/bookings')
+        }else {
+          Swal.fire({
+            title: "Oops...",
+            text: "Something went wrong!",
+            icon: "error",
+            confirmButtonText: "OK",
+            timer: 3000
+          });
+        }
+      })
    
   };
 
   return (
     <>
-    <ToastContainer/>
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid">
