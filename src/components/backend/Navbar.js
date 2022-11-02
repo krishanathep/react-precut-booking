@@ -5,10 +5,15 @@ export default function Navbar() {
 
   const navigate = useNavigate()
   const name = JSON.parse(localStorage.getItem("name"));
+  const role = JSON.parse(localStorage.getItem("role"));
+
+  if (role =='user') {
+    window.location.href = "/";
+  }
 
   function signOut() {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("name");
     navigate("/")
   }
 
@@ -30,13 +35,9 @@ export default function Navbar() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
-            Hello, {name}{' '}<i className="fas fa-user-circle fa-lg"></i>
+              Hello, {name}{' '}<i className="fas fa-user-circle fa-lg"></i>
             </a>
             <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-              {/* <Link to='profile' className="dropdown-item">
-                <i className="fas fa-user mr-2"></i> Profile
-              </Link>
-              <div className="dropdown-divider"></div> */}
               <a href="#" className="dropdown-item" onClick={signOut}>
                 <i className="fas fa-sign-out-alt mr-2"></i> Sign out
               </a>

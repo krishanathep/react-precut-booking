@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 export default function CapactiyUpload() {
 
   const navigate = useNavigate()
 
   const [selectedFile, setSelectedFile] = useState();
-  const [isSelected, setIsSelected] = useState(false);
+  //const [isSelected, setIsSelected] = useState(false);
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
-    setIsSelected(true);
+    //setIsSelected(true);
   };
 
   const handleSubmission = () => {
@@ -29,16 +29,22 @@ export default function CapactiyUpload() {
 			.then((response) => response.json())
 			.then((result) => {
 				console.log('Success:', result);
-        // Swal.fire({
-        //   title: "Successfully",
-        //   text: "Welcome to Precut Booking System",
-        //   icon: "success",
-        //   confirmButtonText: "OK",
-        //   timer: 3000
-        // });
+        Swal.fire({
+          title: "Successfully",
+          text: "File imported to Successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          timer: 3000
+        });
 			})
-			.catch((error) => {
-				console.error('Error:', error);
+			.catch((errors) => {
+        Swal.fire({
+          title: "Oops...",
+          text: errors,
+          icon: "error",
+          confirmButtonText: "OK",
+          timer: 3000
+        });
 			});
 
       navigate('/backend/capacity')
@@ -74,7 +80,6 @@ export default function CapactiyUpload() {
                     <h5 className="m-0">Capacity import</h5>
                   </div>
                   <div className="card-body">
-                    <form>
                       {/* <div className="form-group">
                         <input
                         name="username"
@@ -108,6 +113,7 @@ export default function CapactiyUpload() {
                           </div>
                         )} */}
                       </div>
+                      <div className="float-right">
                       <button
                         onClick={handleSubmission}
                         className="btn btn-primary"
@@ -117,7 +123,7 @@ export default function CapactiyUpload() {
                       <Link to="/backend/capacity" className="btn btn-danger">
                         Cancel
                       </Link>
-                    </form>
+                      </div>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, Children, useCallback } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Swal from "sweetalert2";
@@ -6,48 +6,105 @@ import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
+const CURRENT_DATE = moment().add(14, "days").toDate();
+
+const ColoredDateCellWrapper = ({ children, value }) =>
+  React.cloneElement(Children.only(children), {
+    style: {
+      ...children.style,
+      backgroundColor: value < CURRENT_DATE ? "lightgrey" : "",
+    },
+  });
+
+// const disbleDate =()=> {
+//   if( 1 === 1){
+//     alert('hello')
+//   }
+// }
+
 export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
-  const fetchData = async() => {
-    await fetch('http://127.0.0.1:8000/api/capacity')
-    //await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
-      .then((res)=>res.json())
-      .then((res)=>setCapacity(res.capacity))
-  }
+  const [date, setDate] = useState(moment().add(14, "days").toDate());
 
-  useEffect(()=>{
+  const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);
+
+  const fetchData = async () => {
+    await fetch("http://127.0.0.1:8000/api/capacity")
+      //await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
+      .then((res) => res.json())
+      .then((res) => setCapacity(res.capacity));
+  };
+
+  useEffect(() => {
     fetchData();
-  },[])
+  }, []);
 
-  const handleSelectBookings = (event) =>{
-    //if (event.slots?.length > 15) return;
-    //alert("onSelectSlot" + JSON.stringify(event));
-    
-    if (event.title === 'ไม่ว่าง') {
+  //const [date1, setDate1] = useState(moment().toDate());
+  const [date2, setDate2] = useState(moment().add(14, "days").toDate());
+
+//   //------------------------------------
+//     const str = capacity.date;
+//     const datesubstring = str.substring(0, 10);
+//     const myDate1 = moment(datesubstring, "YYYY-MM-DD").toDate();
+// //------------------------------------
+
+
+  const showTitle = (e) => {
+    const str = e.date;
+    const datesubstring = str.substring(0, 10);
+    const myDate = moment(datesubstring, "YYYY-MM-DD").toDate();
+    //alert(result);
+    if(e.capacity == 0) {
+      return (e.title = "ไม่ว่าง")
+    }
+
+    if (myDate <= date2) {
+      return (e.title = "ไม่ว่าง");
+    } else {
+      return (e.title = "ว่าง" + " " + e.capacity + " " + "ชุด");
+    }
+  };
+
+  const handleSelectBookings = (event) => {
+    // if (event.slots?.length > 15) return;
+    // alert("onSelectSlot" + JSON.stringify(event));
+
+    if (event.title === "ไม่ว่าง") {
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
         text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
         icon: "error",
-        confirmButtonText: "OK",
+        confirmButtonText: "ตกลง",
         //timer: 3000
       });
-      return
+      return;
     }
 
-    if (event.title === 'ว่าง 200 เซ็ต') {
+    if (event.capacity === 0) {
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
-        text: "ถ้าต้องการจองวันที่ CAP 200 กรุณาติดต่อเจ้าหน้าที่",
-        icon: "warning",
-        confirmButtonText: "OK",
+        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
+        icon: "error",
+        confirmButtonText: "ตกลง",
         //timer: 3000
       });
-      return
+      return;
     }
 
-    window.location.href = `/bookings/create/`+ event.id
-  } 
+    // if (event.capacity < 200) {
+    //   Swal.fire({
+    //     title: "เกิดข้อผิดพลาด",
+    //     text: "ถ้าต้องการจองวันที่ CAP 200 กรุณาติดต่อเจ้าหน้าที่",
+    //     icon: "warning",
+    //     confirmButtonText: "ตกลง",
+    //     //timer: 3000
+    //   });
+    //   return;
+    // }
+
+    window.location.href = `/bookings/create/` + event.id;
+  };
 
   return (
     <>
@@ -93,49 +150,53 @@ export default function Bookings() {
                         <Calendar
                           localizer={localizer}
                           events={capacity}
-                          startAccessor="start"
-                          endAccessor="end"
-                          views={['month','agenda']}
+                          titleAccessor={showTitle}
+                          startAccessor="date"
+                          endAccessor="date"
+                          views={["month", "agenda"]}
                           style={{ height: 700 }}
-                          
+                          onNavigate={onNavigate}
+                          date={date}
                           onSelectEvent={handleSelectBookings}
-                          eventPropGetter={(
-                            capacity
-                          ) => {
+                          components={{
+                            dateCellWrapper: ColoredDateCellWrapper,
+                          }}
+                          eventPropGetter={(capacity) => {
                             let newStyle = {
-                              //backgroundColor: "lightgrey",
+                              backgroundColor: "",
                             };
 
-                            if(capacity.start < capacity.start) {
-                              newStyle.backgroundColor = "#DE3163";
-                            }
 
-                            if (capacity.title  === "ไม่ว่าง") {
+
+
+                            if(moment(new Date(capacity.date))<= date2) {
+                              newStyle.backgroundColor = "grey";
+                            } else 
+
+                            if (
+                              (capacity.capacity / capacity.maxcap) * 100 ===
+                              0
+                            ) {
                               newStyle.backgroundColor = "#DE3163";
+                              //newStyle.backgroundColor = "grey";
+                            } else if (
+                              (capacity.capacity / capacity.maxcap) * 100 >=
+                              80
+                            ) {
+                              newStyle.backgroundColor = "#40E0D0";
                             } else {
-                              if (capacity.title === "ว่าง 400 เซ็ต") {
-                                newStyle.backgroundColor = "#40E0D0";
-                              } else {
-                                if (capacity.title === "ว่าง 200 เซ็ต") {
-                                  newStyle.backgroundColor = "#FFBF00";
-                                }
+                              if (
+                                (capacity.capacity / capacity.maxcap) * 100 <
+                                80
+                              ) {
+                                newStyle.backgroundColor = "#FFBF00";
                               }
                             }
-
-                          
                             return {
                               className: "",
                               style: newStyle,
                             };
                           }}
-
-                          onNavigate={(date, view) => {
-                            console.log('#### onNavigate');
-                            console.log('#### date=', date);
-                            console.log('#### view=', view);
-                            //this.setState({currentDate: date});
-                          }}
-                          
                         />
                       </div>
                     </div>

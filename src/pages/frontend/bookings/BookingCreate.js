@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+import "moment-timezone";
 import Swal from "sweetalert2";
 
 export default function BookingCreate() {
@@ -23,9 +25,9 @@ export default function BookingCreate() {
 
   useEffect(()=>{
     getData();
-    setBookingDate(capacity.start)
+    setBookingDate(capacity.date)
     setLimite(capacity.capacity)
-  },[capacity.start, capacity.copacity])
+  },[capacity.date, capacity.capacity])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,7 +43,7 @@ export default function BookingCreate() {
       return
     }
 
-    if(booking_capacity > 400){
+    if(booking_capacity > capacity.capacity){
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
         text: "ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด",
@@ -114,9 +116,9 @@ export default function BookingCreate() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  {/* <div className="card-header">
+                  <div className="card-header">
                     <h5 className="m-0">Booking create</h5>
-                  </div> */}
+                  </div>
                   <div className="card-body">
                     <form onSubmit={handleSubmit}>
                       <div className="row">
@@ -138,7 +140,8 @@ export default function BookingCreate() {
                             <input
                               type="text"
                               className="form-control"
-                              value={booking_date}
+                              //value={booking_date}
+                              value={ booking_date ? moment(new Date(booking_date)).format("DD-MM-YYYY"): ''}
                               onChange={(event) => setBookingDate(event.target.value)}
                               readOnly
                             />
@@ -146,7 +149,7 @@ export default function BookingCreate() {
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Capacity ที่สามารถจองได้ของวันนี้คือ {limite}</label>
+                            <label htmlFor="name">Capacity สามารถจองได้ {limite} ชุด</label>
                             <input
                               type="number"
                               className="form-control"

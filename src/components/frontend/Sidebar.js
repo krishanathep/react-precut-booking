@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <>
     <aside className="main-sidebar sidebar-dark-primary sidebar-no-expand elevation-4">
-      <Link to='/dashboard' className="brand-link">
+      <Link to='/bookings' className="brand-link">
         <img
           src="/assets/dist/img/AdminLTELogo.png"
           alt="AdminLTE Logo"

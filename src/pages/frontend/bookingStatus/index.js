@@ -17,7 +17,7 @@ export default function BookingStatus() {
       project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ export default function BookingStatus() {
       project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ export default function BookingStatus() {
       project: "คุณเอ เขาค้อ ส่งสาขาลำปาง",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
     {
       id: 4,
@@ -47,7 +47,7 @@ export default function BookingStatus() {
       project: "คุณเอ เขาค้อ ส่งสาขานครสวรรค์",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
     {
       id: 5,
@@ -57,7 +57,7 @@ export default function BookingStatus() {
       project: "คุณชโยดม ฉันทวางค์ ส่งสาขาลำปาง",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
     {
       id: 6,
@@ -67,16 +67,16 @@ export default function BookingStatus() {
       project: "นพ.ขชล รวมทรัพย์ ส่งนครสวรรค์",
       type: "หน้าต่าง&ประตู",
       model: "Signature",
-      file: "https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf",
+      status: "รอตรวจแบบ",
     },
   ];
 
   const columns = [
-    {
-      dataField: "id",
-      text: "ID",
-      sort: true
-    },
+    // {
+    //   dataField: "id",
+    //   text: "ID",
+    //   sort: true
+    // },
     {
       dataField: "fab_name",
       text: "FAB name",
@@ -114,10 +114,16 @@ export default function BookingStatus() {
       sort: true
     },
     {
-      dataField: "actions",
-      text: "Actions",
-      formatter: actionButton,
+      dataField: "status",
+      text: "สถานะงาน",
+      filter: textFilter(),
+      sort: true
     },
+    // {
+    //   dataField: "actions",
+    //   text: "Actions",
+    //   formatter: actionButton,
+    // },
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
@@ -126,10 +132,10 @@ export default function BookingStatus() {
         <div className="btn-group">
           {/* <Link to={"/booking-status/view/" + row.id} className="btn btn-default"> */}
           <Link to={"/booking-status/view/"} className="btn btn-default">
-          <i className="fas fa-list"></i>
+          <i className="fas fa-file-alt"></i>
           </Link>
           <a href={row.file} type="button" className="btn btn-default">
-          <i className="fas fa-file-download"></i>
+          <i className="fas fa-download"></i>
           </a>
         </div>
       </>

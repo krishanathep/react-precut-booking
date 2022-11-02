@@ -65,9 +65,10 @@ export default function BookingView() {
                         <td>
                           <a
                             href="https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf"
-                            className="btn btn-success"
+                           
                           >
-                            Download
+                            ดาวน์โหลด
+                            {/* <i className="fas fa-file-pdf"></i> */}
                           </a>
                         </td>
                       </tr>

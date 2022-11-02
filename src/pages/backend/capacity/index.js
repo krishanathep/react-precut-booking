@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import Moment from "react-moment";
 import "moment-timezone";
 import { Link } from "react-router-dom";
 
 export default function Capacity() {
-
   // const role = localStorage.getItem("role");
 
   // if(role!=="admin"){
@@ -29,44 +28,54 @@ export default function Capacity() {
     fetchData();
   }, []);
 
-
   const columns = [
+    // {
+    //   dataField: "id",
+    //   text: "ID",
+    //   sort: true,
+    // },
     {
-      dataField: "id",
-      text: "ID",
-      //filter: textFilter(),
-      sort: true
+      dataField: "date",
+      text: "Date (วันที่)",
+      filter: textFilter(),
+      sort: true,
+      sort: true,
+      formatter: (cellContent, row) => {
+        return <Moment format="DD-MM-YYYY">{row.date}</Moment>;
+      },
     },
     {
-      dataField: "title",
-      text: "Capacity title",
+      dataField: "demand",
+      text: "Demand (จองแล้ว)",
       filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
-      dataField: "start",
-      text: "Capacity date",
+      dataField: "maxcap",
+      text: "Max CAP (จำนวนสูงสุดต่อวัน)",
       filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
       dataField: "capacity",
-      text: "Capacity",
+      text: "Available (คงเหลือ)",
       filter: textFilter(),
-      sort: true
-      
+      sort: true,
     },
-   
+    // {
+    //   dataField: "percent",
+    //   text: "Percent",
+    //   filter: textFilter(),
+    //   sort: true,
+    // },
     {
       dataField: "created_at",
-      text: "Import date",
+      text: "วันที่เพิ่มข้อมูล",
       filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
-        return (
-          <Moment format="DD-MM-YYYY">{row.created_date}</Moment>
-        )
-      }
+        return <Moment format="DD-MM-YYYY">{row.created_date}</Moment>;
+      },
     },
     // {
     //   dataField: "username",
@@ -108,14 +117,14 @@ export default function Capacity() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Capacity list</h1>
+                <h1 className="m-0">Capacity Management</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">Home</a>
                   </li>
-                  <li className="breadcrumb-item active">Capacity list</li>
+                  <li className="breadcrumb-item active">Capacity management</li>
                 </ol>
               </div>
             </div>
@@ -127,21 +136,23 @@ export default function Capacity() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Capacity list</h5>
+                    <h5 className="m-0">Capacity management</h5>
                   </div>
                   <div className="card-body">
                     <div className="float-right mb-2">
-                      {/* <a href="http://127.0.0.1:8000/capacity/import" className="btn btn-primary">
-                        <i class="fas fa-plus"></i> Capacity
-                      </a> */}
-                      <Link className="btn btn-primary" to='/backend/capacity/upload'><i className="fas fa-file-upload"></i> Import file</Link>
+                      <Link
+                        className="btn btn-primary"
+                        to="/backend/capacity/upload"
+                      >
+                        <i className="fas fa-file-upload"></i> Import
+                      </Link>
                     </div>
                     <BootstrapTable
                       keyField="id"
                       data={capacity}
                       columns={columns}
                       pagination={paginationFactory()}
-                      filter={ filterFactory() }
+                      filter={filterFactory()}
                     />
                   </div>
                 </div>

@@ -3,6 +3,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import Moment from "react-moment";
+import "moment-timezone";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
@@ -46,17 +48,21 @@ export default function Users() {
       text: "Role",
       filter: textFilter(),
       sort: true,
-      // formatter: (cellContent, row) => {
-      //   return (
-      //     <h6><span className="badge badge-info">{row.role}</span></h6>
-      //   )
-      // }
     },
     {
       dataField: "fab_name",
       text: "FAB",
       filter: textFilter(),
       sort: true
+    },
+    {
+      dataField: "created_at",
+      text: "Create at",
+      filter: textFilter(),
+      sort: true,
+      formatter: (cellContent, row) => {
+        return <Moment format="DD-MM-YYYY">{row.created_date}</Moment>;
+      },
     },
     {
       dataField: "actions",
