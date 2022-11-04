@@ -1,13 +1,28 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 //import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-//import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+
 import { Link } from "react-router-dom";
 
 export default function BookingStatus() {
+  const fabname = JSON.parse(localStorage.getItem("fab"))
+
+  const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">
+      {' '} Showing { from } to { to } of { size } Results
+    </span>
+  );
+
+  const options = {
+
+    showTotal: true,
+    paginationTotalRenderer: customTotal,
+    disablePageTitle: true,
+   
+  }
+
   const bookings = [
     {
       id: 1,
@@ -77,66 +92,62 @@ export default function BookingStatus() {
     //   text: "ID",
     //   sort: true
     // },
-    {
-      dataField: "fab_name",
-      text: "FAB name",
-      filter: textFilter(),
-      sort: true
-    },
+    // {
+    //   dataField: "fab_name",
+    //   text: "FAB name",
+    //   //filter: textFilter(),
+    //   sort: true
+    // },
     {
       dataField: "date",
       text: "วันส่งคำสั่งซื้อ",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "invoice",
       text: "เลขที่ใบเสนอราคา",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "project",
       text: "ชื่อโครงการ/ลูกค้า",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "type",
       text: "ประเภทสินค้า",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "model",
       text: "รุ่นสินค้า",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "status",
       text: "สถานะงาน",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
-    // {
-    //   dataField: "actions",
-    //   text: "Actions",
-    //   formatter: actionButton,
-    // },
+    {
+      dataField: "actions",
+      text: "Actions",
+      formatter: actionButton,
+    },
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
     return (
       <>
-        <div className="btn-group">
-          {/* <Link to={"/booking-status/view/" + row.id} className="btn btn-default"> */}
-          <Link to={"/booking-status/view/"} className="btn btn-default">
+        <div>
+          <Link to={"/booking-status/view/"} className="btn btn-info">
           <i className="fas fa-file-alt"></i>
           </Link>
-          <a href={row.file} type="button" className="btn btn-default">
-          <i className="fas fa-download"></i>
-          </a>
         </div>
       </>
     );
@@ -149,7 +160,7 @@ export default function BookingStatus() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Status</h1>
+                <h1 className="m-0">บริษัท {fabname}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -168,7 +179,7 @@ export default function BookingStatus() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Status</h5>
+                    <h5 className="m-0">เช็คสถานะงาน</h5>
                   </div>
                   <div className="card-body">
                     {/* <div className="float-right mb-2">
@@ -176,12 +187,31 @@ export default function BookingStatus() {
                         <i class="fas fa-plus"></i> Booking
                       </Link>
                     </div> */}
+                    <div className="row mb-4">
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                      <div className="col-md-2">
+                        <input type="text" className="form-control" />
+                      </div>
+                    </div>
                     <BootstrapTable
                       keyField="id"
                       data={bookings}
                       columns={columns}
-                      pagination={paginationFactory()}
-                      filter={ filterFactory() }
+                      pagination={paginationFactory(options)}
                     />
                   </div>
                 </div>

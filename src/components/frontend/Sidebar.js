@@ -52,13 +52,13 @@ export default function Sidebar() {
             <li className="nav-item">
               <Link to="/bookings" className="nav-link">
               <i className="nav-icon fas fa-calendar"></i>
-                <p>Bookings</p>
+                <p>จองวันผลิตสินค้า</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/booking-status" className="nav-link">
               <i className="nav-icon fas fa-list"></i>
-                <p>Status</p>
+                <p>เช็คสถานะงาน</p>
               </Link>
             </li>
           </ul>

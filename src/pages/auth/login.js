@@ -41,7 +41,7 @@ export default function Login() {
           });
 
           if (res.data.role === "admin") {
-            navigate("/backend/capacity");
+            navigate("/backend/");
           } else if (res.data.role === "user"){
             navigate("/bookings");
           } else {

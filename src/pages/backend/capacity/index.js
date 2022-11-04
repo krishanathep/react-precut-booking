@@ -37,8 +37,7 @@ export default function Capacity() {
     {
       dataField: "date",
       text: "Date (วันที่)",
-      filter: textFilter(),
-      sort: true,
+      //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
         return <Moment format="DD-MM-YYYY">{row.date}</Moment>;
@@ -47,19 +46,19 @@ export default function Capacity() {
     {
       dataField: "demand",
       text: "Demand (จองแล้ว)",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
     },
     {
       dataField: "maxcap",
       text: "Max CAP (จำนวนสูงสุดต่อวัน)",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
     },
     {
       dataField: "capacity",
       text: "Available (คงเหลือ)",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
     },
     // {
@@ -71,7 +70,7 @@ export default function Capacity() {
     {
       dataField: "created_at",
       text: "วันที่เพิ่มข้อมูล",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
         return <Moment format="DD-MM-YYYY">{row.created_date}</Moment>;

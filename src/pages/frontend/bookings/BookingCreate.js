@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import { NumericFormat } from 'react-number-format';
 import moment from "moment";
 import "moment-timezone";
 import Swal from "sweetalert2";
@@ -98,7 +99,7 @@ export default function BookingCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Booking create</h1>
+                <h1 className="m-0">บริษัท {fab_name}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -150,12 +151,13 @@ export default function BookingCreate() {
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="name">Capacity สามารถจองได้ {limite} ชุด</label>
-                            <input
+                            <NumericFormat
                               type="number"
                               className="form-control"
                               value={booking_capacity}
                               onChange={(event) => setBookingCapacity(event.target.value)}
                               placeholder="Input capacity"
+                              decimalScale={0}
                             />
                             <small className="text-danger">* หากต้องการสั่งซื้อมากกว่า CAP ที่กำหนด ให้ติดต่อทีมขาย หรือ ทีม CS ที่ดูแลท่าน</small>
                           </div>

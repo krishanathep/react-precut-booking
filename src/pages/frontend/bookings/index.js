@@ -25,9 +25,11 @@ const ColoredDateCellWrapper = ({ children, value }) =>
 export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
+  const fabname = JSON.parse(localStorage.getItem("fab"))
+
   const [date, setDate] = useState(moment().add(14, "days").toDate());
 
-  const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);
+  const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);  
 
   const fetchData = async () => {
     await fetch("http://127.0.0.1:8000/api/capacity")
@@ -113,7 +115,7 @@ export default function Bookings() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Bookings</h1>
+                <h1 className="m-0">บริษัท {fabname}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -131,9 +133,9 @@ export default function Bookings() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
-                  {/* <div className="card-header">
-                    <h5 className="m-0">Bookings</h5>
-                  </div> */}
+                  <div className="card-header">
+                    <h5 className="m-0">จองวันผลิตสินค้า</h5>
+                  </div>
                   <div className="card-body">
                     <div className="row">
                       {/* <div className="col-md-12">
@@ -153,7 +155,7 @@ export default function Bookings() {
                           titleAccessor={showTitle}
                           startAccessor="date"
                           endAccessor="date"
-                          views={["month", "agenda"]}
+                          views={["month"]}
                           style={{ height: 700 }}
                           onNavigate={onNavigate}
                           date={date}
@@ -165,9 +167,6 @@ export default function Bookings() {
                             let newStyle = {
                               backgroundColor: "",
                             };
-
-
-
 
                             if(moment(new Date(capacity.date))<= date2) {
                               newStyle.backgroundColor = "grey";

@@ -42,18 +42,18 @@ export default function Sidebar() {
               role="menu"
               data-accordion="false"
             >
-              {/* <li className="nav-item">
-              <Link to="/backend/dashboard" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
-                <p>Dashbard</p>
-              </Link>
-            </li> */}
-              {/* <li className="nav-item">
-              <Link to="/backend/bookings" className="nav-link">
+             <li className="nav-item">
+              <Link to="/bookings" className="nav-link">
               <i className="nav-icon fas fa-calendar"></i>
-                <p>Bookings</p>
+                <p>จองวันผลิตสินค้า</p>
               </Link>
-            </li> */}
+            </li>
+            <li className="nav-item">
+              <Link to="/booking-status" className="nav-link">
+              <i className="nav-icon fas fa-list"></i>
+                <p>เช็คสถานะงาน</p>
+              </Link>
+            </li>
               <li className="nav-item">
                 <Link to="/backend/capacity" className="nav-link">
                   <i className="nav-icon fas fa-calendar"></i>
