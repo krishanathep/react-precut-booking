@@ -21,20 +21,6 @@ export default function Sidebar() {
           <span className="brand-text font-weight-light">Admin-PBS</span>
         </Link>
         <div className="sidebar">
-          {/* <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div className="image">
-            <img
-              src={user.avatar}
-              className="img-circle elevation-2"
-              alt="User Image"
-            />
-          </div>
-          <div className="info">
-            <a href="#" className="d-block">
-              {user.email}
-            </a>
-          </div>
-        </div> */}
           <nav className="mt-2">
             <ul
               className="nav nav-pills nav-sidebar flex-column"
@@ -42,30 +28,12 @@ export default function Sidebar() {
               role="menu"
               data-accordion="false"
             >
-             <li className="nav-item">
-              <Link to="/bookings" className="nav-link">
-              <i className="nav-icon fas fa-calendar"></i>
-                <p>จองวันผลิตสินค้า</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/booking-status" className="nav-link">
-              <i className="nav-icon fas fa-list"></i>
-                <p>เช็คสถานะงาน</p>
-              </Link>
-            </li>
               <li className="nav-item">
                 <Link to="/backend/capacity" className="nav-link">
                   <i className="nav-icon fas fa-calendar"></i>
                   <p>Capacity</p>
                 </Link>
               </li>
-                <li className="nav-item">
-                  <Link to="/backend/users" className="nav-link">
-                    <i className="nav-icon fas fa-users"></i>
-                    <p>Users</p>
-                  </Link>
-                </li>
             </ul>
           </nav>
         </div>

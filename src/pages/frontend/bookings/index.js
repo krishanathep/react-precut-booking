@@ -25,11 +25,11 @@ const ColoredDateCellWrapper = ({ children, value }) =>
 export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
-  const fabname = JSON.parse(localStorage.getItem("fab"))
+  const fabname = JSON.parse(localStorage.getItem("fab"));
 
   const [date, setDate] = useState(moment().add(14, "days").toDate());
 
-  const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);  
+  const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);
 
   const fetchData = async () => {
     await fetch("http://127.0.0.1:8000/api/capacity")
@@ -45,20 +45,19 @@ export default function Bookings() {
   //const [date1, setDate1] = useState(moment().toDate());
   const [date2, setDate2] = useState(moment().add(14, "days").toDate());
 
-//   //------------------------------------
-//     const str = capacity.date;
-//     const datesubstring = str.substring(0, 10);
-//     const myDate1 = moment(datesubstring, "YYYY-MM-DD").toDate();
-// //------------------------------------
-
+  //   //------------------------------------
+  //     const str = capacity.date;
+  //     const datesubstring = str.substring(0, 10);
+  //     const myDate1 = moment(datesubstring, "YYYY-MM-DD").toDate();
+  // //------------------------------------
 
   const showTitle = (e) => {
     const str = e.date;
     const datesubstring = str.substring(0, 10);
     const myDate = moment(datesubstring, "YYYY-MM-DD").toDate();
     //alert(result);
-    if(e.capacity == 0) {
-      return (e.title = "ไม่ว่าง")
+    if (e.capacity == 0) {
+      return (e.title = "ไม่ว่าง");
     }
 
     if (myDate <= date2) {
@@ -113,6 +112,20 @@ export default function Bookings() {
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid">
+            <div className="alert alert-info alert-dismissible">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+              <h5>
+                <i className="icon fas fa-exclamation-circle"></i> เรียนท่านผู้ใช้งาน
+              </h5>
+              เนื่องจากการจองจากระบบ Precut Booking นี้ยังจะไม่ทราบผลทันที เนื่องจากระบบจะอัพเดทวันต่อวัน กรุณาตรวจสอบสถานะอีกครั้งในวันถัดไป
+            </div>
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1 className="m-0">บริษัท {fabname}</h1>
@@ -168,11 +181,9 @@ export default function Bookings() {
                               backgroundColor: "",
                             };
 
-                            if(moment(new Date(capacity.date))<= date2) {
+                            if (moment(new Date(capacity.date)) <= date2) {
                               newStyle.backgroundColor = "grey";
-                            } else 
-
-                            if (
+                            } else if (
                               (capacity.capacity / capacity.maxcap) * 100 ===
                               0
                             ) {

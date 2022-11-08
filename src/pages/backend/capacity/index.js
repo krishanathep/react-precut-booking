@@ -8,13 +8,12 @@ import "moment-timezone";
 import { Link } from "react-router-dom";
 
 export default function Capacity() {
-  // const role = localStorage.getItem("role");
 
-  // if(role!=="admin"){
-  //   alert(role)
-  // }else{
-  //   alert('no')
-  // }
+  const role = JSON.parse(localStorage.getItem("role"));
+
+  if (role =='user') {
+    window.location.href = "/";
+  }
 
   const [capacity, setCapacity] = useState([]);
 

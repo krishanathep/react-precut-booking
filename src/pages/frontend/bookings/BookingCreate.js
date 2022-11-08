@@ -13,9 +13,12 @@ export default function BookingCreate() {
   const [booking_capacity, setBookingCapacity] = useState('')
   const [booking_date, setBookingDate] = useState('')
   const [limite, setLimite] = useState('')
+
   const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
   const [user_name, setUserName] = useState(JSON.parse(localStorage.getItem("name")))
-  const data_from = 'https://form.jotform.com/222820524863455'
+
+  const [faburl, setFabUrl] = useState(JSON.parse(localStorage.getItem("url")))
+  const [fabcode, setFabCode] = useState(JSON.parse(localStorage.getItem("code")))
 
   const getData = async() => {
     await fetch('http://127.0.0.1:8000/api/capacity/' + id)
@@ -65,7 +68,9 @@ export default function BookingCreate() {
       body: JSON.stringify(data),
     };
 
-    window.open(data_from+'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
+    //window.open(faburl +'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
+    
+    window.open(faburl + '?' + 'token' + '=' + fabcode +'&'+'date'+'='+booking_date +'&'+ 'Order_Amount' + '=' + booking_capacity);
 
     fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
       .then((res)=>res.json())

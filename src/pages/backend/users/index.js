@@ -13,6 +13,12 @@ export default function Users() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
+  const role = JSON.parse(localStorage.getItem("role"));
+
+  if (role =='user') {
+    window.location.href = "/";
+  }
+
   const fetchData = async () => {
     try {
       //setLoading(true);
@@ -27,10 +33,10 @@ export default function Users() {
   };
 
   const columns = [
-    {
-      dataField: "id",
-      text: "ID",
-    },
+    // {
+    //   dataField: "id",
+    //   text: "ID",
+    // },
     {
       dataField: "name",
       text: "Name",

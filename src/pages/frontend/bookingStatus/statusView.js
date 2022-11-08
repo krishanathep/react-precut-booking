@@ -60,7 +60,7 @@ export default function BookingView() {
                         <td>รุ่นสินค้า</td>
                         <td>Signature</td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <td>ไฟล์ดาวน์โหลด</td>
                         <td>
                           <a
@@ -68,10 +68,10 @@ export default function BookingView() {
                            
                           >
                             ดาวน์โหลด
-                            {/* <i className="fas fa-file-pdf"></i> */}
+                            
                           </a>
                         </td>
-                      </tr>
+                      </tr> */}
                     </table>
                     <div className="float-right mt-2">
                       <Link to="/booking-status" className="btn btn-danger">

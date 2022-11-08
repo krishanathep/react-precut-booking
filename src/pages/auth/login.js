@@ -31,7 +31,13 @@ export default function Login() {
           localStorage.setItem("email", JSON.stringify(res.data["email"]));
           localStorage.setItem("fab", JSON.stringify(res.data["fab"]));
           localStorage.setItem("role", JSON.stringify(res.data["role"]));
+
+          localStorage.setItem("url", JSON.stringify(res.data["url"]));
+          localStorage.setItem("code", JSON.stringify(res.data["code"]));
           
+          console.log(res.data.url)
+          console.log(res.data.code)
+
           Swal.fire({
             title: "Successfully",
             text: "Welcome to Precut Booking System",
@@ -41,10 +47,10 @@ export default function Login() {
           });
 
           if (res.data.role === "admin") {
-            navigate("/backend/");
+            navigate("/bookings");
           } else if (res.data.role === "user"){
             navigate("/bookings");
-          } else {
+          } else if (res.data.role === "owner"){
             navigate("/backend/capacity");
           }
 
@@ -72,7 +78,7 @@ export default function Login() {
           </div>
           <div className="card card-primary card-outline">
             <div className="card-header" align="center">
-              Sign in to start your session
+              Login to Your Account
             </div>
             <div className="card-body login-card-body">
               <form onSubmit={handleSubmit}>
