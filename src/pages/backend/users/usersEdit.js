@@ -8,6 +8,7 @@ export default function UsersEdit() {
     const {id} = useParams()
 
     const[edituser, setEditUser] = useState([])
+    const[fab, setFab] = useState([])
 
     const getData = async () => {
         await fetch('http://127.0.0.1:8000/api/users/'+id)
@@ -15,8 +16,15 @@ export default function UsersEdit() {
         .then((res)=>setEditUser(res.user))
       }
 
+      const getFab = async () => {
+        await fetch("http://127.0.0.1:8000/api/fab-url")
+          .then((res) => res.json())
+          .then((res) => setFab(res.faburl));
+      };
+
    useEffect(()=>{
     getData(id)
+    getFab()
    },[id])
 
    function handleInput(event){
@@ -32,7 +40,7 @@ export default function UsersEdit() {
 
     const data = {
       name: edituser.name,
-      fab_name: edituser.fab_name,
+      fab_id: edituser.fab_id,
     }
 
     const requestOptions = {
@@ -88,19 +96,6 @@ export default function UsersEdit() {
                   <div className="card-body">
                   <form onSubmit={handleSubmit}>
                       <div className="row">
-                        {/* <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="name">Email</label>
-                            <input
-                              type="text"
-                              name="email"
-                              className="form-control"
-                              value={edituser.email}
-                              onChange={handleInput}  
-                              readOnly  
-                            />
-                          </div>
-                        </div> */}
                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="name">Name</label>
@@ -113,43 +108,24 @@ export default function UsersEdit() {
                             />
                           </div>
                         </div>
-                        {/* <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="name">Role</label>
-                            <input
-                              type="text"
-                              name="role"
-                              className="form-control"
-                              value={edituser.role}
-                              onChange={handleInput}
-                              readOnly
-                            />
-                          </div>
-                        </div> */}
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">FAB</label>
-                            <input
-                              type="text"
-                              name="fab_name"
-                              className="form-control"
-                              value={edituser.fab_name}
-                              onChange={handleInput}
-                            />
+                            <label htmlFor="name">FAB Name</label>
+                            <select class="form-control" id="sel1"
+                            //value={fab_id}
+                            //onChange={(event) => setFabId(event.target.value)}
+                            value={edituser.fab_id}
+                            onChange={handleInput}
+                            >
+                              <option value={""}>Select FAB</option>
+                              {fab.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                  {item.fabricator_name}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
-                        {/* <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="name">Password</label>
-                            <input
-                              type="password"
-                              name="password"
-                              className="form-control"
-                              value={edituser.password}
-                              onChange={handleInput}
-                            />
-                          </div>
-                        </div> */}
                         <div className="col-md-12 float-right">
                           <div className="float-right">
                             <button className="btn btn-primary">Submit</button>{" "}

@@ -16,12 +16,6 @@ const ColoredDateCellWrapper = ({ children, value }) =>
     },
   });
 
-// const disbleDate =()=> {
-//   if( 1 === 1){
-//     alert('hello')
-//   }
-// }
-
 export default function Bookings() {
   const [capacity, setCapacity] = useState([]);
 
@@ -45,7 +39,7 @@ export default function Bookings() {
   //const [date1, setDate1] = useState(moment().toDate());
   const [date2, setDate2] = useState(moment().add(14, "days").toDate());
 
-  //   //------------------------------------
+  // //------------------------------------
   //     const str = capacity.date;
   //     const datesubstring = str.substring(0, 10);
   //     const myDate1 = moment(datesubstring, "YYYY-MM-DD").toDate();
@@ -112,7 +106,7 @@ export default function Bookings() {
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid">
-            <div className="alert alert-info alert-dismissible">
+            <div className="alert alert-primary alert-dismissible">
               <button
                 type="button"
                 class="close"
@@ -122,13 +116,14 @@ export default function Bookings() {
                 &times;
               </button>
               <h5>
-                <i className="icon fas fa-exclamation-circle"></i> เรียนท่านผู้ใช้งาน
+                <i className="icon fas fa-exclamation-circle"></i> เรียน{' '}{fabname}
               </h5>
-              เนื่องจากการจองจากระบบ Precut Booking นี้ยังจะไม่ทราบผลทันที เนื่องจากระบบจะอัพเดทวันต่อวัน กรุณาตรวจสอบสถานะอีกครั้งในวันถัดไป
+              ** ข้อมูลระบบจะทำการอัพเดทจำนวนข้อมูลชุด Capacity รอบละ 1 วัน ซึ่งอาจส่งผลต่อการจองสินค้า อาจไม่ได้รับสินค้าที่ต้องการเสมอไป 
+              ท่านสามารถดูวันที่คาดว่าจะได้รับจริง ในแถบ "ตรวจสอบสถานะ" เมื่อทีมวางแผนมีการลงแผนการผลิตเรียบร้อยแล้ว **
             </div>
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">บริษัท {fabname}</h1>
+                <h1 className="m-0">{fabname}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">

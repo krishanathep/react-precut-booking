@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { NumericFormat } from 'react-number-format';
+import Moment from "react-moment";
 import moment from "moment";
 import "moment-timezone";
 import Swal from "sweetalert2";
@@ -70,7 +71,7 @@ export default function BookingCreate() {
 
     //window.open(faburl +'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
     
-    window.open(faburl + '?' + 'token' + '=' + fabcode +'&'+'date'+'='+booking_date +'&'+ 'Order_Amount' + '=' + booking_capacity);
+    window.open(faburl + '?' + 'token' + '=' + fabcode +'&'+'V2'+'='+ moment(new Date(booking_date)).format("DD-MM-YYYY") +'&'+ 'V1' + '=' + booking_capacity);
 
     fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
       .then((res)=>res.json())
@@ -104,7 +105,7 @@ export default function BookingCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">บริษัท {fab_name}</h1>
+                <h1 className="m-0">{fab_name}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -123,7 +124,7 @@ export default function BookingCreate() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Booking create</h5>
+                    <h5 className="m-0">จองวันที่ผลิตสินค้า</h5>
                   </div>
                   <div className="card-body">
                     <form onSubmit={handleSubmit}>

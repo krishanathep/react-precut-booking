@@ -1,67 +1,83 @@
-import React, { useState } from "react";
-import { Link,useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function UsersCreate() {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('')
-    const [role, setRole] = useState('user')
-    const [fab_name, setFabName] = useState('')
-    const [password, setPassword] = useState('')
-    const [password_confirm, setPasswordConfirm] = useState('')
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("user");
+  const [fab_id, setFabId] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirm, setPasswordConfirm] = useState("");
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+  const [fab, setFab] = useState([]);
 
-        if(password !== password_confirm){
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (password !== password_confirm) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Please Check Password confirm",
+        icon: "error",
+        confirmButtonText: "OK",
+        timer: 3000,
+      });
+      return;
+    }
+
+    const data = {
+      email,
+      name,
+      role,
+      fab_id,
+      password,
+    };
+
+    const resusetOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+
+    fetch("http://127.0.0.1:8000/api/register", resusetOptions)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success === true) {
+          Swal.fire({
+            title: "Successfully",
+            text: "Created User Successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+            timer: 3000,
+          });
+
+          navigate("/backend/users");
+        } else {
           Swal.fire({
             title: "Oops...",
-            text: "Please Check Password confirm",
+            text: "Something went wrong!",
             icon: "error",
             confirmButtonText: "OK",
-            timer: 3000
+            timer: 3000,
           });
-          return
+          return;
         }
+      });
+  };
 
-        const data = {
-            email, name, role, fab_name, password,
-          }
-         
-          const resusetOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          };
-        
-          fetch("http://127.0.0.1:8000/api/register", resusetOptions)
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.success === true) {
+  const fetchData = async () => {
+    await fetch("http://127.0.0.1:8000/api/fab-url")
+      //await fetch('https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/capacity')
+      .then((res) => res.json())
+      .then((res) => setFab(res.faburl));
+    console.log(fab);
+  };
 
-              Swal.fire({
-                title: "Successfully",
-                text: "Created User Successfully",
-                icon: "success",
-                confirmButtonText: "OK",
-                timer: 3000
-              });
-
-              navigate('/backend/users')
-            } else {
-              Swal.fire({
-                title: "Oops...",
-                text: "Something went wrong!",
-                icon: "error",
-                confirmButtonText: "OK",
-                timer: 3000
-              });
-              return
-            }
-          });
-    
-    }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -92,7 +108,7 @@ export default function UsersCreate() {
                     <h5 className="m-0">Users create</h5>
                   </div>
                   <div className="card-body">
-                  <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="form-group">
@@ -101,8 +117,8 @@ export default function UsersCreate() {
                               type="text"
                               className="form-control"
                               value={email}
-                              onChange={(event) => setEmail(event.target.value)}  
-                              placeholder='Enter your email'  
+                              onChange={(event) => setEmail(event.target.value)}
+                              placeholder="Enter your email"
                             />
                           </div>
                         </div>
@@ -114,8 +130,24 @@ export default function UsersCreate() {
                               className="form-control"
                               value={name}
                               onChange={(event) => setName(event.target.value)}
-                              placeholder='Enter your email'
+                              placeholder="Enter your Name"
                             />
+                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="name">FAB Name</label>
+                            <select class="form-control" id="sel1"
+                            value={fab_id}
+                            onChange={(event) => setFabId(event.target.value)}
+                            >
+                              <option value={""}>Select FAB</option>
+                              {fab.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                  {item.fabricator_name}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
                         <div className="col-md-12">
@@ -126,20 +158,7 @@ export default function UsersCreate() {
                               className="form-control"
                               value={role}
                               onChange={(event) => setRole(event.target.value)}
-                              placeholder='Enter your name'
                               hidden
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="name">FAB</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={fab_name}
-                              onChange={(event) => setFabName(event.target.value)}
-                              placeholder='Enter your fab name'
                             />
                           </div>
                         </div>
@@ -150,8 +169,10 @@ export default function UsersCreate() {
                               type="password"
                               className="form-control"
                               value={password}
-                              onChange={(event) => setPassword(event.target.value)}
-                              placeholder='Enter your password'
+                              onChange={(event) =>
+                                setPassword(event.target.value)
+                              }
+                              placeholder="Enter your password"
                             />
                           </div>
                         </div>
@@ -162,15 +183,20 @@ export default function UsersCreate() {
                               type="password"
                               className="form-control"
                               value={password_confirm}
-                              onChange={(event) => setPasswordConfirm(event.target.value)}
-                              placeholder='Enter your password confirm'
+                              onChange={(event) =>
+                                setPasswordConfirm(event.target.value)
+                              }
+                              placeholder="Enter your password confirm"
                             />
                           </div>
                         </div>
                         <div className="col-md-12 float-right">
                           <div className="float-right">
                             <button className="btn btn-primary">Submit</button>{" "}
-                            <Link to="/backend/users" className="btn btn-danger">
+                            <Link
+                              to="/backend/users"
+                              className="btn btn-danger"
+                            >
                               Cancel
                             </Link>
                           </div>

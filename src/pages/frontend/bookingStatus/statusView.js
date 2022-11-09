@@ -1,7 +1,10 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 
 export default function BookingView() {
+
+  const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
+
   return (
     <>
       <div className="content-wrapper">
@@ -9,7 +12,7 @@ export default function BookingView() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Status view</h1>
+                <h1 className="m-0">{fab_name}</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -28,7 +31,7 @@ export default function BookingView() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Status view</h5>
+                    <h5 className="m-0">รายละเอียดสถานะงาน</h5>
                   </div>
                   <div className="card-body">
                     <table className="table table-bordered mt-2">

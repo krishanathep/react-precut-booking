@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/login";
 import "./App.css";
 
@@ -20,6 +20,7 @@ import AdminBookings from "./pages/backend/bookings";
 import AdminUsers from "./pages/backend/users";
 import AdminUsersCreate from "./pages/backend/users/usersCreate";
 import AdminUsersEdit from "./pages/backend/users/usersEdit";
+import AdminUsersPassword from "./pages/backend/users/userPassword";
 import AdminCapacity from "./pages/backend/capacity";
 import AdminCapacityUpload from "./pages/backend/capacity/CapacityUpload";
 import PageNotFound from "./pages/notfound";
@@ -47,6 +48,7 @@ function App() {
           <Route path="/backend/users" element={<AdminUsers />} />
           <Route path="/backend/users/create" element={<AdminUsersCreate />} />
           <Route path="/backend/users/edit/:id" element={<AdminUsersEdit />} />
+          <Route path="/backend/users/password" element={<AdminUsersPassword />} />
 
           <Route path="/backend/capacity" element={<AdminCapacity />} />
           <Route
@@ -54,7 +56,7 @@ function App() {
             element={<AdminCapacityUpload />}
           />
 
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
         {/* <Route element={<AdminNavbar />}>
           <Route path="/backend/dashboard" element={<AdminDashboard />} />

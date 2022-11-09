@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState("");
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
   const role = JSON.parse(localStorage.getItem("role"));
@@ -40,31 +40,31 @@ export default function Users() {
     {
       dataField: "name",
       text: "Name",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "email",
       text: "Email",
-      filter: textFilter(),
+      //filter: textFilter(),
+      sort: true
+    },
+    {
+      dataField: "faburl.fabricator_name",
+      text: "Fabricator",
+      //filter: textFilter(),
       sort: true
     },
     {
       dataField: "role",
       text: "Role",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
-    },
-    {
-      dataField: "fab_name",
-      text: "FAB",
-      filter: textFilter(),
-      sort: true
     },
     {
       dataField: "created_at",
       text: "Create at",
-      filter: textFilter(),
+      //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
         return <Moment format="DD-MM-YYYY">{row.created_date}</Moment>;
@@ -80,6 +80,7 @@ export default function Users() {
   function actionButton(cell, row, rowIndex, formatExtraData) {
     async function deleteUser(event, id) {
       event.preventDefault();
+
         await Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -120,9 +121,9 @@ export default function Users() {
           >
             <i className="fas fa-pen"></i>
           </Link>
-          {/* <Link to={"/bookings/edit/" + row.id} className="btn btn-default">
-          <i className="fas fa-pen"></i>
-          </Link> */}
+          <a href="http://localhost:8000/change-password" className="btn btn-default">
+          <i className="fas fa-key"></i>
+          </a>
           <button
             type="button"
             className="btn btn-default"
