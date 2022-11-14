@@ -46,6 +46,7 @@ export default function Sidebar() {
             >
                {isadmin ? 
               <>
+              <li class="nav-header">MAIN MENU</li>
               <li className="nav-item">
                 <Link to="/bookings" className="nav-link">
                   <i className="nav-icon fas fa-calendar"></i>
@@ -54,13 +55,13 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 <Link to="/booking-status" className="nav-link">
-                  <i className="nav-icon fas fa-list"></i>
+                <i className="nav-icon fas fa-tasks"></i>
                   <p>ตรวจสอบสถานะ</p>
                 </Link>
               </li>
               <li className="nav-item">
               <Link to="/backend/capacity" className="nav-link">
-                <i className="nav-icon fas fa-calendar"></i>
+              <i className="nav-icon fas fa-chart-pie"></i>
                 <p>จัดการปริมาณงาน</p>
               </Link>
             </li>
@@ -74,6 +75,7 @@ export default function Sidebar() {
               : null} 
               {isuser ? 
               <>
+              <li class="nav-header">MAIN MENU</li>
               <li className="nav-item">
                 <Link to="/bookings" className="nav-link">
                   <i className="nav-icon fas fa-calendar"></i>
@@ -82,7 +84,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 <Link to="/booking-status" className="nav-link">
-                  <i className="nav-icon fas fa-list"></i>
+                <i className="nav-icon fas fa-tasks"></i>
                   <p>ตรวจสอบสถานะ</p>
                 </Link>
               </li>
@@ -90,9 +92,10 @@ export default function Sidebar() {
               : null}
               {isowner ? 
               <>
+             <li class="nav-header">MAIN MENU</li>
              <li className="nav-item">
               <Link to="/backend/capacity" className="nav-link">
-                <i className="nav-icon fas fa-calendar"></i>
+              <i className="nav-icon fas fa-chart-pie"></i>
                 <p>จัดการปริมาณงาน</p>
               </Link>
             </li>

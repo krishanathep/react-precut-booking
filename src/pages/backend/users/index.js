@@ -34,8 +34,8 @@ export default function Users() {
 
   const columns = [
     // {
-    //   dataField: "id",
-    //   text: "ID",
+    //   dataField: "row",
+    //   text: "ID", 
     // },
     {
       dataField: "name",
@@ -74,6 +74,7 @@ export default function Users() {
       dataField: "actions",
       text: "Actions",
       formatter: actionButton,
+      align: 'center'
     },
   ];
 
@@ -121,9 +122,9 @@ export default function Users() {
           >
             <i className="fas fa-pen"></i>
           </Link>
-          <a href="http://localhost:8000/change-password" className="btn btn-default">
+          {/* <a href="http://localhost:8000/change-password" className="btn btn-default">
           <i className="fas fa-key"></i>
-          </a>
+          </a> */}
           <button
             type="button"
             className="btn btn-default"

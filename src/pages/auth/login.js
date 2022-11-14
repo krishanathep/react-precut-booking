@@ -23,9 +23,7 @@ export default function Login() {
       //await fetch("https://precutbooking.windsor.co.th/bookings/laravel_api_auth/public/api/login", resusetOptions)
       .then((res) => res.json())
       .then((res) => {
-
         if ("token" in res.data) {
-          
           localStorage.setItem("token", res.data["token"]);
           localStorage.setItem("name", JSON.stringify(res.data["name"]));
           localStorage.setItem("email", JSON.stringify(res.data["email"]));
@@ -34,35 +32,34 @@ export default function Login() {
 
           localStorage.setItem("url", JSON.stringify(res.data["url"]));
           localStorage.setItem("code", JSON.stringify(res.data["code"]));
-          
-          console.log(res.data.url)
-          console.log(res.data.code)
+
+          console.log(res.data.url);
+          console.log(res.data.code);
 
           Swal.fire({
             title: "Successfully",
             text: "Welcome to Precut Booking System",
             icon: "success",
             confirmButtonText: "OK",
-            timer: 3000
+            timer: 3000,
           });
 
           if (res.data.role === "admin") {
             navigate("/bookings");
-          } else if (res.data.role === "user"){
+          } else if (res.data.role === "user") {
             navigate("/bookings");
-          } else if (res.data.role === "owner"){
+          } else if (res.data.role === "owner") {
             navigate("/backend/capacity");
           }
-
         } else {
           Swal.fire({
             title: "Oops...",
             text: "Something went wrong!",
             icon: "error",
             confirmButtonText: "OK",
-            timer: 3000
+            timer: 3000,
           });
-          return
+          return;
         }
       });
   }
@@ -126,6 +123,9 @@ export default function Login() {
                   </div>
                 </div>
               </form>
+              <p class="mb-1">
+                <a href="http://127.0.0.1:8000/password/reset">I forgot my password</a>
+              </p>
             </div>
           </div>
         </div>

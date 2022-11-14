@@ -1,90 +1,38 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-//import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import "bootstrap-daterangepicker/daterangepicker.css";
+
 
 export default function BookingStatus() {
-  const fabname = JSON.parse(localStorage.getItem("fab"))
+  const fabname = JSON.parse(localStorage.getItem("fab"));
+
+  const [precut, setPrecut] = useState([])
+  const [error, setError] = useState('')
+  const [quotation, setQuotation] = useState('')
+  const [status, setStatus] = useState('')
+  const [sendDate, setSendDate] = useState('')
+  const [startDate, setStartDate] = useState(new Date());
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">
-      {' '} Showing { from } to { to } of { size } Results
+      {" "}
+      Showing {from} to {to} of {size} Results
     </span>
   );
 
   const options = {
-
     showTotal: true,
     paginationTotalRenderer: customTotal,
     disablePageTitle: true,
-   
-  }
-
-  const bookings = [
-    {
-      id: 1,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149609/2",
-      project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-    {
-      id: 2,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149691/2",
-      project: "คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-    {
-      id: 3,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149692/2",
-      project: "คุณเอ เขาค้อ ส่งสาขาลำปาง",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-    {
-      id: 4,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149693/2",
-      project: "คุณเอ เขาค้อ ส่งสาขานครสวรรค์",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-    {
-      id: 5,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149694/2",
-      project: "คุณชโยดม ฉันทวางค์ ส่งสาขาลำปาง",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-    {
-      id: 6,
-      fab_name: "บจ.ไทยไวนิล",
-      date: "Oct 22, 2022",
-      invoice: "2013149695/2",
-      project: "นพ.ขชล รวมทรัพย์ ส่งนครสวรรค์",
-      type: "หน้าต่าง&ประตู",
-      model: "Signature",
-      status: "รอตรวจแบบ",
-    },
-  ];
+  };
 
   const columns = [
     // {
@@ -99,45 +47,67 @@ export default function BookingStatus() {
     //   sort: true
     // },
     {
-      dataField: "date",
-      text: "วันส่งคำสั่งซื้อ",
+      dataField: "order_receive_date",
+      text: "วันส่งคำสั่งสินค้า",
       //filter: textFilter(),
-      sort: true
+      sort: true,
+      formatter: (cellContent, row) => {
+        return <Moment format="DD-MM-YYYY">{row.order_receive_date}</Moment>;
+      },
     },
     {
-      dataField: "invoice",
+      dataField: "qt_number",
       text: "เลขที่ใบเสนอราคา",
       //filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
-      dataField: "project",
+      dataField: "real_customer_name",
       text: "ชื่อโครงการ/ลูกค้า",
       //filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
-      dataField: "type",
+      dataField: "product_type",
       text: "ประเภทสินค้า",
       //filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
-      dataField: "model",
+      dataField: "product_group",
+      text: "กลุ่มสินค้า",
+      //filter: textFilter(),
+      sort: true,
+    },
+    {
+      dataField: "product_color",
+      text: "สีสินค้า",
+      //filter: textFilter(),
+      sort: true,
+    },
+    {
+      dataField: "product_series",
       text: "รุ่นสินค้า",
       //filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
-      dataField: "status",
+      dataField: "request_date",
+      text: "วันที่ส่งสินค้า",
+      //filter: textFilter(),
+      sort: true,
+    },
+    {
+      dataField: "order_status",
       text: "สถานะงาน",
       //filter: textFilter(),
-      sort: true
+      sort: true,
     },
     {
       dataField: "actions",
       text: "Actions",
       formatter: actionButton,
+      align: "center",
     },
   ];
 
@@ -145,13 +115,76 @@ export default function BookingStatus() {
     return (
       <>
         <div>
-          <Link to={"/booking-status/view/"} className="btn btn-info">
-          <i className="fas fa-file-alt"></i>
+          <Link to={"/booking-status/view/"} className="btn btn-default">
+            <i className="fas fa-file-alt"></i>
           </Link>
         </div>
       </>
     );
   }
+
+  const [state, setState] = useState('');
+
+  const handleCallback = (start) => {
+    setState({start});
+  };
+
+  const start = state?.start?.format("YYYY-MM-DD");
+
+  async function searchSendDate() {
+    try {
+      await fetch(`http://localhost:8000/api/precut-send-date?data=${start}`)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  async function searchRequestDate() {
+    try {
+      await fetch(`http://localhost:8000/api/precut-request-date?data=${start}`)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));
+    } catch (error) {
+      setError(error);
+    }
+    alert(start)
+  }
+
+  async function searchStatus(key) {
+    try {
+      await fetch("http://localhost:8000/api/precut-status?data=" + key)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  async function searchQt(key) {
+    try {
+      await fetch("http://localhost:8000/api/precut-qutation?data=" + key)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  async function getData() {
+    try {
+      await fetch("http://localhost:8000/api/precut")
+      .then((res) => res.json())
+      .then((res) => setPrecut(res.precut));
+    } catch(error) {
+      setError(error)
+    }
+  }
+
+  useEffect(()=>{
+    getData();
+  },[])
 
   return (
     <>
@@ -182,37 +215,83 @@ export default function BookingStatus() {
                     <h5 className="m-0">เช็คสถานะงาน</h5>
                   </div>
                   <div className="card-body">
-                    {/* <div className="float-right mb-2">
-                      <Link to="/bookings/create" className="btn btn-primary">
-                        <i class="fas fa-plus"></i> Booking
-                      </Link>
-                    </div> */}
-                    <div className="row mb-4">
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
-                      </div>
-                      <div className="col-md-2">
-                        <input type="text" className="form-control" />
+                    <div className="card mb-4">
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col-md-3">
+                            <div className="form-group">
+                              <label htmlFor="">วันที่สั่งสินค้า</label>
+                              <DateRangePicker
+                              initialSettings={{
+                              singleDatePicker: true
+                              }}
+                              onCallback={handleCallback}
+                              onApply={searchSendDate}
+                            >
+                              <input type="text" className="form-control" />
+                            </DateRangePicker>
+                            </div>
+                          </div>
+                          <div className="col-md-3">
+                            <div className="form-group">
+                              <label htmlFor="">วันที่ส่งสินค้า</label>
+                              <DateRangePicker
+                              initialSettings={{
+                              singleDatePicker: true
+                              }}
+                              onCallback={handleCallback}
+                              onApply={searchRequestDate}
+                            >
+                              <input type="text" className="form-control" />
+                            </DateRangePicker>
+                            </div>
+                          </div>
+                          <div className="col-md-3">
+                            <div className="form-group">
+                              <label htmlFor="">เลขที่ใบเสนอราคา</label>
+                              <input
+                                name={quotation}
+                                type="text"
+                                className="form-control"
+                                placeholder="เลขที่ใบเสนอราคา"
+                                onChange={(event) =>
+                                  searchQt(event.target.value)
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-3">
+                            <div className="form-group">
+                              <label htmlFor="">สถานะสินค้า</label>
+                              <select class="form-control" id="sel1" name={status} onChange={(event) =>
+                                searchStatus(event.target.value)
+                              }>
+                                <option value="">
+                                  เลือกสถานะสินค้า
+                                </option>
+                                <option value="รับข้อมูลเข้าระบบ">รับข้อมูลเข้าระบบ</option>
+                                <option value="รอตรวจแบบ">รอตรวจแบบ</option>
+                                <option value="อนุมัติและเข้าสู่กระบวนการ">
+                                  อนุมัติและเข้าสู่กระบวนการ
+                                </option>
+                                <option value="ไม่ได้รับการอนุมัติ">ไม่ได้รับการอนุมัติ</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <BootstrapTable
+                    <div className="card">
+                      <div className="card-body">
+                        <BootstrapTable
                       keyField="id"
-                      data={bookings}
+                      data={precut}
                       columns={columns}
                       pagination={paginationFactory(options)}
+                      noDataIndication="ไม่พบข้อมูล"
                     />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
