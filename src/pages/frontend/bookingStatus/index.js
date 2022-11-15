@@ -3,23 +3,22 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
-import DateRangePicker from 'react-bootstrap-daterangepicker';
-import "bootstrap-daterangepicker/daterangepicker.css";
-
+import moment from "moment";
 
 export default function BookingStatus() {
   const fabname = JSON.parse(localStorage.getItem("fab"));
 
   const [precut, setPrecut] = useState([])
   const [error, setError] = useState('')
-  const [quotation, setQuotation] = useState('')
-  const [status, setStatus] = useState('')
-  const [sendDate, setSendDate] = useState('')
-  const [startDate, setStartDate] = useState(new Date());
+  const [quotation] = useState('')
+  const [status] = useState('')
+  const [sendDate, setSendDate] = useState(new Date());
+  const [requestDate, setRequestDate] = useState(new Date());
+  
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">
@@ -123,17 +122,10 @@ export default function BookingStatus() {
     );
   }
 
-  const [state, setState] = useState('');
-
-  const handleCallback = (start) => {
-    setState({start});
-  };
-
-  const start = state?.start?.format("YYYY-MM-DD");
-
-  async function searchSendDate() {
+  async function searchSendDate(date) {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-send-date?name=${fabname}&data=${start}`)
+      setSendDate(date)
+      await fetch(`http://localhost:8000/api/precut-fab-send-date?name=${fabname}&data=${moment(date).format("YYYY-MM-DD")}`)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -141,9 +133,10 @@ export default function BookingStatus() {
     }
   }
 
-  async function searchRequestDate() {
+  async function searchRequestDate(date) {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-request-date?name=${fabname}&data=${start}`)
+      setRequestDate(date)
+      await fetch(`http://localhost:8000/api/precut-fab-request-date?name=${fabname}&data=${moment(date).format("YYYY-MM-DD")}`)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -220,29 +213,21 @@ export default function BookingStatus() {
                           <div className="col-md-3">
                             <div className="form-group">
                               <label htmlFor="">วันที่สั่งสินค้า</label>
-                              <DateRangePicker
-                              initialSettings={{
-                              singleDatePicker: true
-                              }}
-                              onCallback={handleCallback}
-                              onApply={searchSendDate}
-                            >
-                              <input type="text" className="form-control" />
-                            </DateRangePicker>
+                              <DatePicker
+                                className="form-control"
+                                selected={sendDate}
+                                onChange={searchSendDate}
+                              />
                             </div>
                           </div>
                           <div className="col-md-3">
                             <div className="form-group">
                               <label htmlFor="">วันที่ส่งสินค้า</label>
-                              <DateRangePicker
-                              initialSettings={{
-                              singleDatePicker: true
-                              }}
-                              onCallback={handleCallback}
-                              onApply={searchRequestDate}
-                            >
-                              <input type="text" className="form-control" />
-                            </DateRangePicker>
+                              <DatePicker
+                                className="form-control"
+                                selected={requestDate}
+                                onChange={searchRequestDate}
+                              />
                             </div>
                           </div>
                           <div className="col-md-3">
