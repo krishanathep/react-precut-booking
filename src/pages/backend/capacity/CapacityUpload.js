@@ -15,6 +15,29 @@ export default function CapactiyUpload() {
   };
 
   const handleSubmission = () => {
+
+    if(!selectedFile){
+      Swal.fire({
+        title: "Oops...",
+        text: "Please Select File for Import",
+        icon: "error",
+        confirmButtonText: "OK",
+        timer: 3000
+      });
+      return
+    }
+
+    if(selectedFile.type != "text/csv"){
+      Swal.fire({
+        title: "Oops...",
+        text: "Please Select CSV File for Import",
+        icon: "error",
+        confirmButtonText: "OK",
+        timer: 3000
+      });
+      return
+    }
+
     const formData = new FormData();
 
 		formData.append('file', selectedFile);
@@ -45,6 +68,7 @@ export default function CapactiyUpload() {
           confirmButtonText: "OK",
           timer: 3000
         });
+        return
 			});
 
       navigate('/backend/capacity')

@@ -59,10 +59,17 @@ export default function Sidebar() {
                   <p>ตรวจสอบสถานะ</p>
                 </Link>
               </li>
+              <li class="nav-header">ADMIN MENU</li>
               <li className="nav-item">
               <Link to="/backend/capacity" className="nav-link">
               <i className="nav-icon fas fa-chart-pie"></i>
                 <p>จัดการปริมาณงาน</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/backend/status" className="nav-link">
+              <i className="nav-icon fas fa-clipboard-check"></i>
+                <p>จัดการสถานะงาน</p>
               </Link>
             </li>
             <li className="nav-item">
@@ -97,6 +104,12 @@ export default function Sidebar() {
               <Link to="/backend/capacity" className="nav-link">
               <i className="nav-icon fas fa-chart-pie"></i>
                 <p>จัดการปริมาณงาน</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/backend/status" className="nav-link">
+              <i className="nav-icon fas fa-clipboard-check"></i>
+                <p>จัดการสถานะงาน</p>
               </Link>
             </li>
               </>

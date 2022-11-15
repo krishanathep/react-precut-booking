@@ -11,8 +11,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import "bootstrap-daterangepicker/daterangepicker.css";
 
 
-export default function BookingStatus() {
-  const fabname = JSON.parse(localStorage.getItem("fab"));
+export default function Status() {
 
   const [precut, setPrecut] = useState([])
   const [error, setError] = useState('')
@@ -40,12 +39,12 @@ export default function BookingStatus() {
     //   text: "ID",
     //   sort: true
     // },
-    // {
-    //   dataField: "fab_name",
-    //   text: "FAB name",
-    //   //filter: textFilter(),
-    //   sort: true
-    // },
+    {
+      dataField: "fabricator_name",
+      text: "FAB name",
+      //filter: textFilter(),
+      sort: true
+    },
     {
       dataField: "order_receive_date",
       text: "วันส่งคำสั่งสินค้า",
@@ -133,7 +132,7 @@ export default function BookingStatus() {
 
   async function searchSendDate() {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-send-date?name=${fabname}&data=${start}`)
+      await fetch(`http://localhost:8000/api/precut-send-date?data=${start}`)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -143,7 +142,7 @@ export default function BookingStatus() {
 
   async function searchRequestDate() {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-request-date?name=${fabname}&data=${start}`)
+      await fetch(`http://localhost:8000/api/precut-request-date?data=${start}`)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -153,7 +152,7 @@ export default function BookingStatus() {
 
   async function searchStatus(key) {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-status?name=${fabname}&data=${key}`)
+      await fetch("http://localhost:8000/api/precut-status?data=" + key)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -163,7 +162,7 @@ export default function BookingStatus() {
 
   async function searchQt(key) {
     try {
-      await fetch(`http://localhost:8000/api/precut-fab-qutation?name=${fabname}&data=${key}`)
+      await fetch("http://localhost:8000/api/precut-qutation?data=" + key)
         .then((res) => res.json())
         .then((res) => setPrecut(res.precut));
     } catch (error) {
@@ -173,7 +172,7 @@ export default function BookingStatus() {
 
   async function getData() {
     try {
-      await fetch("http://localhost:8000/api/precut-fab?name=" + fabname)
+      await fetch("http://localhost:8000/api/precut")
       .then((res) => res.json())
       .then((res) => setPrecut(res.precut));
     } catch(error) {
@@ -192,7 +191,7 @@ export default function BookingStatus() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">{fabname}</h1>
+                <h1 className="m-0">Status</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -211,7 +210,7 @@ export default function BookingStatus() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">เช็คสถานะงาน</h5>
+                    <h5 className="m-0">จัดการสถานะงาน</h5>
                   </div>
                   <div className="card-body">
                     <div className="card mb-4">

@@ -23,6 +23,7 @@ import AdminUsersEdit from "./pages/backend/users/usersEdit";
 import AdminUsersPassword from "./pages/backend/users/userPassword";
 import AdminCapacity from "./pages/backend/capacity";
 import AdminCapacityUpload from "./pages/backend/capacity/CapacityUpload";
+import AdminStatus from './pages/backend/status'
 import PageNotFound from "./pages/notfound";
 
 function App() {
@@ -49,6 +50,8 @@ function App() {
           <Route path="/backend/users/create" element={<AdminUsersCreate />} />
           <Route path="/backend/users/edit/:id" element={<AdminUsersEdit />} />
           <Route path="/backend/users/password" element={<AdminUsersPassword />} />
+
+          <Route path="/backend/status" element={<AdminStatus />} />
 
           <Route path="/backend/capacity" element={<AdminCapacity />} />
           <Route
