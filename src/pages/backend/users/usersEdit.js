@@ -15,6 +15,7 @@ export default function UsersEdit() {
         .then((res)=>res.json())
         .then((res)=>setEditUser(res.user))
       }
+      console.log(edituser)
 
       const getFab = async () => {
         await fetch("http://127.0.0.1:8000/api/fab-url")

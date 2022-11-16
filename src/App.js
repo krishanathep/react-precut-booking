@@ -26,7 +26,7 @@ import AdminCapacityUpload from "./pages/backend/capacity/CapacityUpload";
 import AdminStatus from './pages/backend/status'
 import PageNotFound from "./pages/notfound";
 
-function App() {
+function App(props) {
 
   return (
     <Router>
@@ -42,7 +42,7 @@ function App() {
           <Route path="/bookings/view/:id" element={<BookingView />} />
 
           <Route path="/booking-status" element={<BookingStatus />} />
-          <Route path="/booking-status/view/" element={<BookingStatusView />} />
+          <Route path="/booking-status/view/:id" element={<BookingStatusView />} />
 
           <Route path="/backend/dashboard" element={<AdminDashboard />} />
           <Route path="/backend/bookings" element={<AdminBookings />} />

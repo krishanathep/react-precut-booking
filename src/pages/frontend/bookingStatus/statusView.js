@@ -1,9 +1,29 @@
-import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import React,{useState,useEffect} from "react";
+import { Link,useParams } from "react-router-dom";
 
 export default function BookingView() {
 
+  const {id} = useParams()
+
+  const[precut, setPrecut] = useState({})
+
+  const[error, setError] = useState('')
+
   const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
+
+  async function getData() {
+    try {
+      await fetch("http://localhost:8000/api/precut/" + id)
+      .then((res) => res.json())
+      .then((res) => setPrecut(res.precut));
+    } catch(error) {
+      setError(error)
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
 
   return (
     <>
@@ -35,46 +55,46 @@ export default function BookingView() {
                   </div>
                   <div className="card-body">
                     <table className="table table-bordered mt-2">
-                      {/* <tr>
-                      <td>ID</td>
-                      <td>1</td>
-                    </tr> */}
-                      <tr>
-                        <td width={"25%"}>FAB name</td>
-                        <td>บจ.ไทยไวนิล</td>
-                      </tr>
                       <tr>
                         <td>วันส่งคำสั่งซื้อ</td>
-                        <td>Oct 22, 2022</td>
+                        <td>{ precut.order_receive_date }</td>
                       </tr>
                       <tr>
                         <td>เลขที่ใบเสนอราคา</td>
-                        <td>2013149609/2</td>
+                        <td>{ precut.qt_number }</td>
                       </tr>
                       <tr>
                         <td>ชื่อโครงการ/ลูกค้า</td>
-                        <td>คุณกมเลศวร์ จุลบุตร ส่งสาขานครสวรรค์</td>
+                        <td>{ precut.real_customer_name }</td>
                       </tr>
                       <tr>
                         <td>ประเภทสินค้า</td>
-                        <td>หน้าต่าง&ประตู</td>
+                        <td>{ precut.product_type }</td>
+                      </tr>
+                      <tr>
+                        <td>กลุ่มสินค้า</td>
+                        <td>{ precut.product_group }</td>
+                      </tr>
+                      <tr>
+                        <td>สีของสินค้า</td>
+                        <td>{ precut.product_color }</td>
                       </tr>
                       <tr>
                         <td>รุ่นสินค้า</td>
-                        <td>Signature</td>
+                        <td>{ precut.product_series }</td>
                       </tr>
-                      {/* <tr>
-                        <td>ไฟล์ดาวน์โหลด</td>
-                        <td>
-                          <a
-                            href="https://www.jotform.com/uploads/npics_ss01/222648731104451/5422371140521003727/203WPL-1%202013149609-2.pdf"
-                           
-                          >
-                            ดาวน์โหลด
-                            
-                          </a>
-                        </td>
-                      </tr> */}
+                      <tr>
+                        <td>วันที่ต้องการสินค้า</td>
+                        <td>{ precut.request_date }</td>
+                      </tr>
+                      <tr>
+                        <td>สถานที่ส่งของ</td>
+                        <td>{ precut.recieve_address }</td>
+                      </tr>
+                      <tr>
+                        <td>สถานะงาน</td>
+                        <td>{ precut.order_status }</td>
+                      </tr>
                     </table>
                     <div className="float-right mt-2">
                       <Link to="/booking-status" className="btn btn-danger">

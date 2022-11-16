@@ -45,7 +45,7 @@ export default function Status() {
     },
     {
       dataField: "order_receive_date",
-      text: "วันส่งคำสั่งสินค้า",
+      text: "วันส่งคำสั่งซื้อ",
       //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
@@ -90,7 +90,7 @@ export default function Status() {
     },
     {
       dataField: "request_date",
-      text: "วันที่ส่งสินค้า",
+      text: "วันที่ต้องการสินค้า",
       //filter: textFilter(),
       sort: true,
     },
@@ -211,7 +211,7 @@ export default function Status() {
                         <div className="row">
                           <div className="col-md-3">
                             <div className="form-group">
-                              <label htmlFor="">วันที่สั่งสินค้า</label>
+                              <label htmlFor="">วันส่งคำสั่งซื้อ</label>
                               <DatePicker
                                 className="form-control"
                                 selected={sendDate}
@@ -221,7 +221,7 @@ export default function Status() {
                           </div>
                           <div className="col-md-3">
                             <div className="form-group">
-                              <label htmlFor="">วันที่ส่งสินค้า</label>
+                              <label htmlFor="">วันที่ต้องการสินค้า</label>
                               <DatePicker
                                 className="form-control"
                                 selected={requestDate}
