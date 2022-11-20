@@ -65,10 +65,10 @@ export default function Bookings() {
     // if (event.slots?.length > 15) return;
     // alert("onSelectSlot" + JSON.stringify(event));
 
-    if (event.title === "ไม่ว่าง") {
+    if (event.title == "ไม่ว่าง") {
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
-        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
+        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ หากต้องการจองในวันนี้จริง กรุณาติดต่อเจ้าหน้าที่",
         icon: "error",
         confirmButtonText: "ตกลง",
         //timer: 3000
@@ -76,16 +76,16 @@ export default function Bookings() {
       return;
     }
 
-    if (event.capacity === 0) {
-      Swal.fire({
-        title: "เกิดข้อผิดพลาด",
-        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
-        icon: "error",
-        confirmButtonText: "ตกลง",
-        //timer: 3000
-      });
-      return;
-    }
+    // if (event.capacity == 0) {
+    //   Swal.fire({
+    //     title: "เกิดข้อผิดพลาด",
+    //     text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ",
+    //     icon: "error",
+    //     confirmButtonText: "ตกลง",
+    //     //timer: 3000
+    //   });
+    //   return;
+    // }
 
     // if (event.capacity < 200) {
     //   Swal.fire({

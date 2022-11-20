@@ -18,7 +18,7 @@ export default function Sidebar() {
     } else if(role === "user") {
       setIsUser(true)
     }
-  });
+  },[]);
 
   if (!token) {
     window.location.href = "/";
@@ -29,7 +29,7 @@ export default function Sidebar() {
       <aside className="main-sidebar sidebar-dark-primary sidebar-no-expand elevation-4">
         <Link to="/bookings" className="brand-link">
           <img
-            src="/assets/dist/img/AdminLTELogo.png"
+            src={process.env.PUBLIC_URL+"/assets/dist/img/AdminLTELogo.png"}
             alt="AdminLTE Logo"
             className="brand-image img-circle elevation-3"
             style={{ opacity: ".8" }}

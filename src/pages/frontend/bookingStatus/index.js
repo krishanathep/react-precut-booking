@@ -72,29 +72,32 @@ export default function BookingStatus() {
       //filter: textFilter(),
       sort: true,
     },
-    {
-      dataField: "product_group",
-      text: "กลุ่มสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    {
-      dataField: "product_color",
-      text: "สีสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    {
-      dataField: "product_series",
-      text: "รุ่นสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
+    // {
+    //   dataField: "product_group",
+    //   text: "กลุ่มสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
+    // {
+    //   dataField: "product_color",
+    //   text: "สีสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
+    // {
+    //   dataField: "product_series",
+    //   text: "รุ่นสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
     {
       dataField: "request_date",
       text: "วันที่ต้องการสินค้า",
       //filter: textFilter(),
       sort: true,
+      formatter: (cellContent, row) => {
+        return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+      },
     },
     {
       dataField: "order_status",
@@ -255,10 +258,12 @@ export default function BookingStatus() {
                                 </option>
                                 <option value="รับข้อมูลเข้าระบบ">รับข้อมูลเข้าระบบ</option>
                                 <option value="รอตรวจแบบ">รอตรวจแบบ</option>
-                                <option value="อนุมัติและเข้าสู่กระบวนการ">
-                                  อนุมัติและเข้าสู่กระบวนการ
+                                <option value="อนุมัติเตรียมแผนการผลิต">
+                                  อนุมัติเตรียมแผนการผลิต
                                 </option>
                                 <option value="ไม่ได้รับการอนุมัติ">ไม่ได้รับการอนุมัติ</option>
+                                <option value="ปิดเคส">ปิดเคส</option>
+                                <option value="ยกเลิก">ยกเลิก</option>                             
                               </select>
                             </div>
                           </div>

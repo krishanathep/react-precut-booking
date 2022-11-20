@@ -24,7 +24,8 @@ import AdminUsersPassword from "./pages/backend/users/userPassword";
 import AdminCapacity from "./pages/backend/capacity";
 import AdminCapacityUpload from "./pages/backend/capacity/CapacityUpload";
 import AdminStatus from './pages/backend/status'
-import PageNotFound from "./pages/notfound";
+import AdminStatusView from './pages/backend/status/view'
+//import PageNotFound from "./pages/notfound";
 
 function App(props) {
 
@@ -52,6 +53,7 @@ function App(props) {
           <Route path="/backend/users/password" element={<AdminUsersPassword />} />
 
           <Route path="/backend/status" element={<AdminStatus />} />
+          <Route path="/backend/status/view/:id" element={<AdminStatusView />} />
 
           <Route path="/backend/capacity" element={<AdminCapacity />} />
           <Route

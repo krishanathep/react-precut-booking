@@ -1,37 +1,39 @@
-import React,{useState,useEffect} from "react";
-import { Link,useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
-export default function BookingView() {
+export default function StatusView() {
+  const { id } = useParams();
 
-  const {id} = useParams()
+  const [precut, setPrecut] = useState([]);
 
-  const[precut, setPrecut] = useState({})
-
-  const[error, setError] = useState('')
+  const [error, setError] = useState("");
 
   const [reject, setReject] = useState(false);
   const [reason, setReason] = useState(false);
   const [request, setRequest] = useState(false);
 
-  const [fab_name, setFabName] = useState(JSON.parse(localStorage.getItem("fab")))
+  const [fab_name, setFabName] = useState(
+    JSON.parse(localStorage.getItem("fab"))
+  );
 
-  async function getData() {
+   function getData() {
     try {
-      await fetch("http://localhost:8000/api/precut/" + id)
-      .then((res) => res.json())
-      .then((res) => setPrecut(res.precut));
-    } catch(error) {
-      setError(error)
+       fetch("http://localhost:8000/api/precut/" + id)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));     
+    } catch (error) {
+      setError(error);
     }
   }
 
-  useEffect(()=>{
-    getData()
+  useEffect(() => {
+    getData();
     hideReason()
     hideReject()
     hideRequest()
-  },[precut.reject_comment, precut.reason_npi_cancel, precut.text_request_cancel])
+  }, [precut.reject_comment, precut.reason_npi_cancel, precut.text_request_cancel]);
 
+ 
   function hideReject() {
     if(precut.reject_comment){
       setReject(true);
@@ -51,6 +53,7 @@ export default function BookingView() {
   }
 
   return (
+       
     <>
       <div className="content-wrapper">
         <div className="content-header">
@@ -79,46 +82,51 @@ export default function BookingView() {
                     <h5 className="m-0">รายละเอียดสถานะงาน</h5>
                   </div>
                   <div className="card-body">
-                    <table className="table table-bordered mt-2">
+                    <div className="container">
+                    <table className="table table-bordered mt-5">
+                      <tr>
+                        <td>FAB Name</td>
+                        <td>{precut.fabricator_name}</td>
+                      </tr>
                       <tr>
                         <td>วันส่งคำสั่งซื้อ</td>
-                        <td>{ precut.order_receive_date }</td>
+                        <td>{precut.order_receive_date}</td>
                       </tr>
                       <tr>
                         <td>เลขที่ใบเสนอราคา</td>
-                        <td>{ precut.qt_number }</td>
+                        <td>{precut.qt_number}</td>
                       </tr>
                       <tr>
                         <td>ชื่อโครงการ/ลูกค้า</td>
-                        <td>{ precut.real_customer_name }</td>
+                        <td>{precut.real_customer_name}</td>
                       </tr>
                       <tr>
                         <td>ประเภทสินค้า</td>
-                        <td>{ precut.product_type }</td>
+                        <td>{precut.product_type}</td>
                       </tr>
                       <tr>
                         <td>กลุ่มสินค้า</td>
-                        <td>{ precut.product_group }</td>
+                        <td>{precut.product_group}</td>
                       </tr>
                       <tr>
                         <td>สีของสินค้า</td>
-                        <td>{ precut.product_color }</td>
+                        <td>{precut.product_color}</td>
                       </tr>
                       <tr>
                         <td>รุ่นสินค้า</td>
-                        <td>{ precut.product_series }</td>
+                        <td>{precut.product_series}</td>
                       </tr>
                       <tr>
                         <td>วันที่ต้องการสินค้า</td>
-                        <td>{ precut.request_date }</td>
+                        <td>{precut.request_date}</td>
                       </tr>
                       <tr>
                         <td>สถานที่ส่งของ</td>
-                        <td>{ precut.recieve_address }</td>
+                        <td>{precut.recieve_address}</td>
                       </tr>
                       <tr>
                         <td>สถานะงาน</td>
-                        <td>{ precut.order_status }</td>
+                        <td>{precut.order_status}</td>
                       </tr>
                       { reject ? 
                       <>
@@ -143,9 +151,10 @@ export default function BookingView() {
                       </> : ""}
                     </table>
                     <div className="float-right mt-2">
-                      <Link to="/booking-status" className="btn btn-danger">
+                      <Link to="/backend/status" className="btn btn-danger">
                         Cancel
                       </Link>
+                    </div>
                     </div>
                   </div>
                 </div>

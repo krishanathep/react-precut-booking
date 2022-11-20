@@ -15,6 +15,7 @@ export default function Status() {
   const [error, setError] = useState("");
   const [quotation] = useState("");
   const [status] = useState("");
+  
   const [sendDate, setSendDate] = useState(new Date());
   const [requestDate, setRequestDate] = useState(new Date());
 
@@ -70,29 +71,32 @@ export default function Status() {
       //filter: textFilter(),
       sort: true,
     },
-    {
-      dataField: "product_group",
-      text: "กลุ่มสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    {
-      dataField: "product_color",
-      text: "สีสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    {
-      dataField: "product_series",
-      text: "รุ่นสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
+    // {
+    //   dataField: "product_group",
+    //   text: "กลุ่มสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
+    // {
+    //   dataField: "product_color",
+    //   text: "สีสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
+    // {
+    //   dataField: "product_series",
+    //   text: "รุ่นสินค้า",
+    //   //filter: textFilter(),
+    //   sort: true,
+    // },
     {
       dataField: "request_date",
       text: "วันที่ต้องการสินค้า",
       //filter: textFilter(),
       sort: true,
+      formatter: (cellContent, row) => {
+        return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+      },
     },
     {
       dataField: "order_status",
@@ -112,7 +116,7 @@ export default function Status() {
     return (
       <>
         <div>
-          <Link to={"/booking-status/view/"} className="btn btn-default">
+          <Link to={"/backend/status/view/"+row.file_name} className="btn btn-default">
             <i className="fas fa-file-alt"></i>
           </Link>
         </div>

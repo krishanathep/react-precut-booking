@@ -63,10 +63,10 @@ export default function CapactiyUpload() {
 			.catch((errors) => {
         Swal.fire({
           title: "Oops...",
-          text: errors,
+          text: "พบข้อผิดพลาดกรุณาตรวจสอบไฟล์ใหม่อีกครั้ง",
           icon: "error",
           confirmButtonText: "OK",
-          timer: 3000
+          //timer: 3000
         });
         return
 			});
@@ -118,6 +118,7 @@ export default function CapactiyUpload() {
                         <input
                           name="file"
                           type="file" 
+                          accept="text/csv"
                           className="form-control-file border"
                           onChange={changeHandler}
                         />

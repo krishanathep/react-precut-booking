@@ -69,9 +69,7 @@ export default function Login() {
       <div className="hold-transition login-page">
         <div className="login-box">
           <div className="login-logo">
-            <Link to="/">
-              <i className="far fa-calendar-check fa-2x"></i>
-            </Link>
+          <img src={process.env.PUBLIC_URL+"/logo-winsor.png"} class="rounded"></img>
           </div>
           <div className="card card-primary card-outline">
             <div className="card-header" align="center">
