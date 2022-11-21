@@ -40,7 +40,7 @@ export default function Status() {
     // },
     {
       dataField: "fabricator_name",
-      text: "FAB name",
+      text: "Fabricator",
       //filter: textFilter(),
       sort: true,
     },
@@ -122,6 +122,16 @@ export default function Status() {
         </div>
       </>
     );
+  }
+
+  async function searchFab(key) {
+    try {
+      await fetch("http://localhost:8000/api/precut-fab-name?data=" + key)
+        .then((res) => res.json())
+        .then((res) => setPrecut(res.precut));
+    } catch (error) {
+      setError(error);
+    }
   }
 
   async function searchSendDate(date) {
@@ -213,7 +223,21 @@ export default function Status() {
                     <div className="card mb-4">
                       <div className="card-body">
                         <div className="row">
-                          <div className="col-md-3">
+                        <div className="col-md-2">
+                            <div className="form-group">
+                              <label htmlFor="">Fabricator</label>
+                              <input
+                                name={quotation}
+                                type="text"
+                                className="form-control"
+                                placeholder="Fabricator"
+                                onChange={(event) =>
+                                  searchFab(event.target.value)
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-2">
                             <div className="form-group">
                               <label htmlFor="">วันส่งคำสั่งซื้อ</label>
                               <DatePicker
@@ -223,7 +247,7 @@ export default function Status() {
                               />
                             </div>
                           </div>
-                          <div className="col-md-3">
+                          <div className="col-md-2">
                             <div className="form-group">
                               <label htmlFor="">วันที่ต้องการสินค้า</label>
                               <DatePicker
@@ -250,25 +274,20 @@ export default function Status() {
                           <div className="col-md-3">
                             <div className="form-group">
                               <label htmlFor="">สถานะสินค้า</label>
-                              <select
-                                class="form-control"
-                                id="sel1"
-                                name={status}
-                                onChange={(event) =>
-                                  searchStatus(event.target.value)
-                                }
-                              >
-                                <option value="">เลือกสถานะสินค้า</option>
-                                <option value="รับข้อมูลเข้าระบบ">
-                                  รับข้อมูลเข้าระบบ
+                              <select class="form-control" id="sel1" name={status} onChange={(event) =>
+                                searchStatus(event.target.value)
+                              }>
+                                <option value="">
+                                  เลือกสถานะสินค้า
                                 </option>
+                                <option value="รับข้อมูลเข้าระบบ">รับข้อมูลเข้าระบบ</option>
                                 <option value="รอตรวจแบบ">รอตรวจแบบ</option>
-                                <option value="อนุมัติและเข้าสู่กระบวนการ">
-                                  อนุมัติและเข้าสู่กระบวนการ
+                                <option value="อนุมัติเตรียมแผนการผลิต">
+                                  อนุมัติเตรียมแผนการผลิต
                                 </option>
-                                <option value="ไม่ได้รับการอนุมัติ">
-                                  ไม่ได้รับการอนุมัติ
-                                </option>
+                                <option value="ไม่ได้รับการอนุมัติ">ไม่ได้รับการอนุมัติ</option>
+                                <option value="ปิดเคส">ปิดเคส</option>
+                                <option value="ยกเลิก">ยกเลิก</option>                             
                               </select>
                             </div>
                           </div>
