@@ -39,7 +39,7 @@ export default function BookingCreate() {
 
     if(booking_capacity === '') {
       Swal.fire({
-        title: "เกิดข้อผิดพลาด",
+        title: "ขออภัย (T..T)'' ",
         text: "กรุณาใส่จำนวน Capacity ที่ต้องการด้วยครับ",
         icon: "error",
         confirmButtonText: "OK",
@@ -50,7 +50,7 @@ export default function BookingCreate() {
 
     if(booking_capacity > capacity.capacity){
       Swal.fire({
-        title: "เกิดข้อผิดพลาด",
+        title: "ขออภัย (T..T)'' ",
         text: "ไม่สามารถเพิ่ม Booking ได้ เพราะ Capacity เกินกว่าที่กำหนด",
         icon: "error",
         confirmButtonText: "OK",
@@ -71,7 +71,7 @@ export default function BookingCreate() {
 
     //window.open(faburl +'?'+'fabName'+'='+fab_name+'&'+'bookingDate'+'='+booking_date+'&'+'capacity'+'='+booking_capacity+'&'+'userName'+'='+user_name);
     
-    window.open(faburl + '?' + 'token' + '=' + fabcode +'&'+'V2'+'='+ moment(new Date(booking_date)).format("DD-MM-YYYY") +'&'+ 'V1' + '=' + booking_capacity);
+    window.open(faburl + '?' + 'token' + '=' + fabcode +'&'+'V2'+'='+ moment(new Date(booking_date)).format("YYYY-MM-DD") +'&'+ 'V1' + '=' + booking_capacity);
 
     fetch('http://127.0.0.1:8000/api/booking-create', resusetOptions)
       .then((res)=>res.json())
@@ -143,7 +143,7 @@ export default function BookingCreate() {
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Booking date</label>
+                            <label htmlFor="name">วันที่ต้องการสินค้า</label>
                             <input
                               type="text"
                               className="form-control"
@@ -156,16 +156,16 @@ export default function BookingCreate() {
                         </div>
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="name">Capacity สามารถจองได้ {limite} ชุด</label>
+                            <label htmlFor="name">จำนวนชุดที่ต้องการ (สามารถจองได้ {limite} ชุด)</label>
                             <NumericFormat
                               type="number"
                               className="form-control"
                               value={booking_capacity}
                               onChange={(event) => setBookingCapacity(event.target.value)}
-                              placeholder="Input capacity"
+                              placeholder="จำนวนชุดที่ต้องการ"
                               decimalScale={0}
                             />
-                            <small className="text-danger">* หากต้องการสั่งซื้อมากกว่า CAP ที่กำหนด ให้ติดต่อทีมขาย หรือ ทีม CS ที่ดูแลท่าน</small>
+                            <small className="text-danger">* หากต้องการสั่งซื้อจำนวนชุดมากกว่า จำนวนที่สามารถจองได้ให้ติดต่อทีมขาย หรือ ทีม CS ที่ดูแลท่าน</small>
                           </div>
                         </div>
                         <div className="col-md-12">

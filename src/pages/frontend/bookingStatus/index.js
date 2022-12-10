@@ -2,12 +2,14 @@ import React, { useState,useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+//import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+//import overlayFactory from 'react-bootstrap-table2-overlay';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import moment from "moment";
+import { collapseToast } from "react-toastify";
 
 export default function BookingStatus() {
   const fabname = JSON.parse(localStorage.getItem("fab"));
@@ -19,7 +21,6 @@ export default function BookingStatus() {
   const [sendDate, setSendDate] = useState(new Date());
   const [requestDate, setRequestDate] = useState(new Date());
   
-
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">
       {" "}
@@ -32,17 +33,11 @@ export default function BookingStatus() {
     paginationTotalRenderer: customTotal,
     disablePageTitle: true,
   };
-
+ 
   const columns = [
     // {
     //   dataField: "id",
     //   text: "ID",
-    //   sort: true
-    // },
-    // {
-    //   dataField: "fab_name",
-    //   text: "FAB name",
-    //   //filter: textFilter(),
     //   sort: true
     // },
     {
@@ -55,48 +50,52 @@ export default function BookingStatus() {
       },
     },
     {
+      dataField: "order_type",
+      text: "ประเภทงาน",
+      //filter: textFilter(),
+      sort: true,
+    },
+    {
       dataField: "qt_number",
       text: "เลขที่ใบเสนอราคา",
-      //filter: textFilter(),
+      formatter: (cellContent, row) => {
+        if(!row.qt_number){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <p>{row.qt_number}</p>
+        }
+      },
       sort: true,
     },
     {
       dataField: "real_customer_name",
       text: "ชื่อโครงการ/ลูกค้า",
-      //filter: textFilter(),
+      formatter: (cellContent, row) => {
+        if(!row.real_customer_name){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <p>{row.real_customer_name}</p>
+        }
+      },
       sort: true,
     },
-    {
-      dataField: "product_type",
-      text: "ประเภทสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    // {
-    //   dataField: "product_group",
-    //   text: "กลุ่มสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
-    // {
-    //   dataField: "product_color",
-    //   text: "สีสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
-    // {
-    //   dataField: "product_series",
-    //   text: "รุ่นสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
     {
       dataField: "request_date",
       text: "วันที่ต้องการสินค้า",
       //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
-        return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+        if(row.request_date == "0000-00-00"){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+        }
       },
     },
     {
@@ -107,18 +106,22 @@ export default function BookingStatus() {
     },
     {
       dataField: "actions",
-      text: "Actions",
+      text: "View",
       formatter: actionButton,
       align: "center",
+      headerStyle: (colum, colIndex) => {
+        return { width: "100px"};
+      }
     },
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
+
     return (
       <>
         <div>
-          <Link to={"/booking-status/view/" + row.file_name} className="btn btn-default">
-            <i className="fas fa-file-alt"></i>
+          <Link to={"/booking-status/view/" + row.filename_encryp} className="btn btn-default">
+            <i className="fas fa-eye"></i>
           </Link>
         </div>
       </>
@@ -249,7 +252,7 @@ export default function BookingStatus() {
                           </div>
                           <div className="col-md-3">
                             <div className="form-group">
-                              <label htmlFor="">สถานะสินค้า</label>
+                              <label htmlFor="">สถานะงาน</label>
                               <select class="form-control" id="sel1" name={status} onChange={(event) =>
                                 searchStatus(event.target.value)
                               }>
@@ -276,6 +279,8 @@ export default function BookingStatus() {
                       keyField="id"
                       data={precut}
                       columns={columns}
+                      // loading={ true }
+                      // overlay={ overlayFactory({ spinner: true, background: 'rgba(192,192,192,0.3)' }) }
                       pagination={paginationFactory(options)}
                       noDataIndication="ไม่พบข้อมูล"
                     />

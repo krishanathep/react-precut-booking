@@ -7,11 +7,16 @@ import Moment from "react-moment";
 import "moment-timezone";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import newId from '../../utils/newId'
+
 
 export default function Users() {
+
   const [users, setUsers] = useState("");
   //const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
+
+  const [id, setId] = useState(newId)
 
   const role = JSON.parse(localStorage.getItem("role"));
 
@@ -34,7 +39,7 @@ export default function Users() {
 
   const columns = [
     // {
-    //   dataField: "row",
+    //   dataField: id,
     //   text: "ID", 
     // },
     {
@@ -139,7 +144,8 @@ export default function Users() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    setId();
+  }, [id]);
 
   // if (loading === true) {
   //   return (

@@ -69,7 +69,7 @@ export default function Sidebar() {
             <li className="nav-item">
               <Link to="/backend/status" className="nav-link">
               <i className="nav-icon fas fa-clipboard-check"></i>
-                <p>จัดการสถานะงาน</p>
+                <p>สถานะงานทั้งหมด</p>
               </Link>
             </li>
             <li className="nav-item">
@@ -103,7 +103,7 @@ export default function Sidebar() {
              <li className="nav-item">
               <Link to="/backend/capacity" className="nav-link">
               <i className="nav-icon fas fa-chart-pie"></i>
-                <p>จัดการปริมาณงาน</p>
+                <p>สถานะงานทั้งหมด</p>
               </Link>
             </li>
             <li className="nav-item">

@@ -6,7 +6,7 @@ import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
-const CURRENT_DATE = moment().add(14, "days").toDate();
+const CURRENT_DATE = moment().add(13, "days").toDate();
 
 const ColoredDateCellWrapper = ({ children, value }) =>
   React.cloneElement(Children.only(children), {
@@ -21,7 +21,7 @@ export default function Bookings() {
 
   const fabname = JSON.parse(localStorage.getItem("fab"));
 
-  const [date, setDate] = useState(moment().add(14, "days").toDate());
+  const [date, setDate] = useState(moment().add(13, "days").toDate());
 
   const onNavigate = useCallback((newDate) => setDate(newDate), [setDate]);
 
@@ -37,7 +37,7 @@ export default function Bookings() {
   }, []);
 
   //const [date1, setDate1] = useState(moment().toDate());
-  const [date2, setDate2] = useState(moment().add(14, "days").toDate());
+  const [date2, setDate2] = useState(moment().add(13, "days").toDate());
 
   // //------------------------------------
   //     const str = capacity.date;
@@ -67,8 +67,8 @@ export default function Bookings() {
 
     if (event.title == "ไม่ว่าง") {
       Swal.fire({
-        title: "เกิดข้อผิดพลาด",
-        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ หากต้องการจองในวันนี้จริง กรุณาติดต่อเจ้าหน้าที่",
+        title: "ขออภัย (T..T)'' ",
+        text: "ไม่สามารถจองวันได้เนื่องจาก CAP ไม่ว่างครับ หากต้องการในวันนี้ กรุณาติดต่อเจ้าหน้าที่หรือแจ้งผ่านผู้แทนขายหรือ CS ผ่านช่องทาง E-mail",
         icon: "error",
         confirmButtonText: "ตกลง",
         //timer: 3000

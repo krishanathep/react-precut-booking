@@ -54,48 +54,52 @@ export default function Status() {
       },
     },
     {
+      dataField: "order_type",
+      text: "ประเภทงาน",
+      //filter: textFilter(),
+      sort: true,
+    },
+    {
       dataField: "qt_number",
       text: "เลขที่ใบเสนอราคา",
-      //filter: textFilter(),
+      formatter: (cellContent, row) => {
+        if(!row.qt_number){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <p>{row.qt_number}</p>
+        }
+      },
       sort: true,
     },
     {
       dataField: "real_customer_name",
       text: "ชื่อโครงการ/ลูกค้า",
-      //filter: textFilter(),
+      formatter: (cellContent, row) => {
+        if(!row.real_customer_name){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <p>{row.real_customer_name}</p>
+        }
+      },
       sort: true,
     },
-    {
-      dataField: "product_type",
-      text: "ประเภทสินค้า",
-      //filter: textFilter(),
-      sort: true,
-    },
-    // {
-    //   dataField: "product_group",
-    //   text: "กลุ่มสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
-    // {
-    //   dataField: "product_color",
-    //   text: "สีสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
-    // {
-    //   dataField: "product_series",
-    //   text: "รุ่นสินค้า",
-    //   //filter: textFilter(),
-    //   sort: true,
-    // },
     {
       dataField: "request_date",
       text: "วันที่ต้องการสินค้า",
       //filter: textFilter(),
       sort: true,
       formatter: (cellContent, row) => {
-        return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+        if(row.request_date == "0000-00-00"){
+          return(
+            <p>ตามไฟล์อัพโหลด</p>
+          )
+        }else{
+          return <Moment format="DD-MM-YYYY">{row.request_date}</Moment>;
+        }
       },
     },
     {
@@ -106,9 +110,12 @@ export default function Status() {
     },
     {
       dataField: "actions",
-      text: "Actions",
+      text: "View",
       formatter: actionButton,
       align: "center",
+      headerStyle: (colum, colIndex) => {
+        return { width: "100px"};
+      }
     },
   ];
 
@@ -116,8 +123,8 @@ export default function Status() {
     return (
       <>
         <div>
-          <Link to={"/backend/status/view/"+row.file_name} className="btn btn-default">
-            <i className="fas fa-file-alt"></i>
+          <Link to={"/backend/status/view/"+row.filename_encryp} className="btn btn-default">
+            <i className="fas fa-eye"></i>
           </Link>
         </div>
       </>
@@ -217,7 +224,7 @@ export default function Status() {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">จัดการสถานะงาน</h5>
+                    <h5 className="m-0">สถานะงานทั้งหมด</h5>
                   </div>
                   <div className="card-body">
                     <div className="card mb-4">
@@ -278,7 +285,7 @@ export default function Status() {
                                 searchStatus(event.target.value)
                               }>
                                 <option value="">
-                                  เลือกสถานะสินค้า
+                                  เลือกสถานะงาน
                                 </option>
                                 <option value="รับข้อมูลเข้าระบบ">รับข้อมูลเข้าระบบ</option>
                                 <option value="รอตรวจแบบ">รอตรวจแบบ</option>
