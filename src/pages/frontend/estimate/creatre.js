@@ -27,27 +27,27 @@ function EstimateCreate() {
 
   const onSubmit = async (data) => {
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append("file", data.file[0]);
-    formData.append("fab_request_no", data.fab_request_no);
-    formData.append("status", data.status);
-    formData.append("fab_name", data.fab_name);
-    formData.append("product_name", data.product_name);
-    formData.append("product_model", data.product_model);
-    formData.append("product_color", data.product_color[0]);
-    formData.append("mullion_type", data.mullion_type);
-    formData.append("muliion_size", data.muliion_size);
-    formData.append("have_mirror", data.have_mirror);
-    formData.append("mirror_type_and_size", data.mirror_type_and_size);
-    formData.append("mirror_edge_size", data.mirror_edge_size);
-    formData.append("product_more_detail", data.product_more_detail);
+    // formData.append("file", data.file[0]);
+    // formData.append("fab_request_no", data.fab_request_no);
+    // formData.append("status", data.status);
+    // formData.append("fab_name", data.fab_name);
+    // formData.append("product_name", data.product_name);
+    // formData.append("product_model", data.product_model);
+    // formData.append("product_color", data.product_color[0]);
+    // formData.append("mullion_type", data.mullion_type);
+    // formData.append("muliion_size", data.muliion_size);
+    // formData.append("have_mirror", data.have_mirror);
+    // formData.append("mirror_type_and_size", data.mirror_type_and_size);
+    // formData.append("mirror_edge_size", data.mirror_edge_size);
+    // formData.append("product_more_detail", data.product_more_detail);
 
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
 
     try {
       await axios
-        .post(`${process.env.REACT_APP_API}/estimate-create`, formData)
+        .post(`${process.env.REACT_APP_API}/estimate-create`, data)
         .then((res) => {
           alert("เพิ่มข้อมูลเรียบร้อยแล้ว");
           navigate("/estimate");

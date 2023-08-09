@@ -6,7 +6,6 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
-import moment from "moment";
 import axios from 'axios'
 
 const Discount = () => {
@@ -34,18 +33,23 @@ const Discount = () => {
       },
     },
     {
-      dataField: "plan_name",
+      dataField: "project_name",
       text: "แบบบ้าน",
       sort: true,
     },
     {
-      dataField: "standard",
-      text: "มาตรฐาน",
+      dataField: "project_type",
+      text: "ประเภทงาน",
       sort: true,
     },
     {
       dataField: "revision",
       text: "Revision",
+      sort: true,
+    },
+    {
+      dataField: "amount",
+      text: "จำนวน",
       sort: true,
       headerStyle: (colum, colIndex) => {
         return { width: "100px" };
@@ -59,20 +63,20 @@ const Discount = () => {
         return <Moment format="DD-MMMM-YYYY">{row.created_at}</Moment>;
       },
     },
-    {
-      dataField: "file",
-      text: "ไฟล์ดาวน์โหลด",
-      formatter: fileDownload,
-      sort: true,
-    },
-    {
-      dataField: "status",
-      text: "สถานะ",
-      sort: true,
-      headerStyle: (colum, colIndex) => {
-        return { width: "100px" };
-      },
-    },
+    // {
+    //   dataField: "file_pdf",
+    //   text: "ไฟล์ดาวน์โหลด",
+    //   formatter: fileDownload,
+    //   sort: true,
+    // },
+    // {
+    //   dataField: "status",
+    //   text: "สถานะ",
+    //   sort: true,
+    //   headerStyle: (colum, colIndex) => {
+    //     return { width: "100px" };
+    //   },
+    // },
     {
       dataField: "actions",
       text: "Actions",
@@ -97,8 +101,8 @@ const Discount = () => {
   function actionButton(cell, row, rowIndex, formatExtraData) {
     return (
       <>
-        <Link to={'/backend/discount/view/'+ row.prefsuite_id} className="btn btn-info"><i className="fas fa-eye"></i></Link>{" "}
-        <Link to={'/backend/discount/edit/'+ row.prefsuite_id} className="btn btn-primary"><i className="fas fa-edit"></i></Link>{" "}
+        <Link to={'/backend/discount/view/'+ row.id} className="btn btn-info"><i className="fas fa-eye"></i></Link>{" "}
+        <Link to={'/backend/discount/edit/'+ row.id} className="btn btn-primary"><i className="fas fa-edit"></i></Link>{" "}
         <button onClick={()=>deleteSubmit()} className="btn btn-danger"><i className="fas fa-trash"></i></button>
       </>
     );
@@ -107,7 +111,7 @@ const Discount = () => {
   function fileDownload(cell, row, rowIndex, formatExtraData) {
     return (
       <>
-        <a href={'http://127.0.0.1:8000/uploads/'+row.file} target="_blank">{row.file}</a>
+        <a href={'http://127.0.0.1:8000/uploads/memo/pdf/'+row.file_pdf} target="_blank">{row.file_pdf}</a>
       </>
     );
   }
@@ -168,7 +172,13 @@ const Discount = () => {
                             className="btn btn-primary"
                             to={"/backend/discount/create"}
                           >
-                            <i className="fas fa-plus"></i> คูปองส่วนลด
+                            <i className="fas fa-plus"></i> ส่วนลดพิเศษ
+                          </Link>{' '}
+                          <Link
+                            className="btn btn-success"
+                            to={"/backend/discount/import"}
+                          >
+                            <i className="fas fa-file-excel"></i> นำเข้าไฟล์
                           </Link>
                         </div>
                       </div>
