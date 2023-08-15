@@ -6,34 +6,57 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
-import axios from 'axios'
+import axios from "axios";
 
 const Discount = () => {
-  const [discounts,setDiscounts] = useState([])
+  const [discounts, setDiscounts] = useState([]);
 
   const getData = async () => {
-    await axios.get('http://127.0.0.1:8000/api/discounts')
-      .then((res)=>{
-        console.log(res.data)
-        setDiscounts(res.data.discounts)
-      })
-  }
+    await axios.get("http://127.0.0.1:8000/api/discounts").then((res) => {
+      console.log(res.data);
+      setDiscounts(res.data.discounts);
+    });
+  };
 
-  useEffect(()=>{
-    getData()
-  },[])
+  const handleDelete = (row) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "Your Discount has been deleted",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        axios
+          .delete("http://127.0.0.1:8000/api/discount-delete/" + row.id)
+          .then((res) => {
+            console.log(res);
+            getData();
+          });
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const columns = [
     {
       dataField: "prefsuit_id",
       text: "Prefsuite ID",
       sort: true,
-      headerStyle: (colum, colIndex) => {
-        return { width: "150px" };
-      },
     },
     {
-      dataField: "project_name",
+      dataField: "design_name",
       text: "แบบบ้าน",
       sort: true,
     },
@@ -43,17 +66,14 @@ const Discount = () => {
       sort: true,
     },
     {
-      dataField: "revision",
-      text: "Revision",
+      dataField: "standard_type",
+      text: "ประเภทมาตรฐาน",
       sort: true,
     },
     {
-      dataField: "amount",
-      text: "จำนวน",
+      dataField: "revision",
+      text: "Revision",
       sort: true,
-      headerStyle: (colum, colIndex) => {
-        return { width: "100px" };
-      },
     },
     {
       dataField: "created_at",
@@ -63,20 +83,6 @@ const Discount = () => {
         return <Moment format="DD-MMMM-YYYY">{row.created_at}</Moment>;
       },
     },
-    // {
-    //   dataField: "file_pdf",
-    //   text: "ไฟล์ดาวน์โหลด",
-    //   formatter: fileDownload,
-    //   sort: true,
-    // },
-    // {
-    //   dataField: "status",
-    //   text: "สถานะ",
-    //   sort: true,
-    //   headerStyle: (colum, colIndex) => {
-    //     return { width: "100px" };
-    //   },
-    // },
     {
       dataField: "actions",
       text: "Actions",
@@ -101,39 +107,20 @@ const Discount = () => {
   function actionButton(cell, row, rowIndex, formatExtraData) {
     return (
       <>
-        <Link to={'/backend/discount/view/'+ row.id} className="btn btn-info"><i className="fas fa-eye"></i></Link>{" "}
-        <Link to={'/backend/discount/edit/'+ row.id} className="btn btn-primary"><i className="fas fa-edit"></i></Link>{" "}
-        <button onClick={()=>deleteSubmit()} className="btn btn-danger"><i className="fas fa-trash"></i></button>
+        <Link to={"/backend/discount/view/" + row.id} className="btn btn-info">
+          <i className="fas fa-eye"></i>
+        </Link>{" "}
+        <Link
+          to={"/backend/discount/edit/" + row.id}
+          className="btn btn-primary"
+        >
+          <i className="fas fa-edit"></i>
+        </Link>{" "}
+        <button onClick={() => handleDelete(row)} className="btn btn-danger">
+          <i className="fas fa-trash"></i>
+        </button>
       </>
     );
-  }
-
-  function fileDownload(cell, row, rowIndex, formatExtraData) {
-    return (
-      <>
-        <a href={'http://127.0.0.1:8000/uploads/memo/pdf/'+row.file_pdf} target="_blank">{row.file_pdf}</a>
-      </>
-    );
-  }
-
-  const deleteSubmit =()=>{
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      }
-    })
   }
 
   return (
@@ -173,7 +160,7 @@ const Discount = () => {
                             to={"/backend/discount/create"}
                           >
                             <i className="fas fa-plus"></i> ส่วนลดพิเศษ
-                          </Link>{' '}
+                          </Link>{" "}
                           <Link
                             className="btn btn-success"
                             to={"/backend/discount/import"}

@@ -22,7 +22,7 @@ const View = () => {
 
   useEffect(()=>{
     fetchData()
-  })
+  },[])
 
   return (
     <>
@@ -60,10 +60,6 @@ const View = () => {
                       <td>{ discount.prefsuit_id }</td>
                     </tr>
                     <tr>
-                      <td>ชื่อโครงการ</td>
-                      <td>{ discount.project_name }</td>
-                    </tr>
-                    <tr>
                       <td>ประเภทงาน</td>
                       <td>{ discount.project_type }</td>
                     </tr>
@@ -84,32 +80,8 @@ const View = () => {
                       <td><a href={ 'http://127.0.0.1:8000/uploads/memo/pdf/'+discount.file_pdf } target='_blank'>{ discount.file_pdf }</a></td>
                     </tr>
                     <tr>
-                      <td>จำนวนสินค้า</td>
-                      <td>{ discount.amount }</td>
-                    </tr>
-                    <tr>
-                      <td>รุ่นสินค้า</td>
-                      <td>{ discount.series }</td>
-                    </tr>
-                    <tr>
-                      <td>สีสินค้า</td>
-                      <td>{ discount.color }</td>
-                    </tr>
-                    <tr>
-                      <td>ตรางเมตร</td>
-                      <td>{ discount.sqm }</td>
-                    </tr>
-                    <tr>
-                      <td>ส่วนลดเดิม</td>
-                      <td>{ discount.current_p_discount }%</td>
-                    </tr>
-                    <tr>
-                      <td>ส่วนสดใหม่</td>
-                      <td>{ discount.new_p_discount }%</td>
-                    </tr>
-                    <tr>
-                      <td>สถานะสินค้า</td>
-                      <td><span class="badge bg-success">{discount.status }</span></td>
+                      <td>อัพโหลดโดย</td>
+                      <td>{ discount.upload_by }</td>
                     </tr>
                     <tr>
                       <td>หมายเหตุ</td>
