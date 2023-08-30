@@ -96,10 +96,8 @@ export default function Status() {
       text: "วันที่ต้องการสินค้า",
       sort: true,
       formatter: (cellContent, row) => {
-        if(row.order_type === "ตรวจแบบอย่างเดียว"){
-          return(
-            <p className="text-center">-</p>
-          )
+        if (row.order_type === "ตรวจแบบอย่างเดียว") {
+          return <p className="text-center">-</p>;
         }
         if (row.request_date === "0000-00-00") {
           return <p>ตามไฟล์อัพโหลด</p>;
@@ -115,25 +113,42 @@ export default function Status() {
     },
     {
       dataField: "actions",
-      text: "View",
+      text: "Actions",
       formatter: actionButton,
       align: "center",
-      headerStyle: (colum, colIndex) => {
-        return { width: "100px" };
-      },
+      headerStyle: {textAlign: 'center'}
     },
   ];
 
   function actionButton(cell, row, rowIndex, formatExtraData) {
+
+    //Cancel Order date range.
+    const CANCEL_ORDER_DATE = moment(row.created_at).add(3, "days").toDate();
+    const CURRENT_DATE = moment().toDate();
+
+    const cancelOrder = () => {
+      alert("ต้องการยกเลิกออเดอร์ : "+ row.file_name);
+    };
+
     return (
       <>
         <div>
           <Link
             to={"/backend/status/view/" + row.filename_encryp}
-            className="btn btn-default"
+            className="btn btn-info"
           >
             <i className="fas fa-eye"></i>
-          </Link>
+          </Link>{" "}
+          <button 
+            onClick={cancelOrder} 
+            className="btn btn-danger"
+            disabled={
+              !(
+                CURRENT_DATE < CANCEL_ORDER_DATE
+              )}
+          >
+            <i className="fas fa-ban"></i>
+          </button>
         </div>
       </>
     );
@@ -332,7 +347,9 @@ export default function Status() {
                                 <option value="อนุมัติเตรียมแผนการผลิต">
                                   อนุมัติเตรียมแผนการผลิต
                                 </option>
-                                <option value="อนุมัติการตรวจแบบแล้ว">อนุมัติการตรวจแบบแล้ว</option>
+                                <option value="อนุมัติการตรวจแบบแล้ว">
+                                  อนุมัติการตรวจแบบแล้ว
+                                </option>
                                 <option value="ไม่ได้รับการอนุมัติ">
                                   ไม่ได้รับการอนุมัติ
                                 </option>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const Create = () => {
@@ -15,6 +16,7 @@ const Create = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+
     const formData = new FormData();
 
     formData.append("file", data.file[0]);
@@ -23,22 +25,40 @@ const Create = () => {
     formData.append("design_name", data.design_name);
     formData.append("standard_type", data.standard_type);
     formData.append("revision", data.revision);
+    formData.append("series", data.series);
+    formData.append("color", data.color);
+    formData.append("lock_system_type", data.lock_system_type);
+    formData.append("amount", data.amount);
+    formData.append("sqm", data.sqm);
+    formData.append("new_p_discount", data.new_p_discount);
     formData.append("remark", data.remark);
     formData.append("upload_by", data.upload_by);
+    formData.append("svt", "SBCI)sm!jdS^UEK8v!");
 
     try {
       await axios
         .post(
-          "http://127.0.0.1:8000/api/discount-create?svt=SBCI)sm!jdS^UEK8v!",
+          process.env.REACT_APP_API+"/discount-create",
           formData
         )
         .then((res) => {
           console.log(res.data.discount);
-          alert("เพิ่มข้อมูลเรียบร้อยแล้ว");
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'เพิ่มข้อมูลส่วนลดเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/backend/discount");
         });
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'ข้อมูลไม่ถูกต้อง',
+        text: "หมายเลข Preftsuite : " + data.prefsuit_id + " ซ้ำกับในระบบ",
+      })
     }
   };
 
@@ -49,7 +69,7 @@ const Create = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Special discount create</h1>
+                <h1 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ (เพิ่มข้อมูล)</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -68,7 +88,7 @@ const Create = () => {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Special discount create</h5>
+                    <h5 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ (เพิ่มข้อมูล)</h5>
                   </div>
                   <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +100,7 @@ const Create = () => {
                           {...register("upload_by", { required: true })}
                           hidden
                         />
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="">Prefsuite ID</label>
                             <input
@@ -96,28 +116,7 @@ const Create = () => {
                             )}
                           </div>
                         </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="">ประเภทงาน</label>
-                            <select
-                              className="form-control"
-                              aria-label="Default select example"
-                              {...register("project_type", { required: true })}
-                            >
-                              <option selected value="">
-                                Please select data
-                              </option>
-                              <option value="บ้านเดีี่ยว">บ้านเดี่ยว</option>
-                              <option value="โครงการ">โครงการ</option>
-                            </select>
-                            {errors.project_type && (
-                              <span className="text-danger">
-                                This field is required
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="">แบบบ้าน</label>
                             <input
@@ -133,9 +132,9 @@ const Create = () => {
                             )}
                           </div>
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="">ประเภทมาตรฐาน</label>
+                            <label htmlFor="">มาตรฐาน</label>
                             <input
                               type="text"
                               className="form-control"
@@ -148,8 +147,8 @@ const Create = () => {
                               </span>
                             )}
                           </div>
-                        </div>
-                        <div className="col-md-12">
+                        </div>                
+                        <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="">Revision</label>
                             <input
@@ -165,7 +164,142 @@ const Create = () => {
                             )}
                           </div>
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">ประเภทงาน</label>
+                            <select
+                              className="form-control"
+                              aria-label="Default select example"
+                              {...register("project_type", { required: true })}
+                            >
+                              <option selected value="">
+                                Please select data
+                              </option>
+                              <option value="บ้านเดี่ยว">บ้านเดี่ยว</option>
+                              <option value="โครงการ">โครงการ</option>
+                            </select>
+                            {errors.project_type && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">รุ่นสินค้า</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("series", { required: true })}
+                            />
+                            {errors.series && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">สีสินค้า</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("color", { required: true })}
+                            />
+                            {errors.color && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">ระบบล็อค</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("lock_system_type", { required: true })}
+                            />
+                            {errors.lock_system_type && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">จำนวนชุด</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("amount", { required: true })}
+                            />
+                            {errors.amount && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">ตารางเมตร</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("sqm", { required: true })}
+                            />
+                            {errors.sqm && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">ส่วนลดพิเศษ</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Please input data"
+                              {...register("new_p_discount", { required: true })}
+                            />
+                            {errors.new_p_discount && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label htmlFor="">PDF file</label>
+                            <br />
+                            <input
+                              type="file"
+                              accept="application/pdf"
+                              className="form-control-file border"
+                              {...register("file", { required: true })}
+                            />
+                            <span className="text-muted">*อัพโหลดได้เฉพาะไฟล์ PDF เท่านั้น</span><br/>
+                            {errors.file && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                         <div className="col-md-12">
                           <div className="form-group">
                             <label htmlFor="">หมายเหตุ</label>
                             <textarea
@@ -176,22 +310,6 @@ const Create = () => {
                               {...register("remark", { required: true })}
                             ></textarea>
                             {errors.remark && (
-                              <span className="text-danger">
-                                This field is required
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <label htmlFor="">PDF file</label>
-                            <br />
-                            <input
-                              type="file"
-                              {...register("file", { required: true })}
-                            />
-                            <br />
-                            {errors.file && (
                               <span className="text-danger">
                                 This field is required
                               </span>

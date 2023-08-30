@@ -3,30 +3,41 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
+import moment from "moment";
 import axios from "axios";
 
 const Discount = () => {
+  const [name] = useState(JSON.parse(localStorage.getItem("name")));
+  const role = JSON.parse(localStorage.getItem("role"));
   const [discounts, setDiscounts] = useState([]);
-
+  const [requestDate, setRequestDate] = useState(new Date());
+  const [preftsuite_fiilter] = useState('')
+  const [design_name_filter] = useState('')
+  const [project_type_filter] = useState('')
+  
   const getData = async () => {
-    await axios.get("http://127.0.0.1:8000/api/discounts").then((res) => {
+    await axios.get(process.env.REACT_APP_API+"/discounts").then((res) => {
       console.log(res.data);
       setDiscounts(res.data.discounts);
     });
   };
 
+
   const handleDelete = (row) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "ยืนยันการลบข้อมูล",
+      text: "คุณต้องการลบข้อมูลเอกสารส่วนลดแบบพิเศษ!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "ยกเลิก",
+      confirmButtonText: "ตกลง",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -36,13 +47,54 @@ const Discount = () => {
           timer: 2000,
         });
         axios
-          .delete("http://127.0.0.1:8000/api/discount-delete/" + row.id)
+          .post(process.env.REACT_APP_API+"/discount-delete/" + row.id)
           .then((res) => {
             console.log(res);
             getData();
           });
       }
     });
+  };
+
+  const filterPreftsuiteID = async (key) => {
+    try {
+      await axios
+        .get(process.env.REACT_APP_API+"/discount-preftsuite_id_filter?data="+key)
+        .then((res) => setDiscounts(res.data.discounts));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterDesignName = async (key) => {
+    try {
+      await axios
+        .get(process.env.REACT_APP_API+"/discount-design_name_filter?data="+key)
+        .then((res) => setDiscounts(res.data.discounts));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterProjectType = async (key) => {
+    try {
+      await axios
+        .get(process.env.REACT_APP_API+"/discount-project_type_filter?data="+key)
+        .then((res) => setDiscounts(res.data.discounts));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterCreateDate = async (date) => {
+    try {
+      setRequestDate(date)
+      await axios
+        .get(process.env.REACT_APP_API+"/discount-create_date_filter?data="+moment(date).format("YYYY-MM-DD"))
+        .then((res) => setDiscounts(res.data.discounts));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -61,18 +113,18 @@ const Discount = () => {
       sort: true,
     },
     {
-      dataField: "project_type",
-      text: "ประเภทงาน",
-      sort: true,
-    },
-    {
       dataField: "standard_type",
-      text: "ประเภทมาตรฐาน",
+      text: "มาตรฐาน",
       sort: true,
     },
     {
       dataField: "revision",
       text: "Revision",
+      sort: true,
+    },
+    {
+      dataField: "project_type",
+      text: "ประเภทงาน",
       sort: true,
     },
     {
@@ -87,6 +139,7 @@ const Discount = () => {
       dataField: "actions",
       text: "Actions",
       align: "center",
+      headerStyle: {textAlign: 'center'},
       formatter: actionButton,
     },
   ];
@@ -116,7 +169,7 @@ const Discount = () => {
         >
           <i className="fas fa-edit"></i>
         </Link>{" "}
-        <button onClick={() => handleDelete(row)} className="btn btn-danger">
+        <button hidden={!(( role === 'admin')) } onClick={() => handleDelete(row)} className="btn btn-danger">
           <i className="fas fa-trash"></i>
         </button>
       </>
@@ -130,7 +183,7 @@ const Discount = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Special discount list</h1>
+                <h1 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -149,7 +202,7 @@ const Discount = () => {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Special discount list</h5>
+                    <h5 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ</h5>
                   </div>
                   <div className="card-body">
                     <div className="row">
@@ -167,6 +220,55 @@ const Discount = () => {
                           >
                             <i className="fas fa-file-excel"></i> นำเข้าไฟล์
                           </Link>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card mt-2">
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col-md-3">
+                            <input 
+                            className="form-control" 
+                            type="text" 
+                            placeholder="Preftsuite ID" 
+                            name={preftsuite_fiilter}
+                            onChange={(e) => filterPreftsuiteID(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <input 
+                            className="form-control" 
+                            type="text" 
+                            placeholder="แบบบ้าน" 
+                            name={design_name_filter}
+                            onChange={(e) => filterDesignName(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                          <select
+                                class="form-control"
+                                id="sel1"
+                                name={project_type_filter}
+                                onChange={(e) =>
+                                  filterProjectType(e.target.value)
+                                }
+                              >
+                                <option value="">เลือกประเภทงาน</option>
+                                <option value="บ้านเดี่ยว">
+                                  บ้านเดี่ยว
+                                </option>
+                                <option value="โครงการ">
+                                  โครงการ
+                                </option>
+                              </select>
+                          </div>
+                          <div className="col-md-3">
+                          <DatePicker
+                            className="form-control"
+                            selected={requestDate}
+                            onChange={filterCreateDate}
+                          />
+                          </div>
                         </div>
                       </div>
                     </div>

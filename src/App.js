@@ -40,6 +40,9 @@ import ViewSpecialDiscount from './pages/backend/discount/view'
 import EditSpecialDiscount from './pages/backend/discount/edit'
 import ImportExcelSpecialDiscount from './pages/backend/discount/importExcel'
 
+// log report
+import ReportSpecialDiscount from './pages/backend/report/discounts'
+
 // google analytics
 import React, {useEffect} from 'react'
 import ReactGA from 'react-ga';
@@ -101,6 +104,8 @@ function App(props) {
           <Route path="/backend/discount/view/:id" element={<ViewSpecialDiscount />} />
           <Route path="/backend/discount/edit/:id" element={<EditSpecialDiscount />} />
           <Route path="/backend/discount/import" element={<ImportExcelSpecialDiscount />} />
+
+          <Route path="/backend/report/discounts" element={<ReportSpecialDiscount />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

@@ -120,7 +120,13 @@ export default function Sidebar() {
                   <li className="nav-item">
                     <Link to="/backend/discount" className="nav-link">
                     <i className="nav-icon fas fa-tags"></i>
-                      <p>คูปองส่วนลดแบบพิเศษ</p>
+                      <p>ส่วนลดแบบพิเศษ</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/backend/report/discounts" className="nav-link">
+                    <i className="nav-icon fas fa-bug"></i>
+                      <p>Special discount logs</p>
                     </Link>
                   </li>
                 </>
@@ -193,7 +199,7 @@ export default function Sidebar() {
                   <li className="nav-item">
                     <Link to="/backend/discount" className="nav-link">
                     <i className="nav-icon fas fa-tags"></i>
-                      <p>คูปองส่วนลดแบบพิเศษ</p>
+                    <p>ส่วนลดแบบพิเศษ</p>
                     </Link>
                   </li>
                   <li className="nav-item">

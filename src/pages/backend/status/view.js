@@ -169,6 +169,9 @@ export default function StatusView() {
     return;
   }
 
+  //Cancel Order date range.
+  const CANCEL_ORDER_DATE = moment(precut.created_at).add(3, "days").toDate();
+
   const EXPIRED_DATE = moment(precut.created_at).add(30, "days").toDate();
   const CURRENT_DATE = moment().toDate();
 
@@ -181,6 +184,10 @@ export default function StatusView() {
       setDownload(true);
     }
     return;
+  }
+
+  const canelOrder = () => {
+    alert("ต้องการยกเลิกออเดอร์ : "+precut.file_name)
   }
 
   return (
@@ -585,7 +592,7 @@ export default function StatusView() {
                                 className="btn btn-primary btn-sm"
                                 href={precut.download}
                               >
-                                Download
+                                ดาวน์โหลดไฟล์
                               </a>
                             </td>
                           </tr>
@@ -668,6 +675,22 @@ export default function StatusView() {
                         ) : (
                           ""
                         )}
+                        <tr>
+                            <td>ยกเลิกคำสั่งซื้อ <span className="text-danger">(ยกเลิกได้หลังจากส่งคำสั่งซื้อได้ไม่เกิน 3 วัน)</span></td>
+                            <td>
+                              <button 
+                                onClick={canelOrder} 
+                                className="btn btn-danger btn-sm"
+                                //Hide button then order not 3 day
+                                disabled={
+                                  !(
+                                    CURRENT_DATE < CANCEL_ORDER_DATE
+                                  )}
+                              >
+                                ยกเลิกคำสั่งซื้อ
+                              </button>
+                            </td>
+                          </tr>
                       </table>
                       <div className="float-right mt-2">
                         <Link to="/backend/status" className="btn btn-danger">

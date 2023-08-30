@@ -7,7 +7,10 @@ import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
-const CURRENT_DATE = moment().add(13, "days").toDate();
+//แก้ไขฟังก์ชั่น 13 วัน ไม่ให้สั่งสินค้า
+//const CURRENT_DATE = moment().add(13, "days").toDate();
+const CURRENT_DATE = moment().add(8, "days").toDate();
+
 
 const ColoredDateCellWrapper = ({ children, value }) =>
   React.cloneElement(Children.only(children), {
@@ -16,6 +19,7 @@ const ColoredDateCellWrapper = ({ children, value }) =>
       backgroundColor: value < CURRENT_DATE ? "lightgrey" : "",
     },
   });
+
 
 export default function Bookings() {
 
@@ -41,7 +45,9 @@ export default function Bookings() {
   }, []);
 
   //const [date1, setDate1] = useState(moment().toDate());
-  const [date2, setDate2] = useState(moment().add(13, "days").toDate());
+  //แก้ไขฟังก์ชั่น 13 วัน ไม่ให้สั่งสินค้า
+  //const [date2, setDate2] = useState(moment().add(13, "days").toDate());
+  const [date2, setDate2] = useState(moment().add(8, "days").toDate());
 
   // //------------------------------------
   //     const str = capacity.date;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const ImportFile = () => {
@@ -20,17 +21,29 @@ const ImportFile = () => {
     formData.append("file_pdf", data.file_pdf[0]);
     formData.append("file_csv", data.file_csv[0]);
     formData.append("upload_by", data.upload_by);
+    formData.append("svt", "SBCI)sm!jdS^UEK8v!");
 
     try {
       await axios
-        .post("http://127.0.0.1:8000/api/import-discount", formData)
+        .post(process.env.REACT_APP_API+"/import-discount", formData)
         .then((res) => {
           console.log(res.data.discount);
-          alert("เพิ่มข้อมูลเรียบร้อยแล้ว");
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'เพิ่มข้อมูลส่วนลดเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/backend/discount");
         });
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error);
+      Swal.fire({
+        icon: 'error',
+        title: 'ข้อมูลไม่ถูกต้อง',
+        text: error.response.data.error,
+      })
     }
   };
 
@@ -41,7 +54,7 @@ const ImportFile = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">Special discount import file</h1>
+                <h1 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ (นำเข้าไฟล์)</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -60,7 +73,7 @@ const ImportFile = () => {
               <div className="col-lg-12">
                 <div className="card card-primary card-outline">
                   <div className="card-header">
-                    <h5 className="m-0">Special discount import file</h5>
+                    <h5 className="m-0">ระบบจัดการส่วนลดแบบพิเศษ (นำเข้าไฟล์)</h5>
                   </div>
                   <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -75,10 +88,12 @@ const ImportFile = () => {
                         <label htmlFor="">PDF file</label>
                         <br />
                         <input
-                          className="form-control-file"
+                          className="form-control-file border"
                           type="file"
+                          accept="application/pdf"
                           {...register("file_pdf", { required: true })}
                         />
+                        <span className="text-muted">*อัพโหลดได้เฉพาะไฟล์ PDF เท่านั้น</span><br/>
                         {errors.file_pdf && (
                           <span className="text-danger">
                             This field is required
@@ -86,13 +101,16 @@ const ImportFile = () => {
                         )}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="">Excel file</label>
+                        <label htmlFor="">CSV file</label>
                         <br />
                         <input
-                          className="form-control-file"
+                          className="form-control-file border"
                           type="file"
+                          accept="text/csv"
                           {...register("file_csv", { required: true })}
                         />
+                        <span 
+                          className="text-muted">*อัพโหลดได้เฉพาะไฟล์ CSV เท่านั้น <a href="https://precutbooking.windsor.co.th/bookings_dev/laravel_api_auth/public/download/Template_special_discount.xlsx">ดาวน์โหลดเท็มเพลต CSV</a></span><br/>
                         {errors.file_csv && (
                           <span className="text-danger">
                             This field is required
